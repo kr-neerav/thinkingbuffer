@@ -1,0 +1,196 @@
+---
+import Layout from '../../layouts/Layout.astro';
+
+export async function getStaticPaths() {
+  // Fetch all markdown files from blog and comics
+  const allPosts = Object.values(import.meta.glob(['../blog/*.md', '../comics/*.md'], { eager: true }));
+  
+  // Extract all unique tags
+  const uniqueTags = [...new Set(allPosts.map((post: any) => post.frontmatter.tags || []).flat())];
+  
+  // Generate a route for each tag
+  return uniqueTags.map((tag) => {
+    const filteredPosts = allPosts.filter((post: any) => 
+      post.frontmatter.tags && post.frontmatter.tags.includes(tag)
+    );
+    
+    // Sort filtered posts by date
+    filteredPosts.sort((a: any, b: any) => new Date(b.frontmatter.date).valueOf() - new Date(a.frontmatter.date).valueOf());
+    
+    return {
+      params: { tag },
+      props: { posts: filteredPosts },
+    };
+  });
+}
+
+const { tag } = Astro.params;
+const { posts } = Astro.props;
+---
+
+<Layout title={`Posts tagged with "${tag}" - Thinking Buffer`}>
+  <div class="tag-header">
+    <a href="/" class="back-link">&larr; Back to Home</a>
+    <h1>Posts tagged with <span class="tag-highlight">"{tag}"</span></h1>
+  </div>
+  
+  <div class="card-grid tag-results">
+    {posts.map((post: any) => {
+      // Determine if it's a comic based on the URL
+      const isComic = post.url.includes('/comics/');
+      
+      if (isComic) {
+        return (
+          <a href={post.url} class="card comic-card-link">
+            <div class="thumbnail">
+              {post.frontmatter.image_url ? (
+                <img src={post.frontmatter.image_url} alt={post.frontmatter.title} loading="lazy" />
+              ) : (
+                <div class="empty-placeholder"></div>
+              )}
+            </div>
+            <div class="comic-info">
+              <span class="comic-category">Comic Art</span>
+              <h3 class="card-title">{post.frontmatter.title}</h3>
+              <p class="comic-meta">{new Date(post.frontmatter.date).toLocaleDateString('en-US', {
+                year: 'numeric',
+                month: 'short',
+                day: 'numeric'
+              })}</p>
+            </div>
+          </a>
+        );
+      } else {
+        return (
+          <a href={post.url} class="card article-card">
+            <h3 class="card-title">{post.frontmatter.title}</h3>
+            <p class="author-meta">{new Date(post.frontmatter.date).toLocaleDateString('en-US', {
+              year: 'numeric',
+              month: 'long',
+              day: 'numeric'
+            })}</p>
+            <p class="card-excerpt">{post.frontmatter.description}</p>
+            <div class="card-tags">
+              {post.frontmatter.tags && post.frontmatter.tags.map((t: string) => (
+                <span class="tag">{t}</span>
+              ))}
+            </div>
+          </a>
+        );
+      }
+    })}
+  </div>
+</Layout>
+
+<style>
+  .tag-header {
+    margin-bottom: 3rem;
+  }
+  
+  .back-link {
+    display: inline-block;
+    margin-bottom: 1rem;
+    color: var(--text-muted);
+    font-weight: 500;
+  }
+  
+  .back-link:hover {
+    color: var(--text-color);
+  }
+  
+  .tag-header h1 {
+    font-size: 2.5rem;
+  }
+  
+  .tag-highlight {
+    color: var(--text-muted);
+  }
+  
+  .card-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1.5rem;
+  }
+  
+  @media (max-width: 700px) {
+    .card-grid {
+      grid-template-columns: 1fr;
+    }
+  }
+  
+  /* Shared card styles (similar to index.astro) */
+  .card-title {
+    font-size: 1rem;
+    font-weight: 700;
+    line-height: 1.3;
+    margin-bottom: 0.5rem;
+    text-transform: uppercase;
+    color: #1A1A1A;
+  }
+  
+  .author-meta, .comic-meta {
+    font-size: 0.8rem;
+    color: #666;
+    margin-bottom: 0.75rem;
+  }
+  
+  .card-excerpt {
+    font-size: 0.85rem;
+    color: #555;
+    margin-bottom: 1.5rem;
+    flex-grow: 1;
+  }
+  
+  .card-tags {
+    display: flex;
+    gap: 0.5rem;
+    flex-wrap: wrap;
+    margin-top: auto;
+  }
+  
+  .tag {
+    font-size: 0.7rem;
+    background: #F1F1F1;
+    padding: 0.25rem 0.6rem;
+    border-radius: 100px;
+    color: #555;
+    font-weight: 500;
+  }
+  
+  /* Comic specific overrides */
+  .comic-card-link {
+    padding: 0;
+    overflow: hidden;
+  }
+  
+  .thumbnail {
+    width: 100%;
+    aspect-ratio: 16/9;
+    background-color: var(--border-color);
+    overflow: hidden;
+  }
+  
+  .thumbnail img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 0.3s ease;
+  }
+  
+  .comic-card-link:hover .thumbnail img {
+    transform: scale(1.05);
+  }
+  
+  .comic-info {
+    padding: 1.25rem;
+  }
+  
+  .comic-category {
+    font-size: 0.75rem;
+    color: #666;
+    margin-bottom: 0.25rem;
+    display: block;
+    text-transform: uppercase;
+    font-weight: 700;
+  }
+</style>

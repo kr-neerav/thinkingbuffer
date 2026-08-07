@@ -1,0 +1,59 @@
+---
+import Layout from '../../layouts/Layout.astro';
+
+// We use import.meta.glob to fetch all markdown files in this directory and any subdirectories
+const posts = Object.values(import.meta.glob('./**/*.md', { eager: true }));
+
+// Sort posts by date, newest first
+posts.sort((a, b) => new Date(b.frontmatter.date).valueOf() - new Date(a.frontmatter.date).valueOf());
+---
+
+<Layout title="Blog - Thinking Buffer">
+	<h1>Blog</h1>
+	
+	<div class="posts">
+		{posts.map(post => (
+			<article class="card post-card">
+				<a href={post.url} class="post-link">
+					<h2>{post.frontmatter.title}</h2>
+				</a>
+				<p class="date">{new Date(post.frontmatter.date).toLocaleDateString('en-US', {
+					year: 'numeric',
+					month: 'long',
+					day: 'numeric'
+				})}</p>
+				<p class="description">{post.frontmatter.description}</p>
+				{post.frontmatter.tags && (
+					<div class="card-tags" style="margin-top: 1rem;">
+						{post.frontmatter.tags.map((tag: string) => (
+							<a href={`/tags/${tag}`} class="tag">{tag}</a>
+						))}
+					</div>
+				)}
+			</article>
+		))}
+	</div>
+</Layout>
+
+<style>
+	.posts {
+		display: flex;
+		flex-direction: column;
+		gap: 2rem;
+	}
+	
+	.post-card h2 {
+		margin-bottom: 0.5rem;
+		font-size: 1.5rem;
+	}
+	
+	.date {
+		font-size: 0.9rem;
+		color: var(--text-muted);
+		margin-bottom: 1rem;
+	}
+	
+	.description {
+		margin-bottom: 0;
+	}
+</style>
