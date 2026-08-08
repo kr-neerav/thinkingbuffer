@@ -28,6 +28,7 @@ const s3Client = new S3Client({
     accessKeyId: AWS_ACCESS_KEY_ID,
     secretAccessKey: AWS_SECRET_ACCESS_KEY,
   },
+  forcePathStyle: true,
 });
 
 const args = process.argv.slice(2);
@@ -116,6 +117,11 @@ async function uploadImages() {
       // Update the markdown content
       const newMatchStr = `![${altText}](${newImageUrl})`;
       updatedContent = updatedContent.replace(fullMatch, newMatchStr);
+      
+      // Also globally replace any remaining references to the relative path (like in frontmatter)
+      const escapedPath = imagePath.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+      const pathRegex = new RegExp(escapedPath, 'g');
+      updatedContent = updatedContent.replace(pathRegex, newImageUrl);
       
       // Cleanup local file
       console.log(`Deleting local file: ${absoluteImagePath}`);

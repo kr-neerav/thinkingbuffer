@@ -1,0 +1,126 @@
+---
+import Layout from './Layout.astro';
+
+interface Props {
+  frontmatter: {
+    title: string;
+    date: string;
+    image_url?: string;
+    tags?: string[];
+  };
+}
+
+const { frontmatter } = Astro.props;
+---
+
+<Layout title={`${frontmatter.title} - Comics`}>
+  <article class="comic-article">
+    <div class="comic-header">
+      <h1>{frontmatter.title}</h1>
+      <p class="comic-date">{new Date(frontmatter.date).toLocaleDateString('en-US', {
+        year: 'numeric',
+        month: 'long',
+        day: 'numeric'
+      })}</p>
+      {frontmatter.tags && (
+        <div class="comic-tags">
+          {frontmatter.tags.map((tag: string) => (
+            <span class="tag">{tag}</span>
+          ))}
+        </div>
+      )}
+    </div>
+
+    <div class="comic-content">
+      <slot />
+    </div>
+
+    <footer class="comic-footer">
+      <a href="/comics" class="back-link">&larr; Back to Comics</a>
+    </footer>
+  </article>
+</Layout>
+
+<style is:global>
+  .comic-article {
+    max-width: 900px;
+    margin: 0 auto;
+    padding: 0 1rem;
+  }
+
+  .comic-header {
+    text-align: center;
+    margin-bottom: 1.5rem;
+  }
+
+  .comic-header h1 {
+    font-size: 2.5rem;
+    margin-bottom: 0.5rem;
+    color: var(--text-color);
+  }
+
+  .comic-date {
+    color: var(--text-muted, #a1a1aa);
+    margin-bottom: 1rem;
+  }
+
+  .comic-tags {
+    display: flex;
+    justify-content: center;
+    gap: 0.5rem;
+    flex-wrap: wrap;
+  }
+
+  .comic-content {
+    display: block;
+  }
+
+  /* Style each slide section */
+  .comic-content h2 {
+    font-size: 1.5rem;
+    color: var(--text-color);
+    margin-top: 3rem;
+    margin-bottom: 1rem;
+    text-align: center;
+    border-bottom: 1px solid var(--border-color);
+    padding-bottom: 0.5rem;
+  }
+  
+  .comic-content h2:nth-of-type(1) {
+    margin-top: 0;
+  }
+
+  .comic-content img {
+    width: 100%;
+    height: auto;
+    border-radius: 12px;
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.1);
+    margin-bottom: 1rem;
+    display: block;
+  }
+
+  .comic-footer {
+    margin-top: 4rem;
+    padding-top: 2rem;
+    border-top: 1px solid var(--border-color, #333);
+    display: flex;
+    justify-content: space-between;
+  }
+
+  .back-link {
+    color: var(--text-muted, #a1a1aa);
+    text-decoration: none;
+    transition: color 0.2s;
+  }
+
+  .back-link:hover {
+    color: var(--primary-color, #3b82f6);
+  }
+  
+  .nav-links-chapter {
+    display: flex;
+    justify-content: space-between;
+    width: 100%;
+    margin-bottom: 2rem;
+  }
+</style>
