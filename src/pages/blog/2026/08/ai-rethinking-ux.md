@@ -4,6 +4,7 @@ title: "Don't Just Ask 'How', Ask 'What If': Letting AI Rethink Your Workflows"
 date: 2026-08-09
 description: "How brainstorming with an LLM completely transformed my comic generation workflow from a clunky CLI to a state-managed web app."
 tags: ["AI", "UX", "Workflow", "Comics", "Productivity"]
+heroImage: "https://pub-d8556b57257648feb0e7d903bdc8186f.r2.dev/src/pages/blog/2026/08/abacus_workflow.jpg"
 ---
 
 # Don't Just Ask 'How', Ask 'What If': Letting AI Rethink Your Workflows
