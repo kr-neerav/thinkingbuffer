@@ -6,6 +6,8 @@ description: "How brainstorming with an LLM completely transformed my comic gene
 tags: ["AI", "UX", "Workflow", "Comics", "Productivity"]
 ---
 
+# Don't Just Ask 'How', Ask 'What If': Letting AI Rethink Your Workflows
+
 I recently embarked on a project to generate comics. The core of my workflow involved managing three separate JSON files: one for generating entities, one for the comic slides, and one for the final narration.
 
 Initially, my biggest challenge was purely logistical: highlighting and copy-pasting prompts from these three JSON files into Google Flow was tedious and error-prone.
