@@ -32,3 +32,5 @@ pnpm-debug.log*
 *.avif
 *.svg
 
+# Allow structural site assets
+!public/images/neerav_avatar.jpg
