@@ -11,7 +11,7 @@ When the user asks you to draft or help write a blog post using this skill, foll
 - **Balanced Length:** Do not be overly verbose, but avoid being too brief. Provide enough detail to be easily understood without unnecessary fluff.
 - **No Repetition:** Ensure concepts are stated clearly once. Avoid repeating yourself.
 - **Easy to Understand:** Use accessible language. Break down complex topics into digestible parts.
-- **Cross-Domain Analogies:** When explaining insights, draw relatable analogies from entirely different domains. Don't restrict yourself to technical domains; include examples that would resonate with varied audiences, such as kids, adults, or older generations.
+- **Cross-Domain Analogies:** When explaining insights, draw relatable analogies from entirely different domains. Don't restrict yourself to technical domains; include examples that would resonate with varied audiences, such as kids, adults, or older generations. (Note: Avoid dry, corporate, or office-based analogies like accountants, receipts, or filing cabinets. Prefer dynamic, real-world examples like navigation, mechanics, or daily life tasks).
 - **Markdown Format:** Always deliver the final draft in clean, well-formatted Markdown.
 
 ## 2. Visual Emphasis (Crucial)
@@ -36,6 +36,7 @@ The user is a highly visual person. Break up walls of text and illustrate concep
 1. **Context Gathering:** Ask the user for the specific context, topic, or outline if they haven't provided enough details.
 2. **Drafting:** Generate the blog post incorporating the style and visual elements mentioned above. Always include YAML frontmatter at the top (including `layout` calculated relative to `Layout.astro`, `title`, `date`, `description`, `tags`) so Astro can parse and display it.
 3. **Saving:** Always save the drafted blog posts in the workspace using date-based subfolders under `src/pages/blog/` in the format `src/pages/blog/YYYY/MM/` (e.g., `src/pages/blog/2026/08/blog_draft.md`).
+   - **Local Images:** Always save generated images locally in the *exact same directory* as the markdown file (e.g., `src/pages/blog/YYYY/MM/image.jpg`), and reference them in the markdown using relative paths (e.g., `![alt](./image.jpg)`). This ensures the `r2-image-uploader` script can properly locate them and preserve the correct URL structure in Cloudflare R2. Never place blog images in the `public/images/` folder.
 4. **Feedback Loop:** Ask the user for their thoughts on the draft. 
 
 ## 4. Continuous Improvement (Self-Updating)
