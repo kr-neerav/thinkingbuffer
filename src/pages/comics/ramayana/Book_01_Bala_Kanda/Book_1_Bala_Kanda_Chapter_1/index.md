@@ -1,6 +1,6 @@
 ---
 layout: ../../../../../layouts/ComicLayout.astro
-title: "Bala Kanda - Chapter 1"
+title: "Book 1: Bala Kanda - Chapter 1"
 date: 2026-08-12
 tags: ["Ramayana", "Comics", "Mythology"]
 image_url: "https://pub-922d698a65e14ae9aeb30a4c6aacdaed.r2.dev/src/pages/comics/ramayana/Book_01_Bala_Kanda/Book_1_Bala_Kanda_Chapter_1/annotated/Book_1_Bala_Kanda_Chapter_1_Slide01_A_Grand_Introduction_202608120500.jpeg"

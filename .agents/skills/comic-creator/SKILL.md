@@ -27,7 +27,7 @@ Set the `layout`, `title`, `date`, `tags`, and `image_url` (pointing to the rela
 ```markdown
 ---
 layout: ../../../../../layouts/ComicLayout.astro
-title: "[Chapter Title]"
+title: "Book [Book Number]: [Book Name] - Chapter [Chapter Number]"
 date: [Current Date or Chapter Date YYYY-MM-DD]
 tags: ["Ramayana", "Comics", "Mythology"]
 image_url: "./annotated/[first_slide_filename.jpeg]"
