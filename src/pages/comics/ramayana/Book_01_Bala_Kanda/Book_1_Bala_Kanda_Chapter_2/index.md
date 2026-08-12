@@ -21,7 +21,7 @@ image_url: "https://pub-922d698a65e14ae9aeb30a4c6aacdaed.r2.dev/src/pages/comics
 
 ## Slide 3 - The Tamasa Banks
 
-![Slide03 - The Tamasa Banks](https://pub-922d698a65e14ae9aeb30a4c6aacdaed.r2.dev/src/pages/comics/ramayana/Book_01_Bala_Kanda/Book_1_Bala_Kanda_Chapter_2/annotated/Book_1_Bala_Kanda_Chapter_2_Slide03_The_Tamasa_Banks_202608081229.jpeg)
+![Slide03 - The Tamasa Banks](https://pub-922d698a65e14ae9aeb30a4c6aacdaed.r2.dev/src/pages/comics/ramayana/Book_01_Bala_Kanda/Book_1_Bala_Kanda_Chapter_2/Book_1_Bala_Kanda_Chapter_2_Slide03_The_Tamasa_Banks_202608081229.jpeg)
 
 ## Slide 4 - A Moment of Love
 
