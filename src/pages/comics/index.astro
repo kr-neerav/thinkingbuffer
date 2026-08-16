@@ -5,19 +5,35 @@ import Layout from '../../layouts/Layout.astro';
 const comics = Object.values(import.meta.glob('./**/*.md', { eager: true }));
 
 // Sort comics by date, newest first
-comics.sort((a, b) => new Date(b.frontmatter.date).valueOf() - new Date(a.frontmatter.date).valueOf());
+comics.sort((a: any, b: any) => new Date(b.frontmatter.date).valueOf() - new Date(a.frontmatter.date).valueOf());
+
+function getComicThumbnail(comic: any) {
+	const url = comic.frontmatter.heroImage || comic.frontmatter.image_url;
+	if (!url) return null;
+	if (url.startsWith('http://') || url.startsWith('https://') || url.startsWith('/')) {
+		return url;
+	}
+	if (url.startsWith('./')) {
+		const cleanUrl = (comic.url || '').replace(/\/$/, '');
+		return `/src/pages${cleanUrl}/${url.slice(2)}`;
+	}
+	return url;
+}
 ---
 
 <Layout title="Comics - Thinking Buffer">
 	<h1>Comics</h1>
 	
 	<div class="comics-grid">
-		{comics.map(comic => (
+		{comics.map((comic: any) => (
 			<article class="card comic-card-link">
 				<a href={comic.url} style="display: block;">
 					<div class="thumbnail">
-						{/* Using the external CDN url from frontmatter as the thumbnail */}
-						<img src={comic.frontmatter.image_url} alt={comic.frontmatter.title} loading="lazy" />
+						{getComicThumbnail(comic) ? (
+							<img src={getComicThumbnail(comic)} alt={comic.frontmatter.title} loading="lazy" />
+						) : (
+							<div class="empty-placeholder"></div>
+						)}
 					</div>
 					<div class="comic-info">
 						<h2>{comic.frontmatter.title}</h2>

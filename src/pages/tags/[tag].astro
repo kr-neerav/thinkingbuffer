@@ -3,7 +3,7 @@ import Layout from '../../layouts/Layout.astro';
 
 export async function getStaticPaths() {
   // Fetch all markdown files from blog and comics
-  const allPosts = Object.values(import.meta.glob(['../blog/*.md', '../comics/*.md'], { eager: true }));
+  const allPosts = Object.values(import.meta.glob(['../blog/**/*.md', '../comics/**/*.md'], { eager: true }));
   
   // Extract all unique tags
   const uniqueTags = [...new Set(allPosts.map((post: any) => post.frontmatter.tags || []).flat())];
@@ -26,6 +26,19 @@ export async function getStaticPaths() {
 
 const { tag } = Astro.params;
 const { posts } = Astro.props;
+
+function getItemImage(item: any) {
+  const url = item.frontmatter.heroImage || item.frontmatter.image_url;
+  if (!url) return null;
+  if (url.startsWith('http://') || url.startsWith('https://') || url.startsWith('/')) {
+    return url;
+  }
+  if (url.startsWith('./')) {
+    const cleanUrl = (item.url || '').replace(/\/$/, '');
+    return `/src/pages${cleanUrl}/${url.slice(2)}`;
+  }
+  return url;
+}
 ---
 
 <Layout title={`Posts tagged with "${tag}" - Thinking Buffer`}>
@@ -43,8 +56,8 @@ const { posts } = Astro.props;
         return (
           <a href={post.url} class="card comic-card-link">
             <div class="thumbnail">
-              {post.frontmatter.image_url ? (
-                <img src={post.frontmatter.image_url} alt={post.frontmatter.title} loading="lazy" />
+              {getItemImage(post) ? (
+                <img src={getItemImage(post)} alt={post.frontmatter.title} loading="lazy" />
               ) : (
                 <div class="empty-placeholder"></div>
               )}

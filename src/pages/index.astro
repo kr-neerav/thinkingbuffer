@@ -8,6 +8,19 @@ const blogs = Object.values(import.meta.glob('./blog/**/*.md', { eager: true }))
 // Fetch all comic posts
 const comics = Object.values(import.meta.glob('./comics/**/*.md', { eager: true }))
   .sort((a: any, b: any) => new Date(b.frontmatter.date).valueOf() - new Date(a.frontmatter.date).valueOf());
+
+function getItemImage(item: any) {
+  const url = item.frontmatter.heroImage || item.frontmatter.image_url;
+  if (!url) return null;
+  if (url.startsWith('http://') || url.startsWith('https://') || url.startsWith('/')) {
+    return url;
+  }
+  if (url.startsWith('./')) {
+    const cleanUrl = (item.url || '').replace(/\/$/, '');
+    return `/src/pages${cleanUrl}/${url.slice(2)}`;
+  }
+  return url;
+}
 ---
 
 <Layout title="Thinking Buffer - Thoughts & Comics">
@@ -22,9 +35,9 @@ const comics = Object.values(import.meta.glob('./comics/**/*.md', { eager: true 
 				) : (
 					blogs.slice(0, 4).map((post: any) => (
 						<a href={post.url} class="card article-card">
-							{post.frontmatter.heroImage && (
+							{getItemImage(post) && (
 								<div class="card-image-container">
-									<img src={post.frontmatter.heroImage} alt={post.frontmatter.title} />
+									<img src={getItemImage(post)} alt={post.frontmatter.title} />
 								</div>
 							)}
 							<h3 class="card-title">{post.frontmatter.title}</h3>
@@ -58,9 +71,9 @@ const comics = Object.values(import.meta.glob('./comics/**/*.md', { eager: true 
 				) : (
 					comics.slice(0, 4).map((comic: any) => (
 						<a href={comic.url} class="card comic-card">
-							{comic.frontmatter.image_url && (
+							{getItemImage(comic) && (
 								<div class="comic-image-container">
-									<img src={comic.frontmatter.image_url} alt={comic.frontmatter.title} />
+									<img src={getItemImage(comic)} alt={comic.frontmatter.title} />
 								</div>
 							)}
 							<div class="comic-content">

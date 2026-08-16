@@ -95,19 +95,33 @@ async function uploadImages() {
 
     console.log(`Uploading ${s3Key} to bucket ${targetBucket}...`);
 
-    const fileStream = fs.createReadStream(absoluteImagePath);
+    const fileBuffer = fs.readFileSync(absoluteImagePath);
     const contentType = getContentType(absoluteImagePath);
 
     const uploadParams = {
       Bucket: targetBucket,
       Key: s3Key,
-      Body: fileStream,
+      Body: fileBuffer,
       ContentType: contentType,
     };
 
-    try {
-      await s3Client.send(new PutObjectCommand(uploadParams));
-      
+    let uploaded = false;
+    for (let attempt = 1; attempt <= 3; attempt++) {
+      try {
+        await s3Client.send(new PutObjectCommand(uploadParams));
+        uploaded = true;
+        break;
+      } catch (error) {
+        console.warn(`Attempt ${attempt} failed for ${s3Key}: ${error.message || error}`);
+        if (attempt < 3) {
+          await new Promise(res => setTimeout(res, 1000 * attempt));
+        } else {
+          console.error(`All retry attempts failed to upload ${s3Key}:`, error);
+        }
+      }
+    }
+
+    if (uploaded) {
       // Remove trailing slash from public URL if it exists
       const cleanPublicUrl = targetPublicUrl.replace(/\/$/, '');
       const newImageUrl = `${cleanPublicUrl}/${s3Key}`;
@@ -126,9 +140,6 @@ async function uploadImages() {
       // Cleanup local file
       console.log(`Deleting local file: ${absoluteImagePath}`);
       fs.unlinkSync(absoluteImagePath);
-      
-    } catch (error) {
-      console.error(`Failed to upload ${s3Key}:`, error);
     }
   }
 
