@@ -2,8 +2,8 @@
 import Layout from '../../layouts/Layout.astro';
 
 export async function getStaticPaths() {
-  // Fetch all markdown files from blog and comics
-  const allPosts = Object.values(import.meta.glob(['../blog/**/*.md', '../comics/**/*.md'], { eager: true }));
+  // Fetch all markdown files from blog
+  const allPosts = Object.values(import.meta.glob('../blog/**/*.md', { eager: true }));
   
   // Extract all unique tags
   const uniqueTags = [...new Set(allPosts.map((post: any) => post.frontmatter.tags || []).flat())];
@@ -48,50 +48,27 @@ function getItemImage(item: any) {
   </div>
   
   <div class="card-grid tag-results">
-    {posts.map((post: any) => {
-      // Determine if it's a comic based on the URL
-      const isComic = post.url.includes('/comics/');
-      
-      if (isComic) {
-        return (
-          <a href={post.url} class="card comic-card-link">
-            <div class="thumbnail">
-              {getItemImage(post) ? (
-                <img src={getItemImage(post)} alt={post.frontmatter.title} loading="lazy" />
-              ) : (
-                <div class="empty-placeholder"></div>
-              )}
-            </div>
-            <div class="comic-info">
-              <span class="comic-category">Comic Art</span>
-              <h3 class="card-title">{post.frontmatter.title}</h3>
-              <p class="comic-meta">{new Date(post.frontmatter.date).toLocaleDateString('en-US', {
-                year: 'numeric',
-                month: 'short',
-                day: 'numeric'
-              })}</p>
-            </div>
-          </a>
-        );
-      } else {
-        return (
-          <a href={post.url} class="card article-card">
-            <h3 class="card-title">{post.frontmatter.title}</h3>
-            <p class="author-meta">{new Date(post.frontmatter.date).toLocaleDateString('en-US', {
-              year: 'numeric',
-              month: 'long',
-              day: 'numeric'
-            })}</p>
-            <p class="card-excerpt">{post.frontmatter.description}</p>
-            <div class="card-tags">
-              {post.frontmatter.tags && post.frontmatter.tags.map((t: string) => (
-                <span class="tag">{t}</span>
-              ))}
-            </div>
-          </a>
-        );
-      }
-    })}
+    {posts.map((post: any) => (
+      <a href={post.url} class="card article-card">
+        {getItemImage(post) && (
+          <div class="card-image-container">
+            <img src={getItemImage(post)} alt={post.frontmatter.title} />
+          </div>
+        )}
+        <h3 class="card-title">{post.frontmatter.title}</h3>
+        <p class="author-meta">{new Date(post.frontmatter.date).toLocaleDateString('en-US', {
+          year: 'numeric',
+          month: 'long',
+          day: 'numeric'
+        })}</p>
+        <p class="card-excerpt">{post.frontmatter.description}</p>
+        <div class="card-tags">
+          {post.frontmatter.tags && post.frontmatter.tags.map((t: string) => (
+            <span class="tag">{t}</span>
+          ))}
+        </div>
+      </a>
+    ))}
   </div>
 </Layout>
 
@@ -121,27 +98,47 @@ function getItemImage(item: any) {
   
   .card-grid {
     display: grid;
-    grid-template-columns: 1fr 1fr;
+    grid-template-columns: repeat(3, 1fr);
     gap: 1.5rem;
   }
   
-  @media (max-width: 700px) {
+  @media (max-width: 900px) {
+    .card-grid {
+      grid-template-columns: repeat(2, 1fr);
+    }
+  }
+
+  @media (max-width: 600px) {
     .card-grid {
       grid-template-columns: 1fr;
     }
   }
   
-  /* Shared card styles (similar to index.astro) */
+  /* Shared card styles */
+  .card-image-container {
+    width: 100%;
+    aspect-ratio: 4/3;
+    border-radius: 12px;
+    overflow: hidden;
+    margin-bottom: 1.25rem;
+    background-color: #F3E5DC;
+  }
+  
+  .card-image-container img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+
   .card-title {
     font-size: 1rem;
     font-weight: 700;
     line-height: 1.3;
     margin-bottom: 0.5rem;
-    text-transform: uppercase;
     color: #1A1A1A;
   }
   
-  .author-meta, .comic-meta {
+  .author-meta {
     font-size: 0.8rem;
     color: #666;
     margin-bottom: 0.75rem;
@@ -168,42 +165,5 @@ function getItemImage(item: any) {
     border-radius: 100px;
     color: #555;
     font-weight: 500;
-  }
-  
-  /* Comic specific overrides */
-  .comic-card-link {
-    padding: 0;
-    overflow: hidden;
-  }
-  
-  .thumbnail {
-    width: 100%;
-    aspect-ratio: 16/9;
-    background-color: var(--border-color);
-    overflow: hidden;
-  }
-  
-  .thumbnail img {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-    transition: transform 0.3s ease;
-  }
-  
-  .comic-card-link:hover .thumbnail img {
-    transform: scale(1.05);
-  }
-  
-  .comic-info {
-    padding: 1.25rem;
-  }
-  
-  .comic-category {
-    font-size: 0.75rem;
-    color: #666;
-    margin-bottom: 0.25rem;
-    display: block;
-    text-transform: uppercase;
-    font-weight: 700;
   }
 </style>

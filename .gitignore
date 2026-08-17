@@ -3,6 +3,9 @@ dist/
 # generated types
 .astro/
 
+# local backups
+_backup_comics/
+
 # dependencies
 node_modules/
 
