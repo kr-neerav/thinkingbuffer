@@ -86,7 +86,6 @@ const { book, allBooks } = Astro.props;
 
 // Known ready/illustrated chapters
 const publishedImages: Record<string, string> = {
-  '1_0': '/images/comics/ramayana_hero.jpg',
   '1_1': '/images/comics/Book_1_Bala_Kanda_Chapter_1_hero.jpg'
 };
 
@@ -105,30 +104,13 @@ for (const [filePath, fileModule] of Object.entries(localComics)) {
 
 // Filter chapters for this book
 const rawChapters = mappingData.filter((item: any) => item.book_num === book.book_num);
-const bookChapters = book.book_num === 1 ? [
-  {
-    book_num: 1,
-    book_id: 'Book_1_Bala_Kanda',
-    kanda_iast: 'Bāla Kāṇḍa',
-    kanda_sanskrit: 'बालकाण्ड',
-    section_number: 0,
-    roman: 'Intro',
-    local_title: 'Introduction',
-    thematic_sanskrit_title: 'Prastāvanā & Samkṣepa',
-    thematic_english_title: 'Welcome to the Odyssey: An Illustrated Introduction to the Ramayana',
-    local_narrative_summary: 'Discover the textual foundation behind this graphic saga—how we preserve Manmatha Nath Dutt’s unabridged 1891 prose translation, the structural purpose of the opening Executive Summary cantos (Samkṣepa Rāmāyaṇa), and how ancient Dharma transforms into actionable modern wisdom.',
-    word_count: 520
-  },
-  ...rawChapters
-] : rawChapters;
+const bookChapters = rawChapters;
 
 const chapterList = bookChapters.map((chap: any) => {
   const key = `${chap.book_num}_${chap.section_number}`;
   const isPublished = key in publishedImages;
   const heroImage = publishedImages[key] || null;
-  const url = chap.section_number === 0 
-    ? `/comics/ramayana/introduction/`
-    : `/comics/ramayana/${book.slug}/${chap.book_id}_Chapter_${chap.section_number}/`;
+  const url = `/comics/ramayana/${book.slug}/${chap.book_id}_Chapter_${chap.section_number}/`;
   
   return {
     ...chap,
