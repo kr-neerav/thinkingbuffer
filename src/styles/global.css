@@ -74,8 +74,9 @@ main p a:hover, main li a:hover {
 	opacity: 1;
 }
 
-/* Header */
-header {
+/* Site Header */
+.site-header,
+.app-container > header {
 	padding: 1.5rem 3rem;
 	display: flex;
 	justify-content: space-between;

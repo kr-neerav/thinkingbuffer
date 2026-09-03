@@ -1,5 +1,6 @@
 ---
 import Layout from './Layout.astro';
+import mappingData from '../data/ramayana_dutt_1to1_mapping.json';
 
 interface Props {
   frontmatter: {
@@ -8,21 +9,133 @@ interface Props {
     image_url?: string;
     heroImage?: string;
     tags?: string[];
+    book_num?: number;
+    kanda_iast?: string;
+    kanda_sanskrit?: string;
+    section_number?: number;
+    roman?: string;
+    sanskrit_title?: string;
+    english_title?: string;
+    word_count?: number;
+    status?: string;
   };
 }
 
 const { frontmatter } = Astro.props;
+
+// Robust fallback extraction from URL or title
+const urlPath = Astro.url.pathname;
+const bookMatch = urlPath.match(/Book_0?(\d+)/i);
+const chapMatch = urlPath.match(/Chapter_(\d+)/i);
+
+const derivedBookNum = frontmatter.book_num || (bookMatch ? parseInt(bookMatch[1]) : 1);
+const derivedSectionNum = frontmatter.section_number !== undefined 
+  ? frontmatter.section_number 
+  : (chapMatch ? parseInt(chapMatch[1]) : (urlPath.includes('Chapter_0') ? 0 : 1));
+
+// Look up from canonical 652-chapter mapping if fields are missing
+const matchedData = mappingData.find(
+  (m: any) => m.book_num === derivedBookNum && m.section_number === derivedSectionNum
+);
+
+const kandaIast = frontmatter.kanda_iast || matchedData?.kanda_iast || 'Bāla Kāṇḍa';
+const kandaSanskrit = frontmatter.kanda_sanskrit || matchedData?.kanda_sanskrit || 'बालकाण्ड';
+const sanskritTitle = frontmatter.sanskrit_title || matchedData?.thematic_sanskrit_title || '';
+const englishTitle = frontmatter.english_title || matchedData?.thematic_english_title || '';
+const sectionNumber = derivedSectionNum;
+const wordCount = frontmatter.word_count || matchedData?.word_count || 0;
+
+const kandaSlugs: Record<number, string> = {
+  1: 'Book_01_Bala_Kanda',
+  2: 'Book_02_Ayodhya_Kanda',
+  3: 'Book_03_Aranya_Kanda',
+  4: 'Book_04_Kishkindha_Kanda',
+  5: 'Book_05_Sundara_Kanda',
+  6: 'Book_06_Yuddha_Kanda',
+  7: 'Book_07_Uttara_Kanda'
+};
+const bookSlug = kandaSlugs[derivedBookNum] || 'Book_01_Bala_Kanda';
+const isIntro = urlPath.includes('/introduction') || derivedSectionNum === 0 || frontmatter.title?.toLowerCase().includes('introduction');
 ---
 
-<Layout title={`${frontmatter.title} - Comics`}>
-  <article class="comic-article">
-    <div class="comic-header">
-      <h1>{frontmatter.title}</h1>
-      <p class="comic-date">{new Date(frontmatter.date).toLocaleDateString('en-US', {
-        year: 'numeric',
-        month: 'long',
-        day: 'numeric'
-      })}</p>
+<Layout title={`${frontmatter.title} - Ramayana Comics`}>
+  <div class="comic-reader-wrapper" id="comic-reader" data-lang="en">
+    <!-- Breadcrumbs -->
+    <nav class="comic-breadcrumbs">
+      <a href="/">Home</a>
+      <span class="separator">/</span>
+      <a href="/comics">Comics</a>
+      <span class="separator">/</span>
+      <a href="/comics/ramayana">Ramayana</a>
+      <span class="separator">/</span>
+      {isIntro ? (
+        <span class="current-crumb">Introduction</span>
+      ) : (
+        <>
+          <a href={`/comics/ramayana/${bookSlug}/`}>{kandaIast}</a>
+          <span class="separator">/</span>
+          <span class="current-crumb">Chapter {sectionNumber}</span>
+        </>
+      )}
+    </nav>
+
+    <!-- Compact Comic Header -->
+    <header class="comic-header">
+      {sanskritTitle && (
+        <div class="sanskrit-eyebrow">
+          {isIntro ? 'रामायण प्रस्तावना • ' : (kandaSanskrit ? `${kandaSanskrit} • ` : '')}{sanskritTitle}
+        </div>
+      )}
+      <h1 class="comic-main-title">{frontmatter.title}</h1>
+      {englishTitle && (
+        <p class="comic-subtitle">{englishTitle}</p>
+      )}
+    </header>
+
+    <!-- Language Switcher Bar -->
+    <div class="comic-language-bar" id="comic-lang-bar">
+      <span class="lang-bar-label">Read in / भाषा:</span>
+      <div class="lang-toggle-group" role="radiogroup" aria-label="Language selection">
+        <button type="button" class="lang-btn active" data-lang="en" aria-checked="true" role="radio">
+          <span class="lang-text">English</span>
+        </button>
+        <button type="button" class="lang-btn" data-lang="hi" aria-checked="false" role="radio">
+          <span class="lang-text">Hindi</span>
+        </button>
+      </div>
+    </div>
+
+    <!-- Comic Slides Content -->
+    <main class="comic-content">
+      <slot />
+    </main>
+
+    <!-- Bottom Language Switcher Bar -->
+    <div class="comic-language-bar comic-language-bar-bottom">
+      <span class="lang-bar-label">Read in / भाषा:</span>
+      <div class="lang-toggle-group" role="radiogroup" aria-label="Language selection">
+        <button type="button" class="lang-btn active" data-lang="en" aria-checked="true" role="radio">
+          <span class="lang-text">English</span>
+        </button>
+        <button type="button" class="lang-btn" data-lang="hi" aria-checked="false" role="radio">
+          <span class="lang-text">Hindi</span>
+        </button>
+      </div>
+    </div>
+
+    <!-- Footer Meta & Navigation -->
+    <footer class="comic-footer">
+      <div class="footer-meta-row">
+        <span class="comic-date">{new Date(frontmatter.date).toLocaleDateString('en-US', {
+          year: 'numeric',
+          month: 'long',
+          day: 'numeric'
+        })}</span>
+        {wordCount > 0 && (
+          <span class="meta-word-count">• {wordCount.toLocaleString()} source words</span>
+        )}
+      </div>
+
       {frontmatter.tags && (
         <div class="comic-tags">
           {frontmatter.tags.map((tag: string) => (
@@ -30,98 +143,373 @@ const { frontmatter } = Astro.props;
           ))}
         </div>
       )}
-    </div>
 
-    <div class="comic-content">
-      <slot />
-    </div>
-
-    <footer class="comic-footer">
-      <a href="/comics" class="back-link">&larr; Back to Comics</a>
+      <div class="footer-nav-links">
+        {isIntro ? (
+          <>
+            <a href="/comics/ramayana" class="back-link">← Ramayana Master Index</a>
+            <a href="/comics/ramayana/Book_01_Bala_Kanda/Book_1_Bala_Kanda_Chapter_1/" class="back-link">Begin Book 1: Chapter 1 →</a>
+          </>
+        ) : (
+          <>
+            <a href={`/comics/ramayana/${bookSlug}/`} class="back-link">← Back to {kandaIast}</a>
+            <a href="/comics/ramayana" class="back-link">Browse All 7 Kāṇḍas →</a>
+          </>
+        )}
+      </div>
     </footer>
-  </article>
+  </div>
 </Layout>
 
 <style is:global>
-  .comic-article {
+  .comic-reader-wrapper {
     max-width: 900px;
     margin: 0 auto;
-    padding: 0 1rem;
+    padding: 0 0.5rem;
   }
 
-  .comic-header {
-    text-align: center;
-    margin-bottom: 1.5rem;
-  }
-
-  .comic-header h1 {
-    font-size: 2.5rem;
-    margin-bottom: 0.5rem;
-    color: var(--text-color);
-  }
-
-  .comic-date {
-    color: var(--text-muted, #a1a1aa);
-    margin-bottom: 1rem;
-  }
-
-  .comic-tags {
+  /* Breadcrumbs */
+  .comic-breadcrumbs {
     display: flex;
-    justify-content: center;
-    gap: 0.5rem;
+    align-items: center;
+    gap: 0.4rem;
+    font-size: 0.8rem;
+    color: var(--text-muted);
+    margin-bottom: 0.75rem;
     flex-wrap: wrap;
   }
 
+  .comic-breadcrumbs a {
+    color: var(--text-muted);
+    text-decoration: none;
+  }
+
+  .comic-breadcrumbs a:hover {
+    color: var(--text-color);
+    text-decoration: underline;
+  }
+
+  .comic-breadcrumbs .separator {
+    opacity: 0.4;
+  }
+
+  .comic-breadcrumbs .current-crumb {
+    color: var(--text-color);
+    font-weight: 600;
+  }
+
+  /* Compact Header */
+  .comic-header {
+    text-align: center;
+    margin-bottom: 1rem;
+    padding: 0.5rem 0;
+  }
+
+  .sanskrit-eyebrow {
+    font-size: 0.82rem;
+    font-weight: 600;
+    color: #b85d19;
+    background: #fff4e8;
+    display: inline-block;
+    padding: 0.2rem 0.7rem;
+    border-radius: 100px;
+    margin-bottom: 0.4rem;
+    border: 1px solid rgba(184, 93, 25, 0.18);
+  }
+
+  .comic-main-title {
+    font-size: 1.5rem;
+    font-weight: 700;
+    color: #1a1a1a;
+    letter-spacing: -0.02em;
+    margin-bottom: 0.25rem;
+    line-height: 1.25;
+  }
+
+  .comic-subtitle {
+    font-size: 0.92rem;
+    color: #555555;
+    max-width: 700px;
+    margin: 0 auto 0.5rem auto;
+    line-height: 1.4;
+  }
+
+  /* Content */
   .comic-content {
     display: block;
   }
 
-  /* Style each slide section */
+  /* Navigation Bar */
+  .nav-links-chapter {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+    margin: 0.75rem 0 1.25rem 0;
+    padding: 0.5rem 1rem;
+    background: #ffffff;
+    border-radius: 10px;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.04);
+    border: 1px solid rgba(0, 0, 0, 0.05);
+  }
+
+  .nav-links-chapter a {
+    font-weight: 600;
+    font-size: 0.82rem;
+    color: #1a1a1a;
+    display: inline-flex;
+    align-items: center;
+    gap: 0.3rem;
+    text-decoration: none;
+    transition: opacity 0.2s ease;
+  }
+
+  .nav-links-chapter a:hover {
+    opacity: 0.7;
+  }
+
+  /* Language Switcher Styling (Soft Minimal Premium) */
+  .comic-language-bar {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.75rem;
+    margin: 0.5rem auto 1.25rem auto;
+    padding: 0.4rem 0.9rem;
+    background: #ffffff;
+    border-radius: 30px;
+    border: 1px solid rgba(0, 0, 0, 0.06);
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.03);
+    width: fit-content;
+  }
+
+  .comic-language-bar-bottom {
+    margin: 2rem auto 1rem auto;
+  }
+
+  .lang-bar-label {
+    font-size: 0.8rem;
+    font-weight: 500;
+    color: var(--text-muted, #666666);
+  }
+
+  .lang-toggle-group {
+    display: inline-flex;
+    background: #f1f3f5;
+    padding: 3px;
+    border-radius: 20px;
+    gap: 2px;
+  }
+
+  .lang-btn {
+    border: none;
+    background: transparent;
+    padding: 0.35rem 0.85rem;
+    border-radius: 16px;
+    font-size: 0.82rem;
+    font-weight: 600;
+    color: #555555;
+    cursor: pointer;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+  }
+
+  .lang-btn:hover:not(.active):not(:disabled) {
+    color: #1a1a1a;
+    background: rgba(255, 255, 255, 0.6);
+  }
+
+  .lang-btn.active {
+    background: #ffffff;
+    color: #b85d19;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.08);
+  }
+
+  .lang-btn:disabled {
+    opacity: 0.45;
+    cursor: not-allowed;
+  }
+
+  /* Dual-Language Image Flipping */
+  .comic-reader-wrapper[data-lang="en"] .comic-content .comic-img-hi,
+  .comic-reader-wrapper[data-lang="en"] .comic-content img[alt*="(Hindi)"],
+  .comic-reader-wrapper[data-lang="en"] .comic-content img[src*="annotated_hi"] {
+    display: none !important;
+  }
+
+  .comic-reader-wrapper[data-lang="hi"] .comic-content .comic-img-en,
+  .comic-reader-wrapper[data-lang="hi"] .comic-content img:not([alt*="(Hindi)"]):not([src*="annotated_hi"]) {
+    display: none !important;
+  }
+
+  /* Slide Headings & Images */
   .comic-content h2 {
-    font-size: 1.5rem;
-    color: var(--text-color);
-    margin-top: 3rem;
-    margin-bottom: 1rem;
+    font-size: 1.05rem;
+    font-weight: 600;
+    color: #2d3748;
+    margin: 1.5rem 0 0.5rem 0;
     text-align: center;
-    border-bottom: 1px solid var(--border-color);
-    padding-bottom: 0.5rem;
+    border: none;
+    padding: 0;
   }
   
   .comic-content h2:nth-of-type(1) {
-    margin-top: 0;
+    margin-top: 0.5rem;
   }
 
   .comic-content img {
     width: 100%;
     height: auto;
     border-radius: 12px;
-    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.1);
-    margin-bottom: 1rem;
+    box-shadow: 0 8px 30px rgba(0, 0, 0, 0.08);
+    margin-bottom: 1.25rem;
     display: block;
+    animation: comicFadeIn 0.25s ease;
   }
 
+  @keyframes comicFadeIn {
+    from {
+      opacity: 0.7;
+    }
+    to {
+      opacity: 1;
+    }
+  }
+
+  /* Footer */
   .comic-footer {
-    margin-top: 4rem;
-    padding-top: 2rem;
-    border-top: 1px solid var(--border-color, #333);
+    margin-top: 3rem;
+    padding-top: 1.5rem;
+    border-top: 1px solid rgba(0, 0, 0, 0.08);
     display: flex;
-    justify-content: space-between;
+    flex-direction: column;
+    align-items: center;
+    gap: 1rem;
   }
 
-  .back-link {
-    color: var(--text-muted, #a1a1aa);
-    text-decoration: none;
-    transition: color 0.2s;
+  .footer-meta-row {
+    display: flex;
+    gap: 0.5rem;
+    color: var(--text-muted);
+    font-size: 0.8rem;
   }
 
-  .back-link:hover {
-    color: var(--primary-color, #3b82f6);
+  .comic-tags {
+    display: flex;
+    justify-content: center;
+    gap: 0.4rem;
+    flex-wrap: wrap;
   }
-  
-  .nav-links-chapter {
+
+  .footer-nav-links {
     display: flex;
     justify-content: space-between;
     width: 100%;
-    margin-bottom: 2rem;
+    margin-top: 1rem;
+  }
+
+  .back-link {
+    color: var(--text-muted);
+    font-weight: 500;
+    font-size: 0.85rem;
+    text-decoration: none;
+  }
+
+  .back-link:hover {
+    color: var(--text-color);
+  }
+
+  @media (max-width: 600px) {
+    .comic-main-title {
+      font-size: 1.25rem;
+    }
+    .comic-subtitle {
+      font-size: 0.85rem;
+    }
+    .nav-links-chapter {
+      flex-direction: column;
+      gap: 0.5rem;
+      text-align: center;
+    }
+    .comic-language-bar {
+      width: 100%;
+      flex-wrap: wrap;
+    }
   }
 </style>
+
+<script is:inline>
+  (function() {
+    function initComicLang() {
+      const reader = document.getElementById('comic-reader');
+      if (!reader) return;
+
+      const langButtons = document.querySelectorAll('.lang-btn');
+      const hiButtons = document.querySelectorAll('.lang-btn[data-lang="hi"]');
+      
+      // Check if Hindi images exist on this page
+      const content = document.querySelector('.comic-content');
+      const allImages = content ? content.querySelectorAll('img') : [];
+      let hasHindi = false;
+
+      allImages.forEach(img => {
+        const src = img.getAttribute('src') || '';
+        const alt = img.getAttribute('alt') || '';
+        if (src.includes('annotated_hi') || alt.includes('(Hindi)')) {
+          hasHindi = true;
+          img.classList.add('comic-img-hi');
+        } else {
+          img.classList.add('comic-img-en');
+        }
+      });
+
+      // If no Hindi images, disable Hindi buttons
+      if (!hasHindi) {
+        hiButtons.forEach(btn => {
+          btn.disabled = true;
+          btn.title = 'Hindi translation coming soon / हिन्दी अनुवाद जल्द आ रहा है';
+          const textSpan = btn.querySelector('.lang-text');
+          if (textSpan) textSpan.textContent = 'Hindi (Soon)';
+        });
+      }
+
+      // Check saved preference in localStorage
+      let preferredLang = 'en';
+      try {
+        preferredLang = localStorage.getItem('tb_comic_lang') || 'en';
+      } catch (e) {}
+
+      // Apply language (fallback to en if hi requested but unavailable)
+      const activeLang = (hasHindi && preferredLang === 'hi') ? 'hi' : 'en';
+      setLanguage(activeLang);
+
+      function setLanguage(lang) {
+        reader.setAttribute('data-lang', lang);
+        langButtons.forEach(btn => {
+          const isCurrent = btn.getAttribute('data-lang') === lang;
+          btn.classList.toggle('active', isCurrent);
+          btn.setAttribute('aria-checked', isCurrent ? 'true' : 'false');
+        });
+        try {
+          localStorage.setItem('tb_comic_lang', lang);
+        } catch (e) {}
+      }
+
+      langButtons.forEach(btn => {
+        btn.addEventListener('click', function() {
+          const targetLang = this.getAttribute('data-lang');
+          if (targetLang === 'hi' && !hasHindi) return;
+          setLanguage(targetLang);
+        });
+      });
+    }
+
+    if (document.readyState === 'loading') {
+      document.addEventListener('DOMContentLoaded', initComicLang);
+    } else {
+      initComicLang();
+    }
+  })();
+</script>

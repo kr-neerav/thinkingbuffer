@@ -1,0 +1,771 @@
+---
+import Layout from '../../../layouts/Layout.astro';
+import mappingData from '../../../data/ramayana_dutt_1to1_mapping.json';
+
+export function getStaticPaths() {
+  const books = [
+    {
+      book_num: 1,
+      slug: 'Book_01_Bala_Kanda',
+      name: 'Bāla Kāṇḍa',
+      sanskrit: 'बालकाण्ड',
+      english: 'The Book of Youth & Childhood',
+      desc: 'Recounts the origin of the epic, the birth of Rama and his brothers, their education, journey with Sage Vishvamitra, slaying of Tataka and Subahu, redemption of Ahalya, breaking of Lord Shiva\'s bow in Mithila, the royal quadruple wedding, and the humbling of Parashurama.',
+      total_words: '~53,400',
+      total_chapters: 75
+    },
+    {
+      book_num: 2,
+      slug: 'Book_02_Ayodhya_Kanda',
+      name: 'Ayodhyā Kāṇḍa',
+      sanskrit: 'अयोध्याकाण्ड',
+      english: 'The Book of Ayodhya & Exile',
+      desc: 'Preparations for Rama\'s coronation, Manthara\'s instigation, Queen Kaikeyi\'s two boons, Dasharatha\'s grief, Rama\'s exile to the Dandaka forest with Sita and Lakshmana, King Dasharatha\'s passing, Bharata\'s righteous refusal of the crown, and the installation of Rama\'s sacred Padukas at Nandigrama.',
+      total_words: '~100,500',
+      total_chapters: 118
+    },
+    {
+      book_num: 3,
+      slug: 'Book_03_Aranya_Kanda',
+      name: 'Āraṇya Kāṇḍa',
+      sanskrit: 'अरण्यकाण्ड',
+      english: 'The Book of the Forest',
+      desc: 'Forest life in Panchavati, encounters with hermits, disfigurement of Surpanakha, destruction of Khara and Dushana\'s army, the magical golden deer (Maricha), the abduction of Sita by demon king Ravana, Jatayu\'s valiant sacrifice, and Rama\'s grief-stricken quest through the wilderness.',
+      total_words: '~56,200',
+      total_chapters: 75
+    },
+    {
+      book_num: 4,
+      slug: 'Book_04_Kishkindha_Kanda',
+      name: 'Kiṣkindhā Kāṇḍa',
+      sanskrit: 'किष्किन्धाकाण्ड',
+      english: 'The Book of the Monkey Kingdom',
+      desc: 'Arrival at Lake Pampa, sacred alliance between Rama and Sugriva facilitated by Hanuman, the slaying of Vali, coronation of Sugriva, deployment of Vanara search parties to all four corners of the earth, and Sampati\'s revelation of Sita\'s location in Lanka across the southern ocean.',
+      total_words: '~55,800',
+      total_chapters: 67
+    },
+    {
+      book_num: 5,
+      slug: 'Book_05_Sundara_Kanda',
+      name: 'Sundara Kāṇḍa',
+      sanskrit: 'सुन्दरकाण्ड',
+      english: 'The Book of Beauty & Hanuman',
+      desc: 'Hanuman\'s monumental leap across the roaring ocean, overcoming Surasa and Simhika, infiltration of the fortress city of Lanka, discovery of Sita in the Ashoka Vatika, delivery of the signet ring, confrontation with Ravana, burning of Lanka, and triumphant return with news of Sita.',
+      total_words: '~68,600',
+      total_chapters: 66
+    },
+    {
+      book_num: 6,
+      slug: 'Book_06_Yuddha_Kanda',
+      name: 'Yuddha Kāṇḍa',
+      sanskrit: 'युद्धकाण्ड',
+      english: 'The Book of the Great War',
+      desc: 'Vibhishana\'s refuge with Rama, construction of the Setu ocean bridge, massive siege of Lanka, heroic clashes of Vanara and Rakshasa warriors, the fall of Kumbhakarna and Indrajit, the climactic duel between Rama and Ravana, Sita\'s trial of fire, and the joyous return to Ayodhya for the grand coronation.',
+      total_words: '~132,000',
+      total_chapters: 128
+    },
+    {
+      book_num: 7,
+      slug: 'Book_07_Uttara_Kanda',
+      name: 'Uttara Kāṇḍa',
+      sanskrit: 'उत्तरकाण्ड',
+      english: 'The Book of the Epilogue',
+      desc: 'Ancient histories of the Rakshasas and Ravana\'s early conquests, the birth of Kusha and Lava in Sage Valmiki\'s hermitage, their singing of the Ramayana epic before King Rama at the Ashvamedha sacrifice, Sita\'s final embrace by Mother Earth, and the ultimate ascension of the Raghu dynasty to Vaikuntha.',
+      total_words: '~86,400',
+      total_chapters: 123
+    }
+  ];
+
+  return books.map((book) => ({
+    params: { book: book.slug },
+    props: { book, allBooks: books }
+  }));
+}
+
+const { book, allBooks } = Astro.props;
+
+// Known ready/illustrated chapters
+const publishedImages: Record<string, string> = {
+  '1_0': '/images/comics/ramayana_hero.jpg',
+  '1_1': '/images/comics/Book_1_Bala_Kanda_Chapter_1_hero.jpg'
+};
+
+// Dynamically discover all published comic chapters from local markdown files
+const localComics = import.meta.glob('./**/*/index.md', { eager: true });
+for (const [filePath, fileModule] of Object.entries(localComics)) {
+  const mod: any = fileModule;
+  const fm = mod?.frontmatter || {};
+  if (fm.status === 'published' && fm.book_num !== undefined && fm.section_number !== undefined) {
+    const key = `${fm.book_num}_${fm.section_number}`;
+    const parts = filePath.split('/');
+    const chapterDir = parts[parts.length - 2];
+    publishedImages[key] = publishedImages[key] || `/images/comics/${chapterDir}_hero.jpg`;
+  }
+}
+
+// Filter chapters for this book
+const rawChapters = mappingData.filter((item: any) => item.book_num === book.book_num);
+const bookChapters = book.book_num === 1 ? [
+  {
+    book_num: 1,
+    book_id: 'Book_1_Bala_Kanda',
+    kanda_iast: 'Bāla Kāṇḍa',
+    kanda_sanskrit: 'बालकाण्ड',
+    section_number: 0,
+    roman: 'Intro',
+    local_title: 'Introduction',
+    thematic_sanskrit_title: 'Prastāvanā & Samkṣepa',
+    thematic_english_title: 'Welcome to the Odyssey: An Illustrated Introduction to the Ramayana',
+    local_narrative_summary: 'Discover the textual foundation behind this graphic saga—how we preserve Manmatha Nath Dutt’s unabridged 1891 prose translation, the structural purpose of the opening Executive Summary cantos (Samkṣepa Rāmāyaṇa), and how ancient Dharma transforms into actionable modern wisdom.',
+    word_count: 520
+  },
+  ...rawChapters
+] : rawChapters;
+
+const chapterList = bookChapters.map((chap: any) => {
+  const key = `${chap.book_num}_${chap.section_number}`;
+  const isPublished = key in publishedImages;
+  const heroImage = publishedImages[key] || null;
+  const url = chap.section_number === 0 
+    ? `/comics/ramayana/introduction/`
+    : `/comics/ramayana/${book.slug}/${chap.book_id}_Chapter_${chap.section_number}/`;
+  
+  return {
+    ...chap,
+    isPublished,
+    heroImage,
+    url
+  };
+});
+
+const readyCount = chapterList.filter(c => c.isPublished).length;
+---
+
+<Layout title={`${book.name} (${book.sanskrit}) - Ramayana Comics - Thinking Buffer`}>
+  <div class="book-detail-container">
+    <!-- Breadcrumbs -->
+    <nav class="breadcrumbs">
+      <a href="/">Home</a>
+      <span class="sep">/</span>
+      <a href="/comics">Comics</a>
+      <span class="sep">/</span>
+      <a href="/comics/ramayana">Ramayana</a>
+      <span class="sep">/</span>
+      <span class="cur">{book.name}</span>
+    </nav>
+
+    <!-- Book Hero -->
+    <header class="book-hero card">
+      <div class="hero-header-row">
+        <span class="book-num-badge">Book {book.book_num} of 7</span>
+        <span class="sanskrit-title-badge">{book.sanskrit}</span>
+      </div>
+      <h1 class="book-main-title">{book.name}</h1>
+      <h2 class="book-sub-title">{book.english}</h2>
+      <p class="book-full-desc">{book.desc}</p>
+
+      <div class="book-stats-bar">
+        <div class="b-stat">
+          <strong>{chapterList.length}</strong>
+          <span>Total Chapters</span>
+        </div>
+        <div class="b-stat">
+          <strong>{book.total_words}</strong>
+          <span>Source Words</span>
+        </div>
+        <div class="b-stat highlight">
+          <strong>{readyCount} of {chapterList.length}</strong>
+          <span>Comics Illustrated</span>
+        </div>
+      </div>
+    </header>
+
+    <!-- Kanda Quick Switcher -->
+    <nav class="kanda-nav-pills">
+      <span class="kanda-nav-label">Jump to Book:</span>
+      <div class="pills-scroll">
+        {allBooks.map((b) => (
+          <a 
+            href={`/comics/ramayana/${b.slug}/`} 
+            class={`kanda-pill ${b.book_num === book.book_num ? 'active' : ''}`}
+          >
+            {b.book_num}. {b.name}
+          </a>
+        ))}
+      </div>
+    </nav>
+
+    <!-- Search & Filter Bar -->
+    <div class="book-search-bar">
+      <div class="search-input-wrap">
+        <svg class="s-icon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <circle cx="11" cy="11" r="8"></circle>
+          <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+        </svg>
+        <input 
+          type="text" 
+          id="kandaSearchInput" 
+          placeholder={`Search within ${book.name} (e.g. Sanskrit title, English keywords, Section)...`}
+        />
+      </div>
+      <div class="filter-toggle-group">
+        <button class="f-btn active" data-filter="all">All Chapters ({chapterList.length})</button>
+        <button class="f-btn" data-filter="ready">Illustrated Only ✨ ({readyCount})</button>
+      </div>
+    </div>
+
+    <!-- Chapter Grid -->
+    <main class="kanda-chapters-grid" id="kandaChaptersList">
+      {chapterList.map((chap) => (
+        <article 
+          class={`card chapter-item-card ${chap.isPublished ? 'is-ready' : 'is-upcoming'}`}
+          data-status={chap.isPublished ? 'ready' : 'upcoming'}
+          data-search={`${chap.thematic_sanskrit_title} ${chap.thematic_english_title} Section ${chap.roman} Chapter ${chap.section_number} ${chap.local_narrative_summary}`.toLowerCase()}
+        >
+          <!-- Thumbnail / Visual Header -->
+          <div class="chapter-media-container">
+            {chap.heroImage ? (
+              <img src={chap.heroImage} alt={chap.thematic_english_title} class="chapter-thumb-img" loading="lazy" />
+            ) : (
+              <div class="chapter-thumb-placeholder">
+                <div class="placeholder-graphic">
+                  <span class="placeholder-sanskrit">{chap.thematic_sanskrit_title}</span>
+                  <span class="placeholder-sec">Section {chap.roman}</span>
+                </div>
+              </div>
+            )}
+            <div class="readiness-overlay">
+              {chap.isPublished ? (
+                <span class="badge-ready">✨ Illustrated Comic Ready</span>
+              ) : (
+                <span class="badge-in-prod">⏳ Comic In Production</span>
+              )}
+            </div>
+          </div>
+
+          <!-- Content Body -->
+          <div class="chapter-body">
+            <div class="chapter-sec-row">
+              <span class="sec-label">Section {chap.roman} • Chapter {chap.section_number}</span>
+              <span class="wc-label">{chap.word_count.toLocaleString()} words</span>
+            </div>
+
+            <h3 class="sanskrit-title">{chap.thematic_sanskrit_title}</h3>
+            <h4 class="english-title">{chap.thematic_english_title}</h4>
+
+            <div class="chapter-action-row">
+              <a href={chap.url} class={`chapter-action-btn ${chap.isPublished ? 'btn-ready' : 'btn-upcoming'}`}>
+                {chap.isPublished ? 'Read Comic →' : 'Read Story & Synopsis →'}
+              </a>
+            </div>
+          </div>
+        </article>
+      ))}
+    </main>
+
+    <!-- Empty search state -->
+    <div id="noKandaResults" class="no-results card" style="display: none;">
+      <h3>No chapters matched your search</h3>
+      <p>Try searching with another keyword or reset the search field.</p>
+    </div>
+  </div>
+</Layout>
+
+<script>
+  document.addEventListener('DOMContentLoaded', () => {
+    const input = document.getElementById('kandaSearchInput') as HTMLInputElement;
+    const filterBtns = document.querySelectorAll('.f-btn');
+    const cards = document.querySelectorAll('.chapter-item-card') as NodeListOf<HTMLElement>;
+    const noResults = document.getElementById('noKandaResults');
+
+    let currentSearch = '';
+    let currentFilter = 'all';
+
+    function applyFilters() {
+      let visible = 0;
+      const query = currentSearch.trim().toLowerCase();
+
+      cards.forEach((card) => {
+        const status = card.getAttribute('data-status') || '';
+        const searchContent = card.getAttribute('data-search') || '';
+
+        const matchesStatus = currentFilter === 'all' || status === currentFilter;
+        const matchesQuery = query === '' || searchContent.includes(query);
+
+        if (matchesStatus && matchesQuery) {
+          card.style.display = 'flex';
+          visible++;
+        } else {
+          card.style.display = 'none';
+        }
+      });
+
+      if (noResults) {
+        noResults.style.display = visible === 0 ? 'block' : 'none';
+      }
+    }
+
+    if (input) {
+      input.addEventListener('input', (e) => {
+        currentSearch = (e.target as HTMLInputElement).value;
+        applyFilters();
+      });
+    }
+
+    filterBtns.forEach((btn) => {
+      btn.addEventListener('click', () => {
+        filterBtns.forEach((b) => b.classList.remove('active'));
+        btn.classList.add('active');
+        currentFilter = btn.getAttribute('data-filter') || 'all';
+        applyFilters();
+      });
+    });
+  });
+</script>
+
+<style>
+  .book-detail-container {
+    max-width: 1100px;
+    margin: 0 auto;
+  }
+
+  /* Breadcrumbs */
+  .breadcrumbs {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    font-size: 0.85rem;
+    color: var(--text-muted);
+    margin-bottom: 1.5rem;
+  }
+
+  .breadcrumbs a {
+    color: var(--text-muted);
+  }
+
+  .breadcrumbs a:hover {
+    color: var(--text-color);
+    text-decoration: underline;
+  }
+
+  .breadcrumbs .sep {
+    opacity: 0.4;
+  }
+
+  .breadcrumbs .cur {
+    color: var(--text-color);
+    font-weight: 600;
+  }
+
+  /* Book Hero */
+  .book-hero {
+    background: linear-gradient(135deg, #FFFDFB 0%, #FFF5ED 50%, #F5F7FA 100%);
+    border: 1px solid rgba(184, 93, 25, 0.15);
+    border-radius: 24px;
+    padding: 2.5rem;
+    margin-bottom: 2rem;
+  }
+
+  .hero-header-row {
+    display: flex;
+    gap: 0.75rem;
+    margin-bottom: 1rem;
+    align-items: center;
+  }
+
+  .book-num-badge {
+    font-size: 0.75rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    color: #b85d19;
+    background: #fff4e8;
+    padding: 0.25rem 0.75rem;
+    border-radius: 100px;
+    border: 1px solid rgba(184, 93, 25, 0.2);
+  }
+
+  .sanskrit-title-badge {
+    font-size: 0.85rem;
+    font-weight: 600;
+    color: #4a5568;
+    background: #ffffff;
+    padding: 0.25rem 0.75rem;
+    border-radius: 100px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.04);
+  }
+
+  .book-main-title {
+    font-size: 2.5rem;
+    font-weight: 800;
+    color: #1a1a1a;
+    letter-spacing: -0.03em;
+    margin-bottom: 0.25rem;
+  }
+
+  .book-sub-title {
+    font-size: 1.25rem;
+    font-weight: 500;
+    color: #4a5568;
+    margin-bottom: 1.25rem;
+  }
+
+  .book-full-desc {
+    font-size: 0.95rem;
+    color: #555555;
+    line-height: 1.7;
+    max-width: 850px;
+    margin-bottom: 2rem;
+  }
+
+  .book-stats-bar {
+    display: flex;
+    gap: 1.25rem;
+    flex-wrap: wrap;
+  }
+
+  .b-stat {
+    background: #ffffff;
+    padding: 0.75rem 1.25rem;
+    border-radius: 12px;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.03);
+    display: flex;
+    flex-direction: column;
+    min-width: 120px;
+  }
+
+  .b-stat strong {
+    font-size: 1.3rem;
+    color: #1a1a1a;
+  }
+
+  .b-stat span {
+    font-size: 0.72rem;
+    color: var(--text-muted);
+    text-transform: uppercase;
+    font-weight: 500;
+  }
+
+  .b-stat.highlight {
+    background: #fdf8f4;
+    border: 1px solid #f6d8be;
+  }
+
+  .b-stat.highlight strong {
+    color: #b85d19;
+  }
+
+  /* Kanda Navigation Pills */
+  .kanda-nav-pills {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    margin-bottom: 2rem;
+    overflow-x: auto;
+    padding-bottom: 0.5rem;
+  }
+
+  .kanda-nav-label {
+    font-size: 0.8rem;
+    font-weight: 600;
+    color: #718096;
+    white-space: nowrap;
+  }
+
+  .pills-scroll {
+    display: flex;
+    gap: 0.5rem;
+    flex-wrap: nowrap;
+  }
+
+  .kanda-pill {
+    background: #ffffff;
+    border: 1px solid rgba(0, 0, 0, 0.08);
+    padding: 0.4rem 0.85rem;
+    border-radius: 100px;
+    font-size: 0.8rem;
+    font-weight: 500;
+    color: #4a5568;
+    white-space: nowrap;
+    text-decoration: none;
+    transition: all 0.2s ease;
+  }
+
+  .kanda-pill:hover {
+    background: #f1f5f9;
+    color: #1a1a1a;
+  }
+
+  .kanda-pill.active {
+    background: #1a1a1a;
+    color: #ffffff;
+    border-color: #1a1a1a;
+  }
+
+  /* Search & Filter */
+  .book-search-bar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 1rem;
+    margin-bottom: 2rem;
+    flex-wrap: wrap;
+  }
+
+  .search-input-wrap {
+    position: relative;
+    flex: 1;
+    min-width: 280px;
+  }
+
+  .s-icon {
+    position: absolute;
+    left: 1rem;
+    top: 50%;
+    transform: translateY(-50%);
+    color: #888888;
+  }
+
+  .search-input-wrap input {
+    width: 100%;
+    padding: 0.75rem 1rem 0.75rem 2.6rem;
+    font-family: inherit;
+    font-size: 0.9rem;
+    border: 1px solid rgba(0, 0, 0, 0.08);
+    border-radius: 12px;
+    background: #ffffff;
+    outline: none;
+    transition: border-color 0.2s ease;
+  }
+
+  .search-input-wrap input:focus {
+    border-color: #b85d19;
+    box-shadow: 0 0 0 3px rgba(184, 93, 25, 0.12);
+  }
+
+  .filter-toggle-group {
+    display: flex;
+    gap: 0.5rem;
+  }
+
+  .f-btn {
+    background: #ffffff;
+    border: 1px solid rgba(0, 0, 0, 0.08);
+    padding: 0.5rem 1rem;
+    border-radius: 100px;
+    font-size: 0.8rem;
+    font-weight: 500;
+    color: #555555;
+    cursor: pointer;
+    transition: all 0.2s ease;
+  }
+
+  .f-btn:hover {
+    background: #f1f5f9;
+  }
+
+  .f-btn.active {
+    background: #b85d19;
+    color: #ffffff;
+    border-color: #b85d19;
+  }
+
+  /* Chapter Cards Grid */
+  .kanda-chapters-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+    gap: 1.5rem;
+    margin-bottom: 4rem;
+  }
+
+  .chapter-item-card {
+    background: #ffffff;
+    border-radius: 18px;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    padding: 0;
+    box-shadow: var(--shadow-soft);
+    border: 1px solid rgba(0, 0, 0, 0.05);
+    transition: transform 0.25s ease, box-shadow 0.25s ease, border-color 0.25s ease;
+  }
+
+  .chapter-item-card:hover {
+    transform: translateY(-4px);
+    box-shadow: var(--shadow-hover);
+    border-color: rgba(184, 93, 25, 0.3);
+  }
+
+  .chapter-item-card.is-ready {
+    border-top: 3px solid #b85d19;
+  }
+
+  /* Thumbnail Container */
+  .chapter-media-container {
+    position: relative;
+    width: 100%;
+    aspect-ratio: 16/9;
+    background: #f4ede6;
+    overflow: hidden;
+  }
+
+  .chapter-thumb-img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 0.3s ease;
+  }
+
+  .chapter-item-card:hover .chapter-thumb-img {
+    transform: scale(1.04);
+  }
+
+  .chapter-thumb-placeholder {
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(135deg, #FFF9F3 0%, #F5F7FB 100%);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 1rem;
+    text-align: center;
+  }
+
+  .placeholder-graphic {
+    display: flex;
+    flex-direction: column;
+    gap: 0.25rem;
+  }
+
+  .placeholder-sanskrit {
+    font-size: 1.1rem;
+    font-weight: 700;
+    color: #a0522d;
+  }
+
+  .placeholder-sec {
+    font-size: 0.75rem;
+    color: #718096;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+  }
+
+  .readiness-overlay {
+    position: absolute;
+    top: 0.75rem;
+    right: 0.75rem;
+  }
+
+  .badge-ready {
+    font-size: 0.7rem;
+    font-weight: 700;
+    color: #03543f;
+    background: rgba(222, 247, 236, 0.95);
+    backdrop-filter: blur(4px);
+    padding: 0.25rem 0.65rem;
+    border-radius: 100px;
+    border: 1px solid #bcf0da;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.06);
+  }
+
+  .badge-in-prod {
+    font-size: 0.68rem;
+    font-weight: 600;
+    color: #744210;
+    background: rgba(254, 243, 199, 0.95);
+    backdrop-filter: blur(4px);
+    padding: 0.25rem 0.65rem;
+    border-radius: 100px;
+    border: 1px solid #fef3c7;
+  }
+
+  /* Body */
+  .chapter-body {
+    padding: 1.25rem;
+    display: flex;
+    flex-direction: column;
+    flex: 1;
+  }
+
+  .chapter-sec-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-size: 0.75rem;
+    color: #718096;
+    margin-bottom: 0.5rem;
+  }
+
+  .sec-label {
+    font-weight: 600;
+    color: #2b6cb0;
+  }
+
+  .sanskrit-title {
+    font-size: 1.1rem;
+    font-weight: 700;
+    color: #1a1a1a;
+    margin-bottom: 0.25rem;
+    line-height: 1.3;
+  }
+
+  .english-title {
+    font-size: 0.88rem;
+    font-weight: 500;
+    color: #4a5568;
+    margin-bottom: 1.25rem;
+    line-height: 1.4;
+    flex-grow: 1;
+  }
+
+  .chapter-action-row {
+    padding-top: 0.75rem;
+    border-top: 1px solid #f1f5f9;
+  }
+
+  .chapter-action-btn {
+    display: block;
+    text-align: center;
+    padding: 0.6rem 1rem;
+    border-radius: 100px;
+    font-size: 0.85rem;
+    font-weight: 600;
+    text-decoration: none;
+    transition: all 0.2s ease;
+  }
+
+  .btn-ready {
+    background: #1a1a1a;
+    color: #ffffff;
+  }
+
+  .btn-ready:hover {
+    background: #333333;
+  }
+
+  .btn-upcoming {
+    background: #f8fafc;
+    color: #4a5568;
+    border: 1px solid #e2e8f0;
+  }
+
+  .btn-upcoming:hover {
+    background: #edf2f7;
+    color: #1a1a1a;
+  }
+
+  .no-results {
+    text-align: center;
+    padding: 3rem;
+    margin: 2rem 0;
+  }
+
+  @media (max-width: 768px) {
+    .book-main-title {
+      font-size: 2rem;
+    }
+    .kanda-chapters-grid {
+      grid-template-columns: 1fr;
+    }
+  }
+</style>

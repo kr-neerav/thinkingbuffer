@@ -22,14 +22,17 @@ function getItemImage(item: any) {
 <Layout title="Thinking Buffer - Thoughts & Deep Articles">
 
 	<div class="home-feed-sections">
-		<!-- Latest Articles -->
+		<!-- Section 1: Latest Articles -->
 		<section class="feed-section">
-			<h2 class="section-title">Latest Articles</h2>
+			<div class="section-header">
+				<h2 class="section-title">Latest Articles</h2>
+			</div>
+			
 			<div class="card-grid">
 				{blogs.length === 0 ? (
 					<p class="no-content">No articles yet.</p>
 				) : (
-					blogs.slice(0, 8).map((post: any) => (
+					blogs.map((post: any) => (
 						<a href={post.url} class="card article-card">
 							{getItemImage(post) && (
 								<div class="card-image-container">
@@ -57,11 +60,40 @@ function getItemImage(item: any) {
 				)}
 			</div>
 		</section>
+
+		<!-- Section 2: Comics & Graphic Stories (Below Articles) -->
+		<section class="feed-section">
+			<div class="section-header">
+				<h2 class="section-title">Comics & Graphic Stories</h2>
+			</div>
+
+			<div class="card-grid">
+				<!-- Ramayana Graphic Novel Series Card -->
+				<a href="/comics/ramayana" class="card article-card comic-feature-card">
+					<div class="card-image-container">
+						<img 
+							src="/images/comics/ramayana_hero.jpg" 
+							alt="The Valmiki Ramayana - Graphic Series" 
+						/>
+						<span class="series-tag-badge">Graphic Novel Series</span>
+					</div>
+					<h3 class="card-title">The Valmiki Ramayana: Graphic Odyssey</h3>
+					<p class="author-meta">
+						August 23, 2026 • 7 Books • 652 Chapters
+					</p>
+					<p class="card-excerpt">A complete 1-to-1 visual comic adaptation mapped directly from Manmatha Nath Dutt's 1891 prose translation across all 7 Kāṇḍas.</p>
+					<div class="card-tags">
+						<span class="tag">Ramayana</span>
+						<span class="tag">Comics</span>
+						<span class="tag">Mythology</span>
+					</div>
+				</a>
+			</div>
+		</section>
 	</div>
 </Layout>
 
 <style>
-
 	/* Stacked Layout Sections */
 	.home-feed-sections {
 		display: flex;
@@ -99,18 +131,35 @@ function getItemImage(item: any) {
 	}
 	
 	.card-image-container {
+		position: relative;
 		width: 100%;
 		aspect-ratio: 4/3;
 		border-radius: 12px;
 		overflow: hidden;
 		margin-bottom: 1.25rem;
-		background-color: #F3E5DC; /* matching mockup */
+		background-color: #F3E5DC;
 	}
 	
 	.card-image-container img {
 		width: 100%;
 		height: 100%;
 		object-fit: cover;
+	}
+
+	.series-tag-badge {
+		position: absolute;
+		top: 0.6rem;
+		left: 0.6rem;
+		font-size: 0.68rem;
+		font-weight: 700;
+		text-transform: uppercase;
+		letter-spacing: 0.05em;
+		color: #b85d19;
+		background: rgba(255, 244, 232, 0.95);
+		backdrop-filter: blur(4px);
+		padding: 0.2rem 0.55rem;
+		border-radius: 100px;
+		border: 1px solid rgba(184, 93, 25, 0.2);
 	}
 	
 	.card-title {

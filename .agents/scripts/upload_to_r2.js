@@ -149,6 +149,20 @@ async function uploadImages() {
   } else {
     console.log('No local images found or updated.');
   }
+
+  // Clean up empty directories if left behind
+  const dirsToCheck = ['annotated', 'annotated_hi'];
+  for (const dirName of dirsToCheck) {
+    const dirPath = path.join(markdownDir, dirName);
+    try {
+      if (fs.existsSync(dirPath) && fs.readdirSync(dirPath).length === 0) {
+        fs.rmdirSync(dirPath);
+        console.log(`Removed empty directory: ${dirPath}`);
+      }
+    } catch (e) {
+      // Ignore directory cleanup errors
+    }
+  }
 }
 
 function getContentType(filePath) {

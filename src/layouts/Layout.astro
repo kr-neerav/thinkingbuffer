@@ -19,12 +19,13 @@ const { title } = Astro.props;
 	</head>
 	<body>
 		<div class="app-container">
-			<header>
+			<header class="site-header">
 				<a href="/" class="logo">Thinking Buffer</a>
 				
 				<nav class="nav-links">
 					<a href="/" class={Astro.url.pathname === '/' ? 'active' : ''}>Home</a>
 					<a href="/blog" class={Astro.url.pathname.startsWith('/blog') ? 'active' : ''}>Articles</a>
+					<a href="/comics" class={Astro.url.pathname.startsWith('/comics') ? 'active' : ''}>Comics</a>
 					<a href="/about" class={Astro.url.pathname.startsWith('/about') ? 'active' : ''}>About</a>
 				</nav>
 				
