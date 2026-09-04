@@ -62,20 +62,15 @@ status: "published"
 ![Slide 08 - Wisdom Through Melody](https://pub-922d698a65e14ae9aeb30a4c6aacdaed.r2.dev/src/pages/comics/ramayana/Book_01_Bala_Kanda/Book_1_Bala_Kanda_Chapter_4/annotated/Book_1_Bala_Kanda_Chapter_4_Slide08_Wisdom_Through_Melody.jpg)
 ![Slide 08 - Wisdom Through Melody (Hindi)](https://pub-922d698a65e14ae9aeb30a4c6aacdaed.r2.dev/src/pages/comics/ramayana/Book_01_Bala_Kanda/Book_1_Bala_Kanda_Chapter_4/annotated_hi/Book_1_Bala_Kanda_Chapter_4_Slide08_Wisdom_Through_Melody.jpg)
 
-## Slide 09 - The Value of True Offerings
+## Slide 09 - True Royalty of Character
 
-![Slide 09 - The Value of True Offerings](https://pub-922d698a65e14ae9aeb30a4c6aacdaed.r2.dev/src/pages/comics/ramayana/Book_01_Bala_Kanda/Book_1_Bala_Kanda_Chapter_4/annotated/Book_1_Bala_Kanda_Chapter_4_Slide09_The_Value_of_True_Offerings.jpg)
-![Slide 09 - The Value of True Offerings (Hindi)](https://pub-922d698a65e14ae9aeb30a4c6aacdaed.r2.dev/src/pages/comics/ramayana/Book_01_Bala_Kanda/Book_1_Bala_Kanda_Chapter_4/annotated_hi/Book_1_Bala_Kanda_Chapter_4_Slide09_The_Value_of_True_Offerings.jpg)
+![Slide 09 - True Royalty of Character](https://pub-922d698a65e14ae9aeb30a4c6aacdaed.r2.dev/src/pages/comics/ramayana/Book_01_Bala_Kanda/Book_1_Bala_Kanda_Chapter_4/annotated/Book_1_Bala_Kanda_Chapter_4_Slide10_True_Royalty_of_Character.jpg)
+![Slide 09 - True Royalty of Character (Hindi)](https://pub-922d698a65e14ae9aeb30a4c6aacdaed.r2.dev/src/pages/comics/ramayana/Book_01_Bala_Kanda/Book_1_Bala_Kanda_Chapter_4/annotated_hi/Book_1_Bala_Kanda_Chapter_4_Slide10_True_Royalty_of_Character.jpg)
 
-## Slide 10 - True Royalty of Character
+## Slide 10 - Facing Moral Truth
 
-![Slide 10 - True Royalty of Character](https://pub-922d698a65e14ae9aeb30a4c6aacdaed.r2.dev/src/pages/comics/ramayana/Book_01_Bala_Kanda/Book_1_Bala_Kanda_Chapter_4/annotated/Book_1_Bala_Kanda_Chapter_4_Slide10_True_Royalty_of_Character.jpg)
-![Slide 10 - True Royalty of Character (Hindi)](https://pub-922d698a65e14ae9aeb30a4c6aacdaed.r2.dev/src/pages/comics/ramayana/Book_01_Bala_Kanda/Book_1_Bala_Kanda_Chapter_4/annotated_hi/Book_1_Bala_Kanda_Chapter_4_Slide10_True_Royalty_of_Character.jpg)
-
-## Slide 11 - Facing Moral Truth
-
-![Slide 11 - Facing Moral Truth](https://pub-922d698a65e14ae9aeb30a4c6aacdaed.r2.dev/src/pages/comics/ramayana/Book_01_Bala_Kanda/Book_1_Bala_Kanda_Chapter_4/annotated/Book_1_Bala_Kanda_Chapter_4_Slide11_Facing_Moral_Truth.jpg)
-![Slide 11 - Facing Moral Truth (Hindi)](https://pub-922d698a65e14ae9aeb30a4c6aacdaed.r2.dev/src/pages/comics/ramayana/Book_01_Bala_Kanda/Book_1_Bala_Kanda_Chapter_4/annotated_hi/Book_1_Bala_Kanda_Chapter_4_Slide11_Facing_Moral_Truth.jpg)
+![Slide 10 - Facing Moral Truth](https://pub-922d698a65e14ae9aeb30a4c6aacdaed.r2.dev/src/pages/comics/ramayana/Book_01_Bala_Kanda/Book_1_Bala_Kanda_Chapter_4/annotated/Book_1_Bala_Kanda_Chapter_4_Slide11_Facing_Moral_Truth.jpg)
+![Slide 10 - Facing Moral Truth (Hindi)](https://pub-922d698a65e14ae9aeb30a4c6aacdaed.r2.dev/src/pages/comics/ramayana/Book_01_Bala_Kanda/Book_1_Bala_Kanda_Chapter_4/annotated_hi/Book_1_Bala_Kanda_Chapter_4_Slide11_Facing_Moral_Truth.jpg)
 
 <div class="nav-links-chapter">
   <a href="/comics/ramayana/Book_01_Bala_Kanda/Book_1_Bala_Kanda_Chapter_3/" class="prev-link">← Previous Chapter</a>
