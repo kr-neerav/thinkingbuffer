@@ -3,6 +3,10 @@ layout: ../../../../../layouts/ComicLayout.astro
 title: "Book 1: Bāla Kāṇḍa - Chapter 11"
 date: 2026-08-23
 tags: ["Ramayana", "Comics", "Mythology", "Bāla Kāṇḍa"]
+image_url: "https://pub-922d698a65e14ae9aeb30a4c6aacdaed.r2.dev/src/pages/comics/ramayana/Book_01_Bala_Kanda/Book_1_Bala_Kanda_Chapter_11/annotated/Book_1_Bala_Kanda_Chapter_11_Slide01_Prophecy_of_the_Four_Sons.jpg"
+heroImage: "https://pub-922d698a65e14ae9aeb30a4c6aacdaed.r2.dev/src/pages/comics/ramayana/Book_01_Bala_Kanda/Book_1_Bala_Kanda_Chapter_11/annotated/Book_1_Bala_Kanda_Chapter_11_Slide01_Prophecy_of_the_Four_Sons.jpg"
+image_url_hi: "https://pub-922d698a65e14ae9aeb30a4c6aacdaed.r2.dev/src/pages/comics/ramayana/Book_01_Bala_Kanda/Book_1_Bala_Kanda_Chapter_11/annotated_hi/Book_1_Bala_Kanda_Chapter_11_Slide01_Prophecy_of_the_Four_Sons.jpg"
+has_hindi: true
 book_num: 1
 kanda_iast: "Bāla Kāṇḍa"
 kanda_sanskrit: "बालकाण्ड"
@@ -10,46 +14,65 @@ section_number: 11
 roman: "XI"
 sanskrit_title: "Śāntā-Ṛṣyaśṛṅga Vivāha"
 english_title: "Rishyashringa marries Princess Shanta; rain returns to Anga"
-word_count: 695
-status: "scaffolded"
+status: "published"
 ---
 
 <div class="nav-links-chapter">
-  <a href="/comics/ramayana/Book_01_Bala_Kanda/Book_1_Bala_Kanda_Chapter_10/" class="prev-link" >← Previous Chapter</a>
-  <a href="/comics/" class="index-link">↑ Master Index</a>
-  <a href="/comics/ramayana/Book_01_Bala_Kanda/Book_1_Bala_Kanda_Chapter_12/" class="next-link" >Next Chapter →</a>
+  <a href="/comics/ramayana/Book_01_Bala_Kanda/Book_1_Bala_Kanda_Chapter_10/" class="prev-link">← Previous Chapter</a>
+  <a href="/comics/ramayana/Book_01_Bala_Kanda/Book_1_Bala_Kanda_Chapter_12/" class="next-link">Next Chapter →</a>
 </div>
 
-<div class="chapter-placeholder-card">
-  <div class="placeholder-header">
-    <span class="badge-kanda">Bāla Kāṇḍa (बालकाण्ड)</span>
-    <span class="badge-section">Section XI • Chapter 11</span>
-    <span class="badge-status">Illustrated Comic Coming Soon</span>
-  </div>
+## Slide 01 - Prophecy of the Four Sons
 
-  <h2 class="sanskrit-heading">Śāntā-Ṛṣyaśṛṅga Vivāha</h2>
-  <h3 class="thematic-heading">Rishyashringa marries Princess Shanta; rain returns to Anga</h3>
+![Slide 01 - Prophecy of the Four Sons](https://pub-922d698a65e14ae9aeb30a4c6aacdaed.r2.dev/src/pages/comics/ramayana/Book_01_Bala_Kanda/Book_1_Bala_Kanda_Chapter_11/annotated/Book_1_Bala_Kanda_Chapter_11_Slide01_Prophecy_of_the_Four_Sons.jpg)
+![Slide 01 - Prophecy of the Four Sons (Hindi)](https://pub-922d698a65e14ae9aeb30a4c6aacdaed.r2.dev/src/pages/comics/ramayana/Book_01_Bala_Kanda/Book_1_Bala_Kanda_Chapter_11/annotated_hi/Book_1_Bala_Kanda_Chapter_11_Slide01_Prophecy_of_the_Four_Sons.jpg)
 
-  <div class="synopsis-box">
-    <h4>Original Narrative Summary (Dutt 1891 Prose Translation)</h4>
-    <p>And he said again,--"O foremost of monarchs, do thou listen to me as I relate how that intelligent Sanat Kumara, best of deities, spoke. 'In the line of Ikshwaku will be born a righteous king, named Dacaratha, fair of form, and firm in promise.</p>
-  </div>
+## Slide 02 - Journey to Kingdom of Anga
 
-  <div class="chapter-meta-details">
-    <div class="meta-item">
-      <strong>Source Text:</strong> Manmatha Nath Dutt (Valmiki Ramayana)
-    </div>
-    <div class="meta-item">
-      <strong>Word Count:</strong> 695 words
-    </div>
-    <div class="meta-item">
-      <strong>Book:</strong> Kāṇḍa 1 of 7
-    </div>
-  </div>
-</div>
+![Slide 02 - Journey to Kingdom of Anga](https://pub-922d698a65e14ae9aeb30a4c6aacdaed.r2.dev/src/pages/comics/ramayana/Book_01_Bala_Kanda/Book_1_Bala_Kanda_Chapter_11/annotated/Book_1_Bala_Kanda_Chapter_11_Slide02_Journey_to_Kingdom_of_Anga.jpg)
+![Slide 02 - Journey to Kingdom of Anga (Hindi)](https://pub-922d698a65e14ae9aeb30a4c6aacdaed.r2.dev/src/pages/comics/ramayana/Book_01_Bala_Kanda/Book_1_Bala_Kanda_Chapter_11/annotated_hi/Book_1_Bala_Kanda_Chapter_11_Slide02_Journey_to_Kingdom_of_Anga.jpg)
+
+## Slide 03 - A Joyful Royal Reunion
+
+![Slide 03 - A Joyful Royal Reunion](https://pub-922d698a65e14ae9aeb30a4c6aacdaed.r2.dev/src/pages/comics/ramayana/Book_01_Bala_Kanda/Book_1_Bala_Kanda_Chapter_11/annotated/Book_1_Bala_Kanda_Chapter_11_Slide03_A_Joyful_Royal_Reunion.jpg)
+![Slide 03 - A Joyful Royal Reunion (Hindi)](https://pub-922d698a65e14ae9aeb30a4c6aacdaed.r2.dev/src/pages/comics/ramayana/Book_01_Bala_Kanda/Book_1_Bala_Kanda_Chapter_11/annotated_hi/Book_1_Bala_Kanda_Chapter_11_Slide03_A_Joyful_Royal_Reunion.jpg)
+
+## Slide 04 - Preparing the Sacred City
+
+![Slide 04 - Preparing the Sacred City](https://pub-922d698a65e14ae9aeb30a4c6aacdaed.r2.dev/src/pages/comics/ramayana/Book_01_Bala_Kanda/Book_1_Bala_Kanda_Chapter_11/annotated/Book_1_Bala_Kanda_Chapter_11_Slide04_Preparing_the_Sacred_City.jpg)
+![Slide 04 - Preparing the Sacred City (Hindi)](https://pub-922d698a65e14ae9aeb30a4c6aacdaed.r2.dev/src/pages/comics/ramayana/Book_01_Bala_Kanda/Book_1_Bala_Kanda_Chapter_11/annotated_hi/Book_1_Bala_Kanda_Chapter_11_Slide04_Preparing_the_Sacred_City.jpg)
+
+## Slide 05 - Welcoming the Holy Seer
+
+![Slide 05 - Welcoming the Holy Seer](https://pub-922d698a65e14ae9aeb30a4c6aacdaed.r2.dev/src/pages/comics/ramayana/Book_01_Bala_Kanda/Book_1_Bala_Kanda_Chapter_11/annotated/Book_1_Bala_Kanda_Chapter_11_Slide05_Welcoming_the_Holy_Seer.jpg)
+![Slide 05 - Welcoming the Holy Seer (Hindi)](https://pub-922d698a65e14ae9aeb30a4c6aacdaed.r2.dev/src/pages/comics/ramayana/Book_01_Bala_Kanda/Book_1_Bala_Kanda_Chapter_11/annotated_hi/Book_1_Bala_Kanda_Chapter_11_Slide05_Welcoming_the_Holy_Seer.jpg)
+
+## Slide 06 - Destiny Demands Human Effort
+
+![Slide 06 - Destiny Demands Human Effort](https://pub-922d698a65e14ae9aeb30a4c6aacdaed.r2.dev/src/pages/comics/ramayana/Book_01_Bala_Kanda/Book_1_Bala_Kanda_Chapter_11/annotated/Book_1_Bala_Kanda_Chapter_11_Slide06_Destiny_Demands_Human_Effort.jpg)
+![Slide 06 - Destiny Demands Human Effort (Hindi)](https://pub-922d698a65e14ae9aeb30a4c6aacdaed.r2.dev/src/pages/comics/ramayana/Book_01_Bala_Kanda/Book_1_Bala_Kanda_Chapter_11/annotated_hi/Book_1_Bala_Kanda_Chapter_11_Slide06_Destiny_Demands_Human_Effort.jpg)
+
+## Slide 07 - The Power of True Connection
+
+![Slide 07 - The Power of True Connection](https://pub-922d698a65e14ae9aeb30a4c6aacdaed.r2.dev/src/pages/comics/ramayana/Book_01_Bala_Kanda/Book_1_Bala_Kanda_Chapter_11/annotated/Book_1_Bala_Kanda_Chapter_11_Slide07_The_Power_of_True_Connection.jpg)
+![Slide 07 - The Power of True Connection (Hindi)](https://pub-922d698a65e14ae9aeb30a4c6aacdaed.r2.dev/src/pages/comics/ramayana/Book_01_Bala_Kanda/Book_1_Bala_Kanda_Chapter_11/annotated_hi/Book_1_Bala_Kanda_Chapter_11_Slide07_The_Power_of_True_Connection.jpg)
+
+## Slide 08 - Sharing Wisdom for Public Good
+
+![Slide 08 - Sharing Wisdom for Public Good](https://pub-922d698a65e14ae9aeb30a4c6aacdaed.r2.dev/src/pages/comics/ramayana/Book_01_Bala_Kanda/Book_1_Bala_Kanda_Chapter_11/annotated/Book_1_Bala_Kanda_Chapter_11_Slide08_Sharing_Wisdom_for_Public_Good.jpg)
+![Slide 08 - Sharing Wisdom for Public Good (Hindi)](https://pub-922d698a65e14ae9aeb30a4c6aacdaed.r2.dev/src/pages/comics/ramayana/Book_01_Bala_Kanda/Book_1_Bala_Kanda_Chapter_11/annotated_hi/Book_1_Bala_Kanda_Chapter_11_Slide08_Sharing_Wisdom_for_Public_Good.jpg)
+
+## Slide 09 - The Magic of Positive Energy
+
+![Slide 09 - The Magic of Positive Energy](https://pub-922d698a65e14ae9aeb30a4c6aacdaed.r2.dev/src/pages/comics/ramayana/Book_01_Bala_Kanda/Book_1_Bala_Kanda_Chapter_11/annotated/Book_1_Bala_Kanda_Chapter_11_Slide09_The_Magic_of_Positive_Energy.jpg)
+![Slide 09 - The Magic of Positive Energy (Hindi)](https://pub-922d698a65e14ae9aeb30a4c6aacdaed.r2.dev/src/pages/comics/ramayana/Book_01_Bala_Kanda/Book_1_Bala_Kanda_Chapter_11/annotated_hi/Book_1_Bala_Kanda_Chapter_11_Slide09_The_Magic_of_Positive_Energy.jpg)
+
+## Slide 10 - Inner Peace Before Success
+
+![Slide 10 - Inner Peace Before Success](https://pub-922d698a65e14ae9aeb30a4c6aacdaed.r2.dev/src/pages/comics/ramayana/Book_01_Bala_Kanda/Book_1_Bala_Kanda_Chapter_11/annotated/Book_1_Bala_Kanda_Chapter_11_Slide10_Inner_Peace_Before_Success.jpg)
+![Slide 10 - Inner Peace Before Success (Hindi)](https://pub-922d698a65e14ae9aeb30a4c6aacdaed.r2.dev/src/pages/comics/ramayana/Book_01_Bala_Kanda/Book_1_Bala_Kanda_Chapter_11/annotated_hi/Book_1_Bala_Kanda_Chapter_11_Slide10_Inner_Peace_Before_Success.jpg)
 
 <div class="nav-links-chapter">
-  <a href="/comics/ramayana/Book_01_Bala_Kanda/Book_1_Bala_Kanda_Chapter_10/" class="prev-link" >← Previous Chapter</a>
-  <a href="/comics/" class="index-link">↑ Master Index</a>
-  <a href="/comics/ramayana/Book_01_Bala_Kanda/Book_1_Bala_Kanda_Chapter_12/" class="next-link" >Next Chapter →</a>
+  <a href="/comics/ramayana/Book_01_Bala_Kanda/Book_1_Bala_Kanda_Chapter_10/" class="prev-link">← Previous Chapter</a>
+  <a href="/comics/ramayana/Book_01_Bala_Kanda/Book_1_Bala_Kanda_Chapter_12/" class="next-link">Next Chapter →</a>
 </div>
