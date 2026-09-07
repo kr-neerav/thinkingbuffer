@@ -1,3 +1,25 @@
+# Scratchpad Notes
+
+
+
+## Shelved Draft: The Missing Dimension: Why Data Pipeline CI/CD Needs More Than Just Code
+**Date & Time:** 2026-09-07T12:41:17-07:00  
+**Context:** Shelved from `src/pages/blog/2026/08/data-pipelines-change-management.md` (unreleased/not yet ready). Kept here for later revision.
+
+### Original Metadata
+- **File:** `src/pages/blog/2026/08/data-pipelines-change-management.md`
+- **Layout:** `../../../../layouts/Layout.astro`
+- **Title:** The Missing Dimension: Why Data Pipeline CI/CD Needs More Than Just Code
+- **Date:** 2026-08-23
+- **Description:** Standard CI/CD ensures code builds and deploys cleanly, but data pipelines process a dynamic second dimension: data. Here is why safe releases require patterns like Write-Audit-Publish.
+- **Tags:** `["Data Engineering", "DataOps", "Data Quality", "Architecture"]`
+- **Hero Image:** `https://pub-d8556b57257648feb0e7d903bdc8186f.r2.dev/src/pages/blog/2026/08/data_pipeline_reservoir.jpg`
+
+---
+
+### Post Content
+
+```markdown
 ---
 layout: ../../../../layouts/Layout.astro
 title: "The Missing Dimension: Why Data Pipeline CI/CD Needs More Than Just Code"
@@ -138,3 +160,5 @@ In standard software, integration tests run during build time. But in data pipel
 Streamlining CI/CD for data pipelines is a great first step, but code deployment is only half the battle. True change management in data engineering requires acknowledging the dynamic, living nature of data.
 
 By pairing traditional code CI/CD with data-aware patterns like **Write-Audit-Publish** and **continuous in-run assertions**, we move from simply releasing code quickly to releasing trustworthy data safely.
+```
+
