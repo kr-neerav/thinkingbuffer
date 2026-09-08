@@ -3,6 +3,10 @@ layout: ../../../../../layouts/ComicLayout.astro
 title: "Book 1: Bāla Kāṇḍa - Chapter 15"
 date: 2026-08-23
 tags: ["Ramayana", "Comics", "Mythology", "Bāla Kāṇḍa"]
+image_url: "https://pub-922d698a65e14ae9aeb30a4c6aacdaed.r2.dev/src/pages/comics/ramayana/Book_01_Bala_Kanda/Book_1_Bala_Kanda_Chapter_15/annotated/Book_1_Bala_Kanda_Chapter_15_Slide01_The_Sacred_Sacrificial_Ritual.jpg"
+heroImage: "https://pub-922d698a65e14ae9aeb30a4c6aacdaed.r2.dev/src/pages/comics/ramayana/Book_01_Bala_Kanda/Book_1_Bala_Kanda_Chapter_15/annotated/Book_1_Bala_Kanda_Chapter_15_Slide01_The_Sacred_Sacrificial_Ritual.jpg"
+image_url_hi: "https://pub-922d698a65e14ae9aeb30a4c6aacdaed.r2.dev/src/pages/comics/ramayana/Book_01_Bala_Kanda/Book_1_Bala_Kanda_Chapter_15/annotated_hi/Book_1_Bala_Kanda_Chapter_15_Slide01_The_Sacred_Sacrificial_Ritual.jpg"
+has_hindi: true
 book_num: 1
 kanda_iast: "Bāla Kāṇḍa"
 kanda_sanskrit: "बालकाण्ड"
@@ -10,46 +14,65 @@ section_number: 15
 roman: "XV"
 sanskrit_title: "Devatā Prārthanā & Viṣṇu Avatāra"
 english_title: "Devas pray to Lord Brahma and Vishnu to end the tyranny of demon king Ravana"
-word_count: 881
-status: "scaffolded"
+status: "published"
 ---
 
 <div class="nav-links-chapter">
-  <a href="/comics/ramayana/Book_01_Bala_Kanda/Book_1_Bala_Kanda_Chapter_14/" class="prev-link" >← Previous Chapter</a>
-  <a href="/comics/" class="index-link">↑ Master Index</a>
-  <a href="/comics/ramayana/Book_01_Bala_Kanda/Book_1_Bala_Kanda_Chapter_16/" class="next-link" >Next Chapter →</a>
+  <a href="/comics/ramayana/Book_01_Bala_Kanda/Book_1_Bala_Kanda_Chapter_14/" class="prev-link">← Previous Chapter</a>
+  <a href="/comics/ramayana/Book_01_Bala_Kanda/Book_1_Bala_Kanda_Chapter_16/" class="next-link">Next Chapter →</a>
 </div>
 
-<div class="chapter-placeholder-card">
-  <div class="placeholder-header">
-    <span class="badge-kanda">Bāla Kāṇḍa (बालकाण्ड)</span>
-    <span class="badge-section">Section XV • Chapter 15</span>
-    <span class="badge-status">Illustrated Comic Coming Soon</span>
-  </div>
+## Slide 01 - The Sacred Sacrificial Ritual
 
-  <h2 class="sanskrit-heading">Devatā Prārthanā & Viṣṇu Avatāra</h2>
-  <h3 class="thematic-heading">Devas pray to Lord Brahma and Vishnu to end the tyranny of demon king Ravana</h3>
+![Slide 01 - The Sacred Sacrificial Ritual](https://pub-922d698a65e14ae9aeb30a4c6aacdaed.r2.dev/src/pages/comics/ramayana/Book_01_Bala_Kanda/Book_1_Bala_Kanda_Chapter_15/annotated/Book_1_Bala_Kanda_Chapter_15_Slide01_The_Sacred_Sacrificial_Ritual.jpg)
+![Slide 01 - The Sacred Sacrificial Ritual (Hindi)](https://pub-922d698a65e14ae9aeb30a4c6aacdaed.r2.dev/src/pages/comics/ramayana/Book_01_Bala_Kanda/Book_1_Bala_Kanda_Chapter_15/annotated_hi/Book_1_Bala_Kanda_Chapter_15_Slide01_The_Sacred_Sacrificial_Ritual.jpg)
 
-  <div class="synopsis-box">
-    <h4>Original Narrative Summary (Dutt 1891 Prose Translation)</h4>
-    <p>Then that one of capacious intelligence, versed in the Vedas, having pondered for a time, and regained his senses, returned unto the king this excellent answer,--"On thy behalf, and with the view of obtaining sons for thee, I will by help of mantras laid down in the Atharva Ve...</p>
-  </div>
+## Slide 02 - Distress in the Celestial Realm
 
-  <div class="chapter-meta-details">
-    <div class="meta-item">
-      <strong>Source Text:</strong> Manmatha Nath Dutt (Valmiki Ramayana)
-    </div>
-    <div class="meta-item">
-      <strong>Word Count:</strong> 881 words
-    </div>
-    <div class="meta-item">
-      <strong>Book:</strong> Kāṇḍa 1 of 7
-    </div>
-  </div>
-</div>
+![Slide 02 - Distress in the Celestial Realm](https://pub-922d698a65e14ae9aeb30a4c6aacdaed.r2.dev/src/pages/comics/ramayana/Book_01_Bala_Kanda/Book_1_Bala_Kanda_Chapter_15/annotated/Book_1_Bala_Kanda_Chapter_15_Slide02_Distress_in_the_Celestial_Realm.jpg)
+![Slide 02 - Distress in the Celestial Realm (Hindi)](https://pub-922d698a65e14ae9aeb30a4c6aacdaed.r2.dev/src/pages/comics/ramayana/Book_01_Bala_Kanda/Book_1_Bala_Kanda_Chapter_15/annotated_hi/Book_1_Bala_Kanda_Chapter_15_Slide02_Distress_in_the_Celestial_Realm.jpg)
+
+## Slide 03 - The Vulnerability of a Tyrant
+
+![Slide 03 - The Vulnerability of a Tyrant](https://pub-922d698a65e14ae9aeb30a4c6aacdaed.r2.dev/src/pages/comics/ramayana/Book_01_Bala_Kanda/Book_1_Bala_Kanda_Chapter_15/annotated/Book_1_Bala_Kanda_Chapter_15_Slide03_The_Vulnerability_of_a_Tyrant.jpg)
+![Slide 03 - The Vulnerability of a Tyrant (Hindi)](https://pub-922d698a65e14ae9aeb30a4c6aacdaed.r2.dev/src/pages/comics/ramayana/Book_01_Bala_Kanda/Book_1_Bala_Kanda_Chapter_15/annotated_hi/Book_1_Bala_Kanda_Chapter_15_Slide03_The_Vulnerability_of_a_Tyrant.jpg)
+
+## Slide 04 - Arrival of the Universal Preserver
+
+![Slide 04 - Arrival of the Universal Preserver](https://pub-922d698a65e14ae9aeb30a4c6aacdaed.r2.dev/src/pages/comics/ramayana/Book_01_Bala_Kanda/Book_1_Bala_Kanda_Chapter_15/annotated/Book_1_Bala_Kanda_Chapter_15_Slide04_Arrival_of_the_Universal_Preserver.jpg)
+![Slide 04 - Arrival of the Universal Preserver (Hindi)](https://pub-922d698a65e14ae9aeb30a4c6aacdaed.r2.dev/src/pages/comics/ramayana/Book_01_Bala_Kanda/Book_1_Bala_Kanda_Chapter_15/annotated_hi/Book_1_Bala_Kanda_Chapter_15_Slide04_Arrival_of_the_Universal_Preserver.jpg)
+
+## Slide 05 - A Vow for Four Sons
+
+![Slide 05 - A Vow for Four Sons](https://pub-922d698a65e14ae9aeb30a4c6aacdaed.r2.dev/src/pages/comics/ramayana/Book_01_Bala_Kanda/Book_1_Bala_Kanda_Chapter_15/annotated/Book_1_Bala_Kanda_Chapter_15_Slide05_A_Vow_for_Four_Sons.jpg)
+![Slide 05 - A Vow for Four Sons (Hindi)](https://pub-922d698a65e14ae9aeb30a4c6aacdaed.r2.dev/src/pages/comics/ramayana/Book_01_Bala_Kanda/Book_1_Bala_Kanda_Chapter_15/annotated_hi/Book_1_Bala_Kanda_Chapter_15_Slide05_A_Vow_for_Four_Sons.jpg)
+
+## Slide 06 - Arrogance and Its Blind Spot
+
+![Slide 06 - Arrogance and Its Blind Spot](https://pub-922d698a65e14ae9aeb30a4c6aacdaed.r2.dev/src/pages/comics/ramayana/Book_01_Bala_Kanda/Book_1_Bala_Kanda_Chapter_15/annotated/Book_1_Bala_Kanda_Chapter_15_Slide06_Arrogance_and_Its_Blind_Spot.jpg)
+![Slide 06 - Arrogance and Its Blind Spot (Hindi)](https://pub-922d698a65e14ae9aeb30a4c6aacdaed.r2.dev/src/pages/comics/ramayana/Book_01_Bala_Kanda/Book_1_Bala_Kanda_Chapter_15/annotated_hi/Book_1_Bala_Kanda_Chapter_15_Slide06_Arrogance_and_Its_Blind_Spot.jpg)
+
+## Slide 07 - Divinity Within Cosmic Boundaries
+
+![Slide 07 - Divinity Within Cosmic Boundaries](https://pub-922d698a65e14ae9aeb30a4c6aacdaed.r2.dev/src/pages/comics/ramayana/Book_01_Bala_Kanda/Book_1_Bala_Kanda_Chapter_15/annotated/Book_1_Bala_Kanda_Chapter_15_Slide07_Divinity_Within_Cosmic_Boundaries.jpg)
+![Slide 07 - Divinity Within Cosmic Boundaries (Hindi)](https://pub-922d698a65e14ae9aeb30a4c6aacdaed.r2.dev/src/pages/comics/ramayana/Book_01_Bala_Kanda/Book_1_Bala_Kanda_Chapter_15/annotated_hi/Book_1_Bala_Kanda_Chapter_15_Slide07_Divinity_Within_Cosmic_Boundaries.jpg)
+
+## Slide 08 - An Ecosystem of Complementary Virtues
+
+![Slide 08 - An Ecosystem of Complementary Virtues](https://pub-922d698a65e14ae9aeb30a4c6aacdaed.r2.dev/src/pages/comics/ramayana/Book_01_Bala_Kanda/Book_1_Bala_Kanda_Chapter_15/annotated/Book_1_Bala_Kanda_Chapter_15_Slide08_An_Ecosystem_of_Complementary_Virtues.jpg)
+![Slide 08 - An Ecosystem of Complementary Virtues (Hindi)](https://pub-922d698a65e14ae9aeb30a4c6aacdaed.r2.dev/src/pages/comics/ramayana/Book_01_Bala_Kanda/Book_1_Bala_Kanda_Chapter_15/annotated_hi/Book_1_Bala_Kanda_Chapter_15_Slide08_An_Ecosystem_of_Complementary_Virtues.jpg)
+
+## Slide 09 - Alignment of Sorrow and Purpose
+
+![Slide 09 - Alignment of Sorrow and Purpose](https://pub-922d698a65e14ae9aeb30a4c6aacdaed.r2.dev/src/pages/comics/ramayana/Book_01_Bala_Kanda/Book_1_Bala_Kanda_Chapter_15/annotated/Book_1_Bala_Kanda_Chapter_15_Slide09_Alignment_of_Sorrow_and_Purpose.jpg)
+![Slide 09 - Alignment of Sorrow and Purpose (Hindi)](https://pub-922d698a65e14ae9aeb30a4c6aacdaed.r2.dev/src/pages/comics/ramayana/Book_01_Bala_Kanda/Book_1_Bala_Kanda_Chapter_15/annotated_hi/Book_1_Bala_Kanda_Chapter_15_Slide09_Alignment_of_Sorrow_and_Purpose.jpg)
+
+## Slide 10 - Mastery Required for Divine Manifestation
+
+![Slide 10 - Mastery Required for Divine Manifestation](https://pub-922d698a65e14ae9aeb30a4c6aacdaed.r2.dev/src/pages/comics/ramayana/Book_01_Bala_Kanda/Book_1_Bala_Kanda_Chapter_15/annotated/Book_1_Bala_Kanda_Chapter_15_Slide10_Mastery_Required_for_Divine_Manifestation.jpg)
+![Slide 10 - Mastery Required for Divine Manifestation (Hindi)](https://pub-922d698a65e14ae9aeb30a4c6aacdaed.r2.dev/src/pages/comics/ramayana/Book_01_Bala_Kanda/Book_1_Bala_Kanda_Chapter_15/annotated_hi/Book_1_Bala_Kanda_Chapter_15_Slide10_Mastery_Required_for_Divine_Manifestation.jpg)
 
 <div class="nav-links-chapter">
-  <a href="/comics/ramayana/Book_01_Bala_Kanda/Book_1_Bala_Kanda_Chapter_14/" class="prev-link" >← Previous Chapter</a>
-  <a href="/comics/" class="index-link">↑ Master Index</a>
-  <a href="/comics/ramayana/Book_01_Bala_Kanda/Book_1_Bala_Kanda_Chapter_16/" class="next-link" >Next Chapter →</a>
+  <a href="/comics/ramayana/Book_01_Bala_Kanda/Book_1_Bala_Kanda_Chapter_14/" class="prev-link">← Previous Chapter</a>
+  <a href="/comics/ramayana/Book_01_Bala_Kanda/Book_1_Bala_Kanda_Chapter_16/" class="next-link">Next Chapter →</a>
 </div>
