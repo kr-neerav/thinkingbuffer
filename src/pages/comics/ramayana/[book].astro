@@ -84,10 +84,8 @@ export function getStaticPaths() {
 
 const { book, allBooks } = Astro.props;
 
-// Known ready/illustrated chapters
-const publishedImages: Record<string, string> = {
-  '1_1': '/images/comics/Book_1_Bala_Kanda_Chapter_1_hero.jpg'
-};
+// Known ready/illustrated chapters (dynamically populated below)
+const publishedImages: Record<string, string> = {};
 
 // Dynamically discover all published comic chapters from local markdown files
 const localComics = import.meta.glob('./**/*/index.md', { eager: true });

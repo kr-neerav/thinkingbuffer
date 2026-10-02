@@ -1,5 +1,8 @@
 ---
+import fs from 'node:fs';
 import Layout from '../../layouts/Layout.astro';
+
+const hasIntroHero = fs.existsSync('public/images/comics/ramayana_hero.jpg');
 
 const booksSummary = [
   { 
@@ -9,10 +12,9 @@ const booksSummary = [
     sanskrit: 'बालकाण्ड', 
     english: 'The Book of Youth & Childhood',
     count: 75, 
-    readyCount: 16,
+    readyCount: 0,
     words: '~53,400', 
-    desc: 'Origins of the epic, divine birth of Rama and his brothers, journey with Sage Vishvamitra, slaying of Tataka & Subahu, redemption of Ahalya, breaking of Lord Shiva\'s bow in Mithila, and the royal wedding.',
-    heroImg: '/images/comics/Book_1_Bala_Kanda_Chapter_1_hero.jpg'
+    desc: 'Origins of the epic, divine birth of Rama and his brothers, journey with Sage Vishvamitra, slaying of Tataka & Subahu, redemption of Ahalya, breaking of Lord Shiva\'s bow in Mithila, and the royal wedding.'
   },
   { 
     num: 2, 
@@ -127,14 +129,16 @@ const totalReady = booksSummary.reduce((acc, b) => acc + b.readyCount, 0);
     <section class="intro-chapter-section">
       <h2 class="section-heading">Begin Here: The Odyssey Introduction</h2>
       <a href="/comics/ramayana/introduction/" class="card intro-card">
-        <div class="intro-img-container">
-          <img 
-            src="/images/comics/ramayana_hero.jpg" 
-            alt="Ramayana Odyssey Introduction" 
-            loading="lazy"
-          />
-          <span class="badge-ready-overlay">✨ Illustrated Comic Ready • 7 Panels</span>
-        </div>
+        {hasIntroHero && (
+          <div class="intro-img-container">
+            <img 
+              src="/images/comics/ramayana_hero.jpg" 
+              alt="Ramayana Odyssey Introduction" 
+              loading="lazy"
+            />
+            <span class="badge-ready-overlay">⏳ Illustrated Comic In Production</span>
+          </div>
+        )}
         <div class="intro-content">
           <div class="intro-meta-tags">
             <span class="badge-kanda">Prologue</span>
@@ -145,7 +149,7 @@ const totalReady = booksSummary.reduce((acc, b) => acc + b.readyCount, 0);
             Discover the textual foundation behind this graphic saga—how we preserve Manmatha Nath Dutt’s unabridged 1891 prose translation, the structural purpose of the opening Executive Summary cantos (Samkṣepa Rāmāyaṇa), and how ancient Dharma transforms into actionable modern wisdom.
           </p>
           <div class="intro-action-row">
-            <span class="intro-btn">Read Introduction Comic →</span>
+            <span class="intro-btn">Read Introduction Overview →</span>
           </div>
         </div>
       </a>

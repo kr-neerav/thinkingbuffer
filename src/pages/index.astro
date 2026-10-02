@@ -1,5 +1,8 @@
 ---
+import fs from 'node:fs';
 import Layout from '../layouts/Layout.astro';
+
+const hasSeriesHero = fs.existsSync('public/images/comics/ramayana_hero.jpg');
 
 // Fetch all blog posts
 const blogs = Object.values(import.meta.glob('./blog/**/*.md', { eager: true }))
@@ -70,12 +73,14 @@ function getItemImage(item: any) {
 			<div class="card-grid">
 				<!-- Ramayana Graphic Novel Series Card -->
 				<a href="/comics/ramayana" class="card article-card comic-feature-card">
-					<div class="card-image-container">
-						<img 
-							src="/images/comics/ramayana_hero.jpg" 
-							alt="The Valmiki Ramayana - Graphic Series" 
-						/>
-					</div>
+					{hasSeriesHero && (
+						<div class="card-image-container">
+							<img 
+								src="/images/comics/ramayana_hero.jpg" 
+								alt="The Valmiki Ramayana - Graphic Series" 
+							/>
+						</div>
+					)}
 					<h3 class="card-title">The Valmiki Ramayana: Graphic Odyssey</h3>
 					<p class="author-meta">
 						August 23, 2026 • 7 Books • 652 Chapters

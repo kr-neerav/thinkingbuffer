@@ -6,10 +6,14 @@
     "node": ">=22.12.0"
   },
   "scripts": {
-    "dev": "astro dev",
-    "build": "astro build",
-    "preview": "astro preview",
-    "astro": "astro",
+    "dev": "ASTRO_TELEMETRY_DISABLED=1 astro dev",
+    "start": "ASTRO_TELEMETRY_DISABLED=1 astro dev --background --port 4321",
+    "stop": "ASTRO_TELEMETRY_DISABLED=1 astro dev stop",
+    "status": "ASTRO_TELEMETRY_DISABLED=1 astro dev status",
+    "logs": "ASTRO_TELEMETRY_DISABLED=1 astro dev logs",
+    "build": "ASTRO_TELEMETRY_DISABLED=1 astro build",
+    "preview": "ASTRO_TELEMETRY_DISABLED=1 astro preview",
+    "astro": "ASTRO_TELEMETRY_DISABLED=1 astro",
     "clean": "rm -rf .astro dist node_modules/.astro node_modules/.vite"
   },
   "dependencies": {
