@@ -2,14 +2,15 @@
 """
 generate_local_comic.py
 =======================
-Transfers annotated comic images and storyboard from museimages / comics storage
-into the thinkingbuffer Astro project, creating a fully functional local version
-of the comic chapter blog post.
+Transfers comic slide images, storyboards, narration, and discussion from
+MythologyMuse outputs (or legacy comics storage) into the thinkingbuffer Astro
+project, generating a dual-language, two-tab (Comics + Narration & Discussion)
+chapter post.
 
 Usage:
-  python3 .agents/scripts/generate_local_comic.py --source-dir <source_dir> --dest-dir <dest_dir> [--move]
-  python3 .agents/scripts/generate_local_comic.py --intro [--move]
   python3 .agents/scripts/generate_local_comic.py --book 1 --chapter 1 [--move]
+  python3 .agents/scripts/generate_local_comic.py intro [--move]
+  python3 .agents/scripts/generate_local_comic.py 1 1 [--move]
 """
 
 import os
@@ -21,8 +22,9 @@ import argparse
 from pathlib import Path
 from datetime import datetime
 
-DEFAULT_SOURCE_BASE = Path(os.path.expanduser("~/Documents/comics/ramayana_dutt"))
-FALLBACK_SOURCE_BASE = Path("/Users/neerav/Documents/Projects/mythology-texts/mythology podcast/ramayana_dutt")
+DEFAULT_SOURCE_BASE = Path("/Users/neerav/Documents/Projects/MythologyMuse/mythologies/ramayana_dutt/outputs")
+FALLBACK_SOURCE_BASE = Path(os.path.expanduser("~/Documents/comics/ramayana_dutt"))
+TERTIARY_SOURCE_BASE = Path("/Users/neerav/Documents/Projects/mythology-texts/mythology podcast/ramayana_dutt")
 DEST_BASE = Path("src/pages/comics/ramayana")
 MAPPING_FILE = Path("src/data/ramayana_dutt_1to1_mapping.json")
 
@@ -48,29 +50,34 @@ def load_mapping_data():
 
 
 def find_source_chapter(source_base: Path, book_num: int, chap_num: int) -> Path | None:
-    """Finds the source chapter directory in comics storage."""
+    """Finds the source chapter directory in outputs or comics storage."""
     if not source_base.exists():
         return None
 
-    # Search for matching chapter folder
+    # 1. Match exact output folder patterns like Book_1_Bala_Kanda_Chapter_1
     pattern = f"Book_{book_num}_*Chapter_{chap_num}"
-    matches = list(source_base.glob(f"**/{pattern}"))
+    matches = [d for d in source_base.glob(pattern) if d.is_dir() and "backup" not in d.name.lower()]
     if matches:
         return matches[0]
 
-    # Also search by book dir
+    # Recursive glob
+    rec_matches = [d for d in source_base.glob(f"**/{pattern}") if d.is_dir() and "backup" not in d.name.lower()]
+    if rec_matches:
+        return rec_matches[0]
+
+    # 2. Check kanda folder if nested
     kanda_folder = KANDA_MAPPING.get(book_num, (f"Book_{book_num:02d}", "", ""))[0]
     book_dir = source_base / kanda_folder
     if book_dir.exists():
         for ch in book_dir.iterdir():
-            if ch.is_dir() and f"Chapter_{chap_num}" in ch.name:
+            if ch.is_dir() and f"Chapter_{chap_num}" in ch.name and "backup" not in ch.name.lower():
                 return ch
 
     return None
 
 
 def find_dest_chapter(dest_base: Path, book_num: int, chap_num: int) -> Path | None:
-    """Finds or constructs the destination chapter directory in Astro."""
+    """Finds or constructs destination chapter directory in Astro."""
     kanda_folder = KANDA_MAPPING.get(book_num, (f"Book_{book_num:02d}", "", ""))[0]
     book_dir = dest_base / kanda_folder
 
@@ -79,7 +86,7 @@ def find_dest_chapter(dest_base: Path, book_num: int, chap_num: int) -> Path | N
             if ch.is_dir() and re.search(rf"Chapter_0?{chap_num}$", ch.name, re.IGNORECASE):
                 return ch
 
-    # Fallback to standard name
+    # Fallback to standard directory name
     return book_dir / f"Book_{book_num}_{kanda_folder.split('_', 2)[-1]}_Chapter_{chap_num}"
 
 
@@ -101,104 +108,130 @@ def parse_frontmatter(content: str) -> tuple[dict, str]:
     return {}, content
 
 
+def clean_text_tags(text: str) -> str:
+    """Strips trailing emotion tags and replaces em/en dashes with hyphens."""
+    t = text.replace("—", " - ").replace("–", "-")
+    t = re.sub(r"\s*-\s*", " - ", t)
+    return re.sub(r"<[^>]+>", "", t).strip()
+
+
+def parse_discussion_item(en_raw: str, hi_raw: str) -> dict:
+    """Parses Question, Reflection, and Takeaway from raw text."""
+    en_clean = clean_text_tags(en_raw)
+    hi_clean = clean_text_tags(hi_raw)
+
+    q_en_m = re.search(r"Question:\s*(.*?)(?=Reflection:|$)", en_clean, re.DOTALL | re.IGNORECASE)
+    r_en_m = re.search(r"Reflection:\s*(.*?)(?=Takeaway:|$)", en_clean, re.DOTALL | re.IGNORECASE)
+    t_en_m = re.search(r"Takeaway:\s*(.*?)$", en_clean, re.DOTALL | re.IGNORECASE)
+
+    q_hi_m = re.search(r"प्रश्न:\s*(.*?)(?=विवेचना:|$)", hi_clean, re.DOTALL)
+    r_hi_m = re.search(r"विवेचना:\s*(.*?)(?=जीवन-सूत्र:|$)", hi_clean, re.DOTALL)
+    t_hi_m = re.search(r"जीवन-सूत्र:\s*(.*?)$", hi_clean, re.DOTALL)
+
+    return {
+        "q_en": q_en_m.group(1).strip() if q_en_m else en_clean,
+        "r_en": r_en_m.group(1).strip() if r_en_m else "",
+        "t_en": t_en_m.group(1).strip() if t_en_m else "",
+        "q_hi": q_hi_m.group(1).strip() if q_hi_m else hi_clean,
+        "r_hi": r_hi_m.group(1).strip() if r_hi_m else "",
+        "t_hi": t_hi_m.group(1).strip() if t_hi_m else "",
+    }
+
+
 def process_chapter(
     source_dir: Path,
     dest_dir: Path,
     is_intro: bool = False,
     book_num: int = 1,
     chap_num: int = 1,
-    move_files: bool = False
+    move_files: bool = False,
 ):
-    print(f"\n==========================================")
+    print("\n==========================================")
     print(f"Source Chapter : {source_dir}")
     print(f"Dest Chapter   : {dest_dir}")
     print(f"Mode           : {'MOVE' if move_files else 'COPY'}")
     print(f"Is Intro       : {is_intro}")
-    print(f"==========================================\n")
+    print("==========================================\n")
 
     if not source_dir.exists():
         print(f"Error: Source directory {source_dir} does not exist.")
         sys.exit(1)
 
-    # 1. Locate source annotated images (English and optional Hindi)
-    src_annotated = source_dir / "annotated"
-    if not src_annotated.exists():
-        # Check if source_dir itself is annotated or has images
-        src_annotated = source_dir
+    # 1. Locate Slide Images in source directory
+    # Checks studio_images/ first, falls back to source_dir itself
+    img_dir = source_dir / "studio_images"
+    if not img_dir.exists():
+        img_dir = source_dir
 
     image_extensions = (".jpg", ".jpeg", ".png", ".webp")
-    source_images = [
-        p for p in src_annotated.iterdir()
+    all_imgs = [
+        p for p in img_dir.iterdir()
         if p.is_file() and p.suffix.lower() in image_extensions
-        and not p.name.startswith(".")
+        and p.name.startswith("slide_")
     ]
 
-    # Filter out discarded candidate files if any
-    source_images = [p for p in source_images if "candidate" not in p.stem.lower()]
-    named_en = [p for p in source_images if re.search(r"(?:Introduction|Book_\d+)_Slide\d+", p.name, re.I)]
-    if named_en:
-        source_images = named_en
-    source_images.sort(key=lambda p: p.name)
+    # Map each slide number to its best image (favoring _final over candidates)
+    slide_map: dict[int, Path] = {}
+    for p in all_imgs:
+        m = re.search(r"slide_0*(\d+)", p.stem, re.I)
+        if m:
+            s_num = int(m.group(1))
+            is_final = "final" in p.stem.lower()
+            if s_num not in slide_map or is_final:
+                slide_map[s_num] = p
+
+    # Sort slides by numeric slide index
+    sorted_slides = sorted(slide_map.items())
+    source_images = [p for _, p in sorted_slides]
 
     if not source_images:
-        print(f"Error: No annotated images found in {src_annotated}")
+        # Fallback to any images that aren't sheets
+        fallback_imgs = [
+            p for p in img_dir.iterdir()
+            if p.is_file() and p.suffix.lower() in image_extensions
+            and not p.name.startswith(".") and not p.name.startswith("sheet_")
+        ]
+        fallback_imgs.sort(key=lambda p: p.name)
+        source_images = fallback_imgs
+
+    if not source_images:
+        print(f"Error: No slide images found in {img_dir}")
         sys.exit(1)
 
-    print(f"Found {len(source_images)} English annotated image(s):")
+    print(f"Found {len(source_images)} slide image(s):")
     for img in source_images:
         print(f"  • {img.name}")
 
-    # Check for Hindi annotated images
-    src_annotated_hi = source_dir / "annotated_hi"
-    source_images_hi = []
-    if src_annotated_hi.exists() and src_annotated_hi.is_dir():
-        source_images_hi = [
-            p for p in src_annotated_hi.iterdir()
-            if p.is_file() and p.suffix.lower() in image_extensions
-            and not p.name.startswith(".")
-        ]
-        source_images_hi = [p for p in source_images_hi if "candidate" not in p.stem.lower()]
-        named_hi = [p for p in source_images_hi if re.search(r"(?:Introduction|Book_\d+)_Slide\d+", p.name, re.I)]
-        if named_hi:
-            source_images_hi = named_hi
-        source_images_hi.sort(key=lambda p: p.name)
+    # Compute web URL path and public/ mirror directory for Astro static serving
+    try:
+        rel_from_src_pages = dest_dir.relative_to(Path("src/pages"))
+    except ValueError:
+        repo_root = Path.cwd()
+        rel_from_src_pages = dest_dir.resolve().relative_to((repo_root / "src/pages").resolve())
 
-    if source_images_hi:
-        print(f"\nFound {len(source_images_hi)} Hindi annotated image(s):")
-        for img in source_images_hi:
-            print(f"  • (HI) {img.name}")
+    web_slides_dir = f"/{rel_from_src_pages.as_posix()}/slides"
+    public_slides_dir = Path("public") / rel_from_src_pages / "slides"
+    public_slides_dir.mkdir(parents=True, exist_ok=True)
 
-    # 2. Transfer English images to destination annotated/
-    dest_annotated = dest_dir / "annotated"
-    dest_annotated.mkdir(parents=True, exist_ok=True)
+    # 2. Transfer Images to destination slides/ and public/
+    dest_slides_dir = dest_dir / "slides"
+    dest_slides_dir.mkdir(parents=True, exist_ok=True)
 
     dest_images = []
     for img in source_images:
-        target_file = dest_annotated / img.name
+        target_file = dest_slides_dir / img.name
+        pub_target_file = public_slides_dir / img.name
         if move_files:
+            shutil.copy2(str(img), str(pub_target_file))
             shutil.move(str(img), str(target_file))
             print(f"Moved: {img.name} -> {target_file}")
         else:
             shutil.copy2(str(img), str(target_file))
-            print(f"Copied: {img.name} -> {target_file}")
+            shutil.copy2(str(img), str(pub_target_file))
+            print(f"Copied: {img.name} -> {target_file} & {pub_target_file}")
         dest_images.append(target_file)
 
-    # Transfer Hindi images to destination annotated_hi/ if available
-    dest_images_hi = []
-    if source_images_hi:
-        dest_annotated_hi = dest_dir / "annotated_hi"
-        dest_annotated_hi.mkdir(parents=True, exist_ok=True)
-        for img in source_images_hi:
-            target_file = dest_annotated_hi / img.name
-            if move_files:
-                shutil.move(str(img), str(target_file))
-                print(f"Moved (HI): {img.name} -> {target_file}")
-            else:
-                shutil.copy2(str(img), str(target_file))
-                print(f"Copied (HI): {img.name} -> {target_file}")
-            dest_images_hi.append(target_file)
-
-    # Sync hero image to public/images/comics for landing and book page cards
+    # Copy hero image to public/images/comics
     public_comics_dir = Path("public/images/comics")
     public_comics_dir.mkdir(parents=True, exist_ok=True)
     if dest_images:
@@ -206,43 +239,94 @@ def process_chapter(
         shutil.copy2(str(dest_images[0]), str(chapter_hero_path))
         if is_intro:
             shutil.copy2(str(dest_images[0]), str(public_comics_dir / "ramayana_hero.jpg"))
-            print(f"Updated global hero image: public/images/comics/ramayana_hero.jpg")
+            print("Updated global hero image: public/images/comics/ramayana_hero.jpg")
 
-    # 3. Locate Storyboard JSON (filter out Hindi storyboard to pick English as primary)
-    storyboard_files = [
-        p for p in source_dir.glob("*comic_storyboard*.json")
-        if "hindi" not in p.name.lower()
-    ]
-    if not storyboard_files:
-        storyboard_files = list(source_dir.glob("*comic_storyboard*.json"))
+    # 3. Locate Storyboards (English & Hindi)
+    sb_en_files = [p for p in source_dir.glob("*comic_storyboard*.json") if "hindi" not in p.name.lower()]
+    sb_hi_files = [p for p in source_dir.glob("*comic_storyboard_hindi*.json")]
 
-    if not storyboard_files and FALLBACK_SOURCE_BASE.exists():
-        # Search fallback mythology-texts repo
-        if is_intro:
-            sb_fallback = FALLBACK_SOURCE_BASE / "Introduction" / "comic_storyboard_Introduction.json"
-            if sb_fallback.exists():
-                storyboard_files = [sb_fallback]
-        else:
-            cand = [
-                p for p in FALLBACK_SOURCE_BASE.glob(f"**/*Chapter_{chap_num}/*comic_storyboard*.json")
-                if "hindi" not in p.name.lower()
-            ]
-            if cand:
-                storyboard_files = cand
-
-    storyboard = []
-    if storyboard_files:
-        sb_path = storyboard_files[0]
-        print(f"\nUsing Storyboard: {sb_path}")
+    storyboard_en = []
+    if sb_en_files:
         try:
-            with open(sb_path, "r", encoding="utf-8") as f:
-                storyboard = json.load(f)
+            with open(sb_en_files[0], "r", encoding="utf-8") as f:
+                storyboard_en = json.load(f)
+            print(f"Loaded English Storyboard: {sb_en_files[0].name}")
         except Exception as e:
-            print(f"Warning: Could not parse storyboard JSON {sb_path}: {e}")
-    else:
-        print("\nWarning: No storyboard JSON found. Using image filenames for slide titles.")
+            print(f"Warning: Could not parse English storyboard: {e}")
 
-    # 4. Generate local index.md
+    storyboard_hi = []
+    if sb_hi_files:
+        try:
+            with open(sb_hi_files[0], "r", encoding="utf-8") as f:
+                storyboard_hi = json.load(f)
+            print(f"Loaded Hindi Storyboard: {sb_hi_files[0].name}")
+        except Exception as e:
+            print(f"Warning: Could not parse Hindi storyboard: {e}")
+
+    # Build slide lookup dictionaries
+    sb_en_map = {item.get("slide", idx): item for idx, item in enumerate(storyboard_en, 1)}
+    sb_hi_map = {item.get("slide", idx): item for idx, item in enumerate(storyboard_hi, 1)}
+
+    # 4. Locate Narration & Discussion Data
+    narration_files = list(source_dir.glob("narration_*.json"))
+    discussion_files = list(source_dir.glob("discussion_*.json"))
+
+    narration_paragraphs = []
+    if narration_files:
+        try:
+            with open(narration_files[0], "r", encoding="utf-8") as f:
+                raw_narr = json.load(f)
+            for item in raw_narr:
+                t_en = clean_text_tags(item.get("text_en", ""))
+                t_hi = clean_text_tags(item.get("text", ""))
+                if t_en or t_hi:
+                    narration_paragraphs.append({"en": t_en, "hi": t_hi})
+            print(f"Loaded Narration JSON: {narration_files[0].name} ({len(narration_paragraphs)} paragraphs)")
+        except Exception as e:
+            print(f"Warning: Could not parse narration JSON: {e}")
+    else:
+        # Fallback to txt files
+        en_txt = source_dir / f"english_narration_{source_dir.name}.txt"
+        hi_txt = source_dir / f"hindi_narration_{source_dir.name}.txt"
+        if not en_txt.exists():
+            cand_en = list(source_dir.glob("english_narration_*.txt"))
+            if cand_en:
+                en_txt = cand_en[0]
+        if not hi_txt.exists():
+            cand_hi = list(source_dir.glob("hindi_narration_*.txt"))
+            if cand_hi:
+                hi_txt = cand_hi[0]
+
+        if en_txt.exists() and hi_txt.exists():
+            try:
+                with open(en_txt, "r", encoding="utf-8") as fe, open(hi_txt, "r", encoding="utf-8") as fh:
+                    en_lines = [l.strip() for l in fe.readlines() if l.strip()]
+                    hi_lines = [l.strip() for l in fh.readlines() if l.strip()]
+                # Narrations are the lines before Question: / प्रश्न:
+                for le, lh in zip(en_lines, hi_lines):
+                    if le.lower().startswith("question:") or lh.startswith("प्रश्न:"):
+                        break
+                    narration_paragraphs.append({"en": clean_text_tags(le), "hi": clean_text_tags(lh)})
+                print(f"Loaded Narration from TXT ({len(narration_paragraphs)} paragraphs)")
+            except Exception as e:
+                print(f"Warning: Could not parse narration TXT: {e}")
+
+    discussion_items = []
+    if discussion_files:
+        try:
+            with open(discussion_files[0], "r", encoding="utf-8") as f:
+                raw_disc = json.load(f)
+            for item in raw_disc:
+                parsed = parse_discussion_item(item.get("text_en", ""), item.get("text", ""))
+                discussion_items.append(parsed)
+            print(f"Loaded Discussion JSON: {discussion_files[0].name} ({len(discussion_items)} items)")
+        except Exception as e:
+            print(f"Warning: Could not parse discussion JSON: {e}")
+
+    has_narration = len(narration_paragraphs) > 0 or len(discussion_items) > 0
+    has_hindi = len(storyboard_hi) > 0 or any(p.get("hi") for p in narration_paragraphs)
+
+    # 5. Extract Metadata and Build index.md
     dest_index_md = dest_dir / "index.md"
     existing_fm = {}
     if dest_index_md.exists():
@@ -252,7 +336,6 @@ def process_chapter(
         except Exception:
             pass
 
-    # Determine metadata
     mapping_data = load_mapping_data()
     matched_meta = next(
         (m for m in mapping_data if m.get("book_num") == book_num and m.get("section_number") == chap_num),
@@ -289,14 +372,11 @@ def process_chapter(
             prev_link_html = f'<a href="/comics/ramayana/{kanda_slug}/Book_{book_num}_{kanda_slug.split("_", 2)[-1]}_Chapter_{chap_num - 1}/" class="prev-link">← Previous Chapter</a>'
         next_link_html = f'<a href="/comics/ramayana/{kanda_slug}/Book_{book_num}_{kanda_slug.split("_", 2)[-1]}_Chapter_{chap_num + 1}/" class="next-link">Next Chapter →</a>'
 
-    first_image_rel = f"./annotated/{dest_images[0].name}"
+    first_image_rel = f"{web_slides_dir}/{dest_images[0].name}"
     today_str = datetime.now().strftime("%Y-%m-%d")
     pub_date = existing_fm.get("date") or today_str
 
-    has_hindi = len(dest_images_hi) > 0
-    first_hi_image_rel = f"./annotated_hi/{dest_images_hi[0].name}" if has_hindi else None
-
-    # Build Markdown Content
+    # Frontmatter Header
     lines = [
         "---",
         f"layout: {layout_rel}",
@@ -305,13 +385,6 @@ def process_chapter(
         f"tags: {tags}",
         f'image_url: "{first_image_rel}"',
         f'heroImage: "{first_image_rel}"',
-    ]
-
-    if has_hindi and first_hi_image_rel:
-        lines.append(f'image_url_hi: "{first_hi_image_rel}"')
-        lines.append('has_hindi: true')
-
-    lines.extend([
         f"book_num: {book_num}",
         f'kanda_iast: "{kanda_iast}"',
         f'kanda_sanskrit: "{kanda_sanskrit}"',
@@ -319,94 +392,187 @@ def process_chapter(
         f'roman: "{roman}"',
         f'sanskrit_title: "{sanskrit_title}"',
         f'english_title: "{english_title}"',
+        f'has_hindi: {str(has_hindi).lower()}',
+        f'has_narration: {str(has_narration).lower()}',
         'status: "published"',
         "---",
         "",
         '<div class="nav-links-chapter">',
-        f"  {prev_link_html}",
-        f"  {next_link_html}",
+        f"{prev_link_html}",
+        f"{next_link_html}",
         "</div>",
+        "",
+        '<!-- TAB 1: COMICS SLIDES (Text displayed below each image) -->',
+        '<div class="tab-pane active" id="pane-comics" data-pane="comics">',
+        ""
+    ]
+
+    # Render each comic slide
+    for idx, img_path in enumerate(dest_images, start=1):
+        # Extract slide number from filename or index
+        m = re.search(r"slide_0*(\d+)", img_path.stem, re.I)
+        s_num = int(m.group(1)) if m else idx
+
+        sb_item_en = sb_en_map.get(s_num, {})
+        sb_item_hi = sb_hi_map.get(s_num, {})
+
+        title_en = sb_item_en.get("title") or sb_item_en.get("slide_label") or f"Slide {s_num:02d}"
+        title_en = re.sub(r"^Slide\s*\d+\s*[-–:]*\s*", "", title_en).strip()
+
+        title_hi = sb_item_hi.get("title") or title_en
+        title_hi = re.sub(r"^Slide\s*\d+\s*[-–:]*\s*", "", title_hi).strip()
+
+        caption_en = clean_text_tags(sb_item_en.get("on_slide_text", ""))
+        caption_hi = clean_text_tags(sb_item_hi.get("on_slide_text", caption_en))
+
+        is_insight = sb_item_en.get("type") == "insight" or "insight" in title_en.lower()
+
+        slide_card_lines = [
+            f'<article class="comic-slide-card" id="slide-{s_num:02d}">',
+            '<div class="slide-card-header">',
+            f'<span class="slide-badge">Slide {s_num:02d}</span>',
+        ]
+        if is_insight:
+            slide_card_lines.append('<span class="slide-type-badge">Insight</span>')
+        slide_card_lines.extend([
+            f'<h3 class="slide-title lang-en">{title_en}</h3>',
+            f'<h3 class="slide-title lang-hi">{title_hi}</h3>',
+            '</div>',
+            '<div class="slide-image-wrapper">',
+            f'<img src="{web_slides_dir}/{img_path.name}" alt="Slide {s_num:02d} - {title_en}" loading="lazy" />',
+            '</div>',
+            '<div class="slide-caption-wrapper">',
+            f'<p class="slide-caption-text lang-en">{caption_en}</p>',
+            f'<p class="slide-caption-text lang-hi">{caption_hi}</p>',
+            '</div>',
+            '</article>',
+            ""
+        ])
+        lines.extend(slide_card_lines)
+
+    lines.extend([
+        "</div>",
+        "",
+        '<!-- TAB 2: NARRATION & DISCUSSION -->',
+        '<div class="tab-pane" id="pane-narration" data-pane="narration">',
+        '<div class="narration-view-container">',
         ""
     ])
 
-    # Render each slide
-    if storyboard:
-        for idx, slide_item in enumerate(storyboard, start=1):
-            s_num = slide_item.get("slide", idx)
-            s_title = slide_item.get("title") or slide_item.get("slide_label") or f"Slide {s_num}"
-            if s_title.startswith(f"Slide{s_num:02d}") or s_title.startswith(f"Slide {s_num}"):
-                cleaned_title = re.sub(r"^Slide\s*\d+\s*[-–:]*\s*", "", s_title).strip()
-            else:
-                cleaned_title = s_title
+    # Add Narration Section
+    if narration_paragraphs:
+        lines.extend([
+            '<!-- Saga Storytelling Section -->',
+            '<section class="narration-saga-section">',
+            '<div class="section-title-bar">',
+            '<span class="section-badge">Chapter Saga</span>',
+            '<h2 class="section-heading lang-en">Full Narrative</h2>',
+            '<h2 class="section-heading lang-hi">संपूर्ण कथा वृत्तांत</h2>',
+            "<p class=\"section-subheading lang-en\">Unabridged story based on Manmatha Nath Dutt's Valmiki Ramayana prose translation.</p>",
+            '<p class="section-subheading lang-hi">मन्मथ नाथ दत्त के वाल्मीकि रामायण गद्य अनुवाद पर आधारित संपूर्ण कथा।</p>',
+            '</div>',
+            '<div class="narration-prose-card">',
+            '<div class="narration-text-flow lang-en">'
+        ])
+        for p in narration_paragraphs:
+            if p["en"]:
+                lines.append(f'<p>{p["en"]}</p>')
+        lines.extend([
+            '</div>',
+            '<div class="narration-text-flow lang-hi">'
+        ])
+        for p in narration_paragraphs:
+            if p["hi"]:
+                lines.append(f'<p>{p["hi"]}</p>')
+        lines.extend([
+            '</div>',
+            '</div>',
+            '</section>',
+            ""
+        ])
 
-            # Match destination English image for this slide
-            matched_img = None
-            for p in dest_images:
-                p_name_lower = p.stem.lower()
-                if f"slide{int(s_num):02d}" in p_name_lower or f"slide_{int(s_num):02d}" in p_name_lower:
-                    matched_img = p
-                    break
-            if not matched_img and idx <= len(dest_images):
-                matched_img = dest_images[idx - 1]
+    # Add Discussion Section
+    if discussion_items:
+        lines.extend([
+            '<!-- Philosophical Discussion & Inquiry Section -->',
+            '<section class="discussion-inquiry-section">',
+            '<div class="section-title-bar">',
+            '<span class="section-badge">Inquiry & Reflection</span>',
+            '<h2 class="section-heading lang-en">Discussion & Modern Takeaways</h2>',
+            '<h2 class="section-heading lang-hi">दार्शनिक विवेचना एवं जीवन-सूत्र</h2>',
+            '<p class="section-subheading lang-en">Ethical inquiry, character motives, and actionable modern wisdom.</p>',
+            '<p class="section-subheading lang-hi">चरित्र, नीति और जीवन मूल्यों की गहन पड़ताल तथा आधुनिक जीवन में व्यावहारिक सूत्र।</p>',
+            '</div>',
+            '<div class="discussion-cards-list">'
+        ])
+        for i, item in enumerate(discussion_items, start=1):
+            lines.extend([
+                '<article class="discussion-card">',
+                '<div class="discussion-card-header">',
+                f'<span class="inquiry-badge">Inquiry {i:02d}</span>',
+                '</div>',
+                '<div class="discussion-content-block lang-en">',
+                f'<h3 class="discussion-question">{item["q_en"]}</h3>',
+                '<div class="discussion-reflection">',
+                f'<p>{item["r_en"]}</p>',
+                '</div>',
+                '<div class="takeaway-card">',
+                '<div class="takeaway-badge">⚡ Actionable Takeaway</div>',
+                f'<p class="takeaway-text">{item["t_en"]}</p>',
+                '</div>',
+                '</div>',
+                '<div class="discussion-content-block lang-hi">',
+                f'<h3 class="discussion-question">{item["q_hi"]}</h3>',
+                '<div class="discussion-reflection">',
+                f'<p>{item["r_hi"]}</p>',
+                '</div>',
+                '<div class="takeaway-card">',
+                '<div class="takeaway-badge">⚡ जीवन-सूत्र (Takeaway)</div>',
+                f'<p class="takeaway-text">{item["t_hi"]}</p>',
+                '</div>',
+                '</div>',
+                '</article>'
+            ])
+        lines.extend([
+            '</div>',
+            '</section>',
+            ""
+        ])
 
-            if matched_img:
-                lines.append(f"## Slide {int(s_num):02d} - {cleaned_title}")
-                lines.append("")
-                lines.append(f"![Slide {int(s_num):02d} - {cleaned_title}](./annotated/{matched_img.name})")
+    if not has_narration:
+        lines.extend([
+            '<div class="narration-prose-card" style="text-align: center; padding: 3rem 1.5rem;">',
+            '<p class="lang-en" style="color: var(--text-muted); font-size: 1.05rem;">The illustrated comic slides are available in the Comic tab. The full narrative translation for this chapter will appear here soon.</p>',
+            '<p class="lang-hi" style="color: var(--text-muted); font-size: 1.05rem;">सचित्र कॉमिक स्लाइड्स कॉमिक टैब में उपलब्ध हैं। इस अध्याय का संपूर्ण कथा अनुवाद जल्द ही यहाँ उपलब्ध होगा।</p>',
+            '</div>',
+            ""
+        ])
 
-                # Match corresponding Hindi image if available
-                if dest_images_hi:
-                    matched_img_hi = next((h for h in dest_images_hi if h.name == matched_img.name), None)
-                    if not matched_img_hi:
-                        for h in dest_images_hi:
-                            h_name_lower = h.stem.lower()
-                            if f"slide{int(s_num):02d}" in h_name_lower or f"slide_{int(s_num):02d}" in h_name_lower:
-                                matched_img_hi = h
-                                break
-                    if not matched_img_hi and idx <= len(dest_images_hi):
-                        matched_img_hi = dest_images_hi[idx - 1]
-
-                    if matched_img_hi:
-                        lines.append(f"![Slide {int(s_num):02d} - {cleaned_title} (Hindi)](./annotated_hi/{matched_img_hi.name})")
-
-                lines.append("")
-    else:
-        for idx, p in enumerate(dest_images, start=1):
-            s_title = p.stem.replace("_", " ")
-            lines.append(f"## Slide {idx:02d} - {s_title}")
-            lines.append("")
-            lines.append(f"![Slide {idx:02d} - {s_title}](./annotated/{p.name})")
-
-            # Match corresponding Hindi image if available
-            if dest_images_hi:
-                matched_img_hi = next((h for h in dest_images_hi if h.name == p.name), None)
-                if not matched_img_hi and idx <= len(dest_images_hi):
-                    matched_img_hi = dest_images_hi[idx - 1]
-                if matched_img_hi:
-                    lines.append(f"![Slide {idx:02d} - {s_title} (Hindi)](./annotated_hi/{matched_img_hi.name})")
-
-            lines.append("")
-
-    lines.append('<div class="nav-links-chapter">')
-    lines.append(f"  {prev_link_html}")
-    lines.append(f"  {next_link_html}")
-    lines.append("</div>")
-    lines.append("")
+    lines.extend([
+        '</div>',
+        '</div>',
+        "",
+        '<div class="nav-links-chapter">',
+        f"{prev_link_html}",
+        f"{next_link_html}",
+        "</div>",
+        ""
+    ])
 
     new_content = "\n".join(lines)
     with open(dest_index_md, "w", encoding="utf-8") as f:
         f.write(new_content)
 
-    print(f"\n✓ Generated local blog post: {dest_index_md}")
-    print(f"  English slides count: {len(dest_images)}")
-    if dest_images_hi:
-        print(f"  Hindi slides count  : {len(dest_images_hi)}")
-    print(f"  Hero image: {first_image_rel}\n")
+    print(f"\n✓ Generated local comic post: {dest_index_md}")
+    print(f"  Slide count        : {len(dest_images)}")
+    print(f"  Narration paragraphs: {len(narration_paragraphs)}")
+    print(f"  Discussion inquiries: {len(discussion_items)}")
+    print(f"  Hero image         : {first_image_rel}\n")
 
 
 def main():
-    parser = argparse.ArgumentParser(description="Generate local comic blog post from storage assets.")
-    parser.add_argument("book_arg", nargs="?", help="Book number or 'intro'/'introduction'")
+    parser = argparse.ArgumentParser(description="Generate local comic post with dual tabs & languages.")
+    parser.add_argument("book_arg", nargs="?", help="Book number or 'intro'")
     parser.add_argument("chap_arg", nargs="?", help="Chapter number")
     parser.add_argument("--intro", action="store_true", help="Process Introduction chapter")
     parser.add_argument("--book", type=int, help="Book number (1-7)")
@@ -420,7 +586,6 @@ def main():
     book_num = 1
     chap_num = 1
 
-    # Check positional args
     if args.intro:
         is_intro = True
     elif args.book_arg:
@@ -451,9 +616,9 @@ def main():
 
     if is_intro:
         if not source_dir:
-            source_dir = DEFAULT_SOURCE_BASE / "Introduction"
+            source_dir = DEFAULT_SOURCE_BASE / "Book_0_Introduction"
             if not source_dir.exists():
-                source_dir = DEFAULT_SOURCE_BASE / "Introduction" / "Introduction"
+                source_dir = DEFAULT_SOURCE_BASE / "Introduction"
             if not source_dir.exists():
                 source_dir = FALLBACK_SOURCE_BASE / "Introduction"
         if not dest_dir:
@@ -464,6 +629,8 @@ def main():
             source_dir = find_source_chapter(DEFAULT_SOURCE_BASE, book_num, chap_num)
             if not source_dir:
                 source_dir = find_source_chapter(FALLBACK_SOURCE_BASE, book_num, chap_num)
+            if not source_dir:
+                source_dir = find_source_chapter(TERTIARY_SOURCE_BASE, book_num, chap_num)
         if not dest_dir:
             dest_dir = find_dest_chapter(DEST_BASE, book_num, chap_num)
 

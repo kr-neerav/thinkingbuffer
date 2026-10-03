@@ -84,6 +84,20 @@ const booksSummary = [
   }
 ];
 
+const publishedByBook: Record<number, number> = {};
+const localComics = import.meta.glob('./ramayana/**/*/index.md', { eager: true });
+for (const [filePath, fileModule] of Object.entries(localComics)) {
+  const mod: any = fileModule;
+  const fm = mod?.frontmatter || {};
+  if (fm.status === 'published' && fm.book_num !== undefined) {
+    publishedByBook[fm.book_num] = (publishedByBook[fm.book_num] || 0) + 1;
+  }
+}
+
+for (const b of booksSummary) {
+  b.readyCount = publishedByBook[b.num] || 0;
+}
+
 const totalChapters = booksSummary.reduce((acc, b) => acc + b.count, 0);
 const totalReady = booksSummary.reduce((acc, b) => acc + b.readyCount, 0);
 ---

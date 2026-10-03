@@ -1,47 +1,51 @@
 ---
 name: comic-creator
-description: Generates an Astro markdown blog post for a Ramayana comic chapter based on storyboard JSON and comic images, and uploads the images to R2.
+description: Generates an Astro markdown blog post for a Ramayana comic chapter with dual tabs (Comics + Narration) and bilingual toggle (English + Hindi) based on studio images, storyboards, narration, and discussion JSON.
 ---
 
 # Comic Creator Skill
 
-This skill automates the creation of a new comic chapter blog post. It reads the storyboard JSON, maps it to the generated comic images, creates the Markdown file with a specific Comic Layout, and then uploads the images to Cloudflare R2 using the `r2-image-uploader` skill.
+This skill automates the creation of a new comic chapter post. It reads studio slide images, bilingual storyboards, narration prose, and discussion inquiries from MythologyMuse outputs, generates the markdown file with dual tabs (Comics + Narration & Discussion), and uploads images to Cloudflare R2 using the `r2-image-uploader` script.
 
 ## Usage
 
-When the user asks to "create a comic" for a specific book and chapter (e.g., Book 1, Chapter 2):
+When the user asks to create or update a comic chapter (e.g., Book 1, Chapter 1 or Introduction):
 
-### 1. Gather Information & Move Assets
-Assets are generated via the `museimages` studio into:
-- English source images: `~/Documents/comics/ramayana_dutt/Book_XX_.../Book_X_..._Chapter_Y/annotated/` (or `Introduction/Introduction/annotated/` for Intro)
-- Hindi source images: `~/Documents/comics/ramayana_dutt/Book_XX_.../Book_X_..._Chapter_Y/annotated_hi/` (or `Introduction/Introduction/annotated_hi/` for Intro)
-- English storyboard: `~/Documents/comics/ramayana_dutt/Book_XX_.../Book_X_..._Chapter_Y/comic_storyboard_*.json`
-- Hindi storyboard: `~/Documents/comics/ramayana_dutt/Book_XX_.../Book_X_..._Chapter_Y/comic_storyboard_hindi_*.json`
+### 1. Source Assets Location
+Assets are generated into:
+`/Users/neerav/Documents/Projects/MythologyMuse/mythologies/ramayana_dutt/outputs/`
 
-Use the `./move_comics.sh` script to copy assets and generate the local blog post:
+Each chapter folder (e.g. `Book_1_Bala_Kanda_Chapter_1` or `Book_0_Introduction`) contains:
+- Slide artwork: `<chapter_dir>/studio_images/slide_XX_final.jpg` (Text is not burned into the image; artwork is language-agnostic)
+- English storyboard: `comic_storyboard_*.json`
+- Hindi storyboard: `comic_storyboard_hindi_*.json`
+- Narration: `narration_*.json` (or `english_narration_*.txt` / `hindi_narration_*.txt`)
+- Discussion: `discussion_*.json` (Q&A, reflection, and actionable takeaways)
+
+### 2. Generate Local Post
+Run `./move_comics.sh`:
 ```bash
 ./move_comics.sh <book_number> <chapter_number>
 # For Introduction:
 ./move_comics.sh intro
 ```
-This transfers the English annotated images into `.../annotated/`, Hindi images into `.../annotated_hi/`, and creates/updates `index.md` with both English and Hindi image references.
-
-### 2. Markdown Structure with Dual-Language Support
-The comic layout supports instant toggling between English and Hindi.
-Each slide includes both image references:
-```markdown
-## Slide XX - [Slide Title]
-
-![Slide XX - [Slide Title]](./annotated/[filename.jpeg])
-![Slide XX - [Slide Title] (Hindi)](./annotated_hi/[filename.jpeg])
-```
+This script:
+1. Copies the final slide images into `.../slides/`
+2. Syncs the first slide as the chapter hero image in `public/images/comics/`
+3. Reads English and Hindi storyboards, narration paragraphs, and discussion inquiries
+4. Generates `index.md` with:
+   - **Tab 1: Comic**: Each slide presents the artwork with bilingual captions placed directly below the image.
+   - **Tab 2: Narration & Discussion**: Full story prose paragraphs followed by structured inquiry cards (Question, Reflection, and Actionable Takeaway).
+   - **Language Toggle**: Synchronized switcher for English and Hindi active on both tabs.
 
 ### 3. Upload Images to R2
-After the file is saved/generated, run the `r2-image-uploader` script on the markdown file:
+After verifying the local post, upload images to Cloudflare R2:
 ```bash
 node .agents/scripts/upload_to_r2.js src/pages/comics/ramayana/Book_XX_.../Book_X_..._Chapter_Y/index.md
+# For Introduction:
+node .agents/scripts/upload_to_r2.js src/pages/comics/ramayana/introduction/index.md
 ```
-This will automatically upload both English and Hindi images to the Cloudflare R2 comics bucket, update the image URLs in the Markdown body and frontmatter, and delete the local image files and empty folders.
+This command uploads the local slide images to the Cloudflare R2 bucket, updates the URLs in markdown and frontmatter, and deletes local temporary image files.
 
-### 4. Finalize
-Verify that the `run_command` was successful, then inform the user that the comic chapter has been generated and images have been uploaded to R2!
+### 4. Verification
+Run `npm run build` or inspect with `astro dev` to verify that tabs and language toggles function properly.

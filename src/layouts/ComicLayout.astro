@@ -17,13 +17,15 @@ interface Props {
     sanskrit_title?: string;
     english_title?: string;
     word_count?: number;
+    has_hindi?: boolean;
+    has_narration?: boolean;
     status?: string;
   };
 }
 
 const { frontmatter } = Astro.props;
 
-// Robust fallback extraction from URL or title
+// Fallback extraction from URL or title
 const urlPath = Astro.url.pathname;
 const bookMatch = urlPath.match(/Book_0?(\d+)/i);
 const chapMatch = urlPath.match(/Chapter_(\d+)/i);
@@ -59,7 +61,7 @@ const isIntro = urlPath.includes('/introduction') || derivedSectionNum === 0 || 
 ---
 
 <Layout title={`${frontmatter.title} - Ramayana Comics`}>
-  <div class="comic-reader-wrapper" id="comic-reader" data-lang="en">
+  <div class="comic-reader-wrapper" id="comic-reader" data-active-tab="comics" data-lang="en">
     <!-- Breadcrumbs -->
     <nav class="comic-breadcrumbs">
       <a href="/">Home</a>
@@ -92,34 +94,78 @@ const isIntro = urlPath.includes('/introduction') || derivedSectionNum === 0 || 
       )}
     </header>
 
-    <!-- Language Switcher Bar -->
-    <div class="comic-language-bar" id="comic-lang-bar">
-      <span class="lang-bar-label">Read in / भाषा:</span>
-      <div class="lang-toggle-group" role="radiogroup" aria-label="Language selection">
-        <button type="button" class="lang-btn active" data-lang="en" aria-checked="true" role="radio">
-          <span class="lang-text">English</span>
-        </button>
-        <button type="button" class="lang-btn" data-lang="hi" aria-checked="false" role="radio">
-          <span class="lang-text">Hindi</span>
-        </button>
+    <!-- Top Chapter Toolbar: Tabs & Language Switcher -->
+    <div class="chapter-toolbar-container">
+      <div class="chapter-toolbar">
+        <div class="chapter-view-tabs" role="tablist" aria-label="Chapter View Modes">
+          <button type="button" class="view-tab-btn active" data-tab="comics" role="tab" aria-selected="true">
+            <svg class="tab-icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <rect x="3" y="3" width="18" height="18" rx="2" ry="2"></rect>
+              <circle cx="8.5" cy="8.5" r="1.5"></circle>
+              <polyline points="21 15 16 10 5 21"></polyline>
+            </svg>
+            <span class="tab-text">Comic</span>
+          </button>
+          <button type="button" class="view-tab-btn" data-tab="narration" role="tab" aria-selected="false">
+            <svg class="tab-icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"></path>
+              <path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"></path>
+            </svg>
+            <span class="tab-text">Narration & Discussion</span>
+          </button>
+        </div>
+
+        <div class="comic-language-bar">
+          <span class="lang-bar-label">Language:</span>
+          <div class="lang-toggle-group" role="radiogroup" aria-label="Language selection">
+            <button type="button" class="lang-btn active" data-lang="en" aria-checked="true" role="radio">
+              <span class="lang-text">English</span>
+            </button>
+            <button type="button" class="lang-btn" data-lang="hi" aria-checked="false" role="radio">
+              <span class="lang-text">हिन्दी</span>
+            </button>
+          </div>
+        </div>
       </div>
     </div>
 
-    <!-- Comic Slides Content -->
+    <!-- Main Content (Both Tabs slot into here) -->
     <main class="comic-content">
       <slot />
     </main>
 
-    <!-- Bottom Language Switcher Bar -->
-    <div class="comic-language-bar comic-language-bar-bottom">
-      <span class="lang-bar-label">Read in / भाषा:</span>
-      <div class="lang-toggle-group" role="radiogroup" aria-label="Language selection">
-        <button type="button" class="lang-btn active" data-lang="en" aria-checked="true" role="radio">
-          <span class="lang-text">English</span>
-        </button>
-        <button type="button" class="lang-btn" data-lang="hi" aria-checked="false" role="radio">
-          <span class="lang-text">Hindi</span>
-        </button>
+    <!-- Bottom Chapter Toolbar -->
+    <div class="chapter-toolbar-container chapter-toolbar-bottom">
+      <div class="chapter-toolbar">
+        <div class="chapter-view-tabs" role="tablist" aria-label="Chapter View Modes">
+          <button type="button" class="view-tab-btn active" data-tab="comics" role="tab" aria-selected="true">
+            <svg class="tab-icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <rect x="3" y="3" width="18" height="18" rx="2" ry="2"></rect>
+              <circle cx="8.5" cy="8.5" r="1.5"></circle>
+              <polyline points="21 15 16 10 5 21"></polyline>
+            </svg>
+            <span class="tab-text">Comic</span>
+          </button>
+          <button type="button" class="view-tab-btn" data-tab="narration" role="tab" aria-selected="false">
+            <svg class="tab-icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"></path>
+              <path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"></path>
+            </svg>
+            <span class="tab-text">Narration & Discussion</span>
+          </button>
+        </div>
+
+        <div class="comic-language-bar">
+          <span class="lang-bar-label">Language:</span>
+          <div class="lang-toggle-group" role="radiogroup" aria-label="Language selection">
+            <button type="button" class="lang-btn active" data-lang="en" aria-checked="true" role="radio">
+              <span class="lang-text">English</span>
+            </button>
+            <button type="button" class="lang-btn" data-lang="hi" aria-checked="false" role="radio">
+              <span class="lang-text">हिन्दी</span>
+            </button>
+          </div>
+        </div>
       </div>
     </div>
 
@@ -201,7 +247,7 @@ const isIntro = urlPath.includes('/introduction') || derivedSectionNum === 0 || 
   /* Compact Header */
   .comic-header {
     text-align: center;
-    margin-bottom: 1rem;
+    margin-bottom: 0.75rem;
     padding: 0.5rem 0;
   }
 
@@ -234,12 +280,130 @@ const isIntro = urlPath.includes('/introduction') || derivedSectionNum === 0 || 
     line-height: 1.4;
   }
 
+  /* Chapter Toolbar (Soft Minimal Premium) */
+  .chapter-toolbar-container {
+    margin: 0.75rem auto 1.5rem auto;
+    width: 100%;
+    display: flex;
+    justify-content: center;
+  }
+
+  .chapter-toolbar-bottom {
+    margin: 2.5rem auto 1.5rem auto;
+  }
+
+  .chapter-toolbar {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1rem;
+    flex-wrap: wrap;
+    background: #ffffff;
+    padding: 0.4rem 0.6rem;
+    border-radius: 40px;
+    border: 1px solid rgba(0, 0, 0, 0.06);
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.04);
+  }
+
+  /* Tabs Switcher */
+  .chapter-view-tabs {
+    display: inline-flex;
+    background: #f1f3f5;
+    padding: 3px;
+    border-radius: 24px;
+    gap: 2px;
+  }
+
+  .view-tab-btn {
+    border: none;
+    background: transparent;
+    padding: 0.4rem 0.95rem;
+    border-radius: 20px;
+    font-size: 0.82rem;
+    font-weight: 600;
+    color: #555555;
+    cursor: pointer;
+    display: inline-flex;
+    align-items: center;
+    gap: 0.4rem;
+    transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+  }
+
+  .view-tab-btn:hover:not(.active):not(:disabled) {
+    color: #1a1a1a;
+    background: rgba(255, 255, 255, 0.6);
+  }
+
+  .view-tab-btn.active {
+    background: #ffffff;
+    color: #b85d19;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+  }
+
+  .view-tab-btn:disabled {
+    opacity: 0.45;
+    cursor: not-allowed;
+  }
+
+  /* Language Switcher */
+  .comic-language-bar {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0 0.4rem;
+  }
+
+  .lang-bar-label {
+    font-size: 0.78rem;
+    font-weight: 500;
+    color: var(--text-muted, #666666);
+  }
+
+  .lang-toggle-group {
+    display: inline-flex;
+    background: #f1f3f5;
+    padding: 3px;
+    border-radius: 20px;
+    gap: 2px;
+  }
+
+  .lang-btn {
+    border: none;
+    background: transparent;
+    padding: 0.35rem 0.8rem;
+    border-radius: 16px;
+    font-size: 0.8rem;
+    font-weight: 600;
+    color: #555555;
+    cursor: pointer;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+  }
+
+  .lang-btn:hover:not(.active):not(:disabled) {
+    color: #1a1a1a;
+    background: rgba(255, 255, 255, 0.6);
+  }
+
+  .lang-btn.active {
+    background: #ffffff;
+    color: #b85d19;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.08);
+  }
+
+  .lang-btn:disabled {
+    opacity: 0.45;
+    cursor: not-allowed;
+  }
+
   /* Content */
   .comic-content {
     display: block;
   }
 
-  /* Navigation Bar */
+  /* Chapter Navigation Bar */
   .nav-links-chapter {
     display: flex;
     justify-content: space-between;
@@ -268,105 +432,286 @@ const isIntro = urlPath.includes('/introduction') || derivedSectionNum === 0 || 
     opacity: 0.7;
   }
 
-  /* Language Switcher Styling (Soft Minimal Premium) */
-  .comic-language-bar {
+  /* ========================================================
+     Tab Panes Visibility Control
+     ======================================================== */
+  .tab-pane {
+    display: none;
+  }
+
+  .tab-pane.active {
+    display: block;
+    animation: comicFadeIn 0.2s ease;
+  }
+
+  .comic-reader-wrapper[data-active-tab="comics"] .tab-pane[data-pane="comics"] {
+    display: block !important;
+  }
+  .comic-reader-wrapper[data-active-tab="comics"] .tab-pane[data-pane="narration"] {
+    display: none !important;
+  }
+
+  .comic-reader-wrapper[data-active-tab="narration"] .tab-pane[data-pane="narration"] {
+    display: block !important;
+  }
+  .comic-reader-wrapper[data-active-tab="narration"] .tab-pane[data-pane="comics"] {
+    display: none !important;
+  }
+
+  /* ========================================================
+     Dual-Language Text and Image Control
+     ======================================================== */
+  .comic-reader-wrapper[data-lang="en"] .lang-hi {
+    display: none !important;
+  }
+  .comic-reader-wrapper[data-lang="hi"] .lang-en {
+    display: none !important;
+  }
+
+  /* Legacy image flips (for legacy posts with separate en/hi annotated image files) */
+  .comic-reader-wrapper[data-lang="en"] .comic-img-hi,
+  .comic-reader-wrapper[data-lang="en"] .comic-content > p img[alt*="(Hindi)"],
+  .comic-reader-wrapper[data-lang="en"] .comic-content > p img[src*="annotated_hi"] {
+    display: none !important;
+  }
+  .comic-reader-wrapper[data-lang="hi"] .comic-img-en,
+  .comic-reader-wrapper[data-lang="hi"] .comic-content > p img:not([alt*="(Hindi)"]):not([src*="annotated_hi"]) {
+    display: none !important;
+  }
+
+  /* Slide card images are neutral studio artwork and stay visible in both English and Hindi */
+  .comic-reader-wrapper .slide-image-wrapper img {
+    display: block !important;
+  }
+
+  /* ========================================================
+     Comic Slide Card (Image with text right below it)
+     ======================================================== */
+  .comic-slide-card {
+    background: #ffffff;
+    border-radius: var(--radius-card, 16px);
+    box-shadow: var(--shadow-soft, 0 10px 40px -10px rgba(0, 0, 0, 0.08));
+    border: 1px solid rgba(0, 0, 0, 0.05);
+    margin-bottom: 2rem;
+    overflow: hidden;
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+  }
+
+  .slide-card-header {
     display: flex;
     align-items: center;
-    justify-content: center;
-    gap: 0.75rem;
-    margin: 0.5rem auto 1.25rem auto;
-    padding: 0.4rem 0.9rem;
-    background: #ffffff;
-    border-radius: 30px;
-    border: 1px solid rgba(0, 0, 0, 0.06);
-    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.03);
-    width: fit-content;
+    gap: 0.6rem;
+    padding: 0.85rem 1.25rem;
+    background: #fafbfc;
+    border-bottom: 1px solid rgba(0, 0, 0, 0.04);
   }
 
-  .comic-language-bar-bottom {
-    margin: 2rem auto 1rem auto;
-  }
-
-  .lang-bar-label {
-    font-size: 0.8rem;
-    font-weight: 500;
-    color: var(--text-muted, #666666);
-  }
-
-  .lang-toggle-group {
-    display: inline-flex;
-    background: #f1f3f5;
-    padding: 3px;
-    border-radius: 20px;
-    gap: 2px;
-  }
-
-  .lang-btn {
-    border: none;
-    background: transparent;
-    padding: 0.35rem 0.85rem;
-    border-radius: 16px;
-    font-size: 0.82rem;
-    font-weight: 600;
-    color: #555555;
-    cursor: pointer;
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-    transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
-  }
-
-  .lang-btn:hover:not(.active):not(:disabled) {
-    color: #1a1a1a;
-    background: rgba(255, 255, 255, 0.6);
-  }
-
-  .lang-btn.active {
-    background: #ffffff;
+  .slide-badge {
+    font-size: 0.75rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
     color: #b85d19;
-    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.08);
+    background: #fff4e8;
+    padding: 0.2rem 0.6rem;
+    border-radius: 12px;
+    border: 1px solid rgba(184, 93, 25, 0.15);
   }
 
-  .lang-btn:disabled {
-    opacity: 0.45;
-    cursor: not-allowed;
+  .slide-type-badge {
+    font-size: 0.72rem;
+    font-weight: 600;
+    color: #2b6cb0;
+    background: #ebf8ff;
+    padding: 0.2rem 0.55rem;
+    border-radius: 12px;
   }
 
-  /* Dual-Language Image Flipping */
-  .comic-reader-wrapper[data-lang="en"] .comic-content .comic-img-hi,
-  .comic-reader-wrapper[data-lang="en"] .comic-content img[alt*="(Hindi)"],
-  .comic-reader-wrapper[data-lang="en"] .comic-content img[src*="annotated_hi"] {
-    display: none !important;
-  }
-
-  .comic-reader-wrapper[data-lang="hi"] .comic-content .comic-img-en,
-  .comic-reader-wrapper[data-lang="hi"] .comic-content img:not([alt*="(Hindi)"]):not([src*="annotated_hi"]) {
-    display: none !important;
-  }
-
-  /* Slide Headings & Images */
-  .comic-content h2 {
+  .slide-title {
     font-size: 1.05rem;
     font-weight: 600;
-    color: #2d3748;
-    margin: 1.5rem 0 0.5rem 0;
-    text-align: center;
-    border: none;
-    padding: 0;
-  }
-  
-  .comic-content h2:nth-of-type(1) {
-    margin-top: 0.5rem;
+    color: #1a202c;
+    margin: 0;
+    letter-spacing: -0.01em;
   }
 
-  .comic-content img {
+  .slide-image-wrapper {
+    width: 100%;
+    background: #0f172a;
+    display: flex;
+    justify-content: center;
+  }
+
+  .slide-image-wrapper img {
     width: 100%;
     height: auto;
-    border-radius: 12px;
-    box-shadow: 0 8px 30px rgba(0, 0, 0, 0.08);
-    margin-bottom: 1.25rem;
     display: block;
+    border-radius: 0;
+    box-shadow: none;
+    margin: 0;
     animation: comicFadeIn 0.25s ease;
+  }
+
+  .slide-caption-wrapper {
+    padding: 1.25rem 1.5rem;
+    background: #ffffff;
+    border-top: 1px solid rgba(0, 0, 0, 0.04);
+  }
+
+  .slide-caption-text {
+    font-size: 1.02rem;
+    line-height: 1.65;
+    color: #2d3748;
+    margin: 0;
+  }
+
+  .slide-caption-text.lang-hi {
+    font-size: 1.06rem;
+    line-height: 1.75;
+  }
+
+  /* ========================================================
+     Narration & Discussion Tab Content
+     ======================================================== */
+  .narration-view-container {
+    display: flex;
+    flex-direction: column;
+    gap: 2.5rem;
+    margin: 1rem 0 2rem 0;
+  }
+
+  .section-title-bar {
+    margin-bottom: 1.25rem;
+    text-align: center;
+  }
+
+  .section-badge {
+    font-size: 0.78rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    color: #b85d19;
+    background: #fff4e8;
+    display: inline-block;
+    padding: 0.25rem 0.75rem;
+    border-radius: 100px;
+    margin-bottom: 0.4rem;
+    border: 1px solid rgba(184, 93, 25, 0.18);
+  }
+
+  .section-heading {
+    font-size: 1.4rem;
+    font-weight: 700;
+    color: #1a1a1a;
+    letter-spacing: -0.02em;
+    margin-bottom: 0.35rem;
+  }
+
+  .section-subheading {
+    font-size: 0.9rem;
+    color: var(--text-muted);
+    max-width: 650px;
+    margin: 0 auto;
+    line-height: 1.5;
+  }
+
+  .narration-prose-card {
+    background: #ffffff;
+    border-radius: var(--radius-card, 16px);
+    box-shadow: var(--shadow-soft, 0 10px 40px -10px rgba(0, 0, 0, 0.08));
+    border: 1px solid rgba(0, 0, 0, 0.05);
+    padding: 2.25rem 2.5rem;
+  }
+
+  .narration-text-flow p {
+    font-size: 1.05rem;
+    line-height: 1.8;
+    color: #2d3748;
+    margin-bottom: 1.25rem;
+  }
+
+  .narration-text-flow.lang-hi p {
+    font-size: 1.08rem;
+    line-height: 1.85;
+  }
+
+  .narration-text-flow p:last-child {
+    margin-bottom: 0;
+  }
+
+  /* Discussion Cards */
+  .discussion-cards-list {
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+  }
+
+  .discussion-card {
+    background: #ffffff;
+    border-radius: var(--radius-card, 16px);
+    box-shadow: var(--shadow-soft, 0 10px 40px -10px rgba(0, 0, 0, 0.08));
+    border: 1px solid rgba(0, 0, 0, 0.05);
+    padding: 1.75rem 2rem;
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+  }
+
+  .inquiry-badge {
+    font-size: 0.75rem;
+    font-weight: 700;
+    letter-spacing: 0.04em;
+    color: #b85d19;
+    background: #fff4e8;
+    padding: 0.2rem 0.65rem;
+    border-radius: 12px;
+    display: inline-block;
+  }
+
+  .discussion-question {
+    font-size: 1.15rem;
+    font-weight: 600;
+    color: #1a202c;
+    line-height: 1.45;
+    margin: 0.25rem 0 0.75rem 0;
+  }
+
+  .discussion-reflection {
+    color: #4a5568;
+    font-size: 1rem;
+    line-height: 1.7;
+    margin-bottom: 1rem;
+  }
+
+  .discussion-reflection p {
+    margin: 0;
+  }
+
+  .takeaway-card {
+    background: #fff9f2;
+    border-left: 4px solid #b85d19;
+    border-radius: 8px;
+    padding: 1rem 1.25rem;
+  }
+
+  .takeaway-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.35rem;
+    font-size: 0.78rem;
+    font-weight: 700;
+    color: #92400e;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    margin-bottom: 0.4rem;
+  }
+
+  .takeaway-text {
+    font-size: 0.95rem;
+    line-height: 1.6;
+    color: #1f2937;
+    font-weight: 500;
+    margin: 0;
   }
 
   @keyframes comicFadeIn {
@@ -421,67 +766,97 @@ const isIntro = urlPath.includes('/introduction') || derivedSectionNum === 0 || 
     color: var(--text-color);
   }
 
-  @media (max-width: 600px) {
+  @media (max-width: 680px) {
     .comic-main-title {
       font-size: 1.25rem;
     }
     .comic-subtitle {
       font-size: 0.85rem;
     }
+    .chapter-toolbar {
+      flex-direction: column;
+      border-radius: 20px;
+      width: 100%;
+      padding: 0.5rem;
+    }
+    .chapter-view-tabs, .comic-language-bar {
+      width: 100%;
+      justify-content: center;
+    }
     .nav-links-chapter {
       flex-direction: column;
       gap: 0.5rem;
       text-align: center;
     }
-    .comic-language-bar {
-      width: 100%;
-      flex-wrap: wrap;
+    .narration-prose-card {
+      padding: 1.25rem 1rem;
+    }
+    .discussion-card {
+      padding: 1.25rem 1rem;
     }
   }
 </style>
 
 <script is:inline>
   (function() {
-    function initComicLang() {
+    function initChapterControls() {
       const reader = document.getElementById('comic-reader');
       if (!reader) return;
 
-      const langButtons = document.querySelectorAll('.lang-btn');
-      const hiButtons = document.querySelectorAll('.lang-btn[data-lang="hi"]');
-      
-      // Check if Hindi images exist on this page
       const content = document.querySelector('.comic-content');
       const allImages = content ? content.querySelectorAll('img') : [];
-      let hasHindi = false;
 
+      // Check for Hindi content
+      const hindiElements = content ? content.querySelectorAll('.lang-hi') : [];
+      let hasHindi = hindiElements.length > 0;
       allImages.forEach(img => {
+        if (img.closest('.comic-slide-card')) return;
         const src = img.getAttribute('src') || '';
         const alt = img.getAttribute('alt') || '';
         if (src.includes('annotated_hi') || alt.includes('(Hindi)')) {
           hasHindi = true;
           img.classList.add('comic-img-hi');
-        } else {
+        } else if (!img.classList.contains('comic-img-hi')) {
           img.classList.add('comic-img-en');
         }
       });
 
-      // If no Hindi images, disable Hindi buttons
+      // Handle Hindi button state
+      const hiButtons = document.querySelectorAll('.lang-btn[data-lang="hi"]');
       if (!hasHindi) {
         hiButtons.forEach(btn => {
           btn.disabled = true;
           btn.title = 'Hindi translation coming soon / हिन्दी अनुवाद जल्द आ रहा है';
           const textSpan = btn.querySelector('.lang-text');
-          if (textSpan) textSpan.textContent = 'Hindi (Soon)';
+          if (textSpan) textSpan.textContent = 'हिन्दी (Soon)';
         });
       }
 
-      // Check saved preference in localStorage
+      // Check for Narration content
+      const narrationPanes = content ? content.querySelectorAll('.tab-pane[data-pane="narration"]') : [];
+      let hasNarration = false;
+      narrationPanes.forEach(pane => {
+        if (pane.textContent.trim().length > 0) {
+          hasNarration = true;
+        }
+      });
+
+      const narrationTabButtons = document.querySelectorAll('.view-tab-btn[data-tab="narration"]');
+      if (!hasNarration) {
+        narrationTabButtons.forEach(btn => {
+          btn.disabled = true;
+          btn.title = 'Full narration coming soon';
+          const label = btn.querySelector('.tab-text');
+          if (label) label.textContent = 'Narration (Soon)';
+        });
+      }
+
+      // Language Switcher Logic
+      const langButtons = document.querySelectorAll('.lang-btn');
       let preferredLang = 'en';
       try {
         preferredLang = localStorage.getItem('tb_comic_lang') || 'en';
       } catch (e) {}
-
-      // Apply language (fallback to en if hi requested but unavailable)
       const activeLang = (hasHindi && preferredLang === 'hi') ? 'hi' : 'en';
       setLanguage(activeLang);
 
@@ -504,12 +879,48 @@ const isIntro = urlPath.includes('/introduction') || derivedSectionNum === 0 || 
           setLanguage(targetLang);
         });
       });
+
+      // Tab Switcher Logic
+      const tabButtons = document.querySelectorAll('.view-tab-btn');
+      const panes = content ? content.querySelectorAll('.tab-pane') : [];
+      let preferredTab = 'comics';
+      try {
+        preferredTab = localStorage.getItem('tb_chapter_tab') || 'comics';
+      } catch (e) {}
+      if (preferredTab === 'narration' && !hasNarration) {
+        preferredTab = 'comics';
+      }
+      setActiveTab(preferredTab);
+
+      function setActiveTab(tab) {
+        reader.setAttribute('data-active-tab', tab);
+        tabButtons.forEach(btn => {
+          const isCurrent = btn.getAttribute('data-tab') === tab;
+          btn.classList.toggle('active', isCurrent);
+          btn.setAttribute('aria-selected', isCurrent ? 'true' : 'false');
+        });
+        panes.forEach(pane => {
+          const isTarget = pane.getAttribute('data-pane') === tab;
+          pane.classList.toggle('active', isTarget);
+        });
+        try {
+          localStorage.setItem('tb_chapter_tab', tab);
+        } catch (e) {}
+      }
+
+      tabButtons.forEach(btn => {
+        btn.addEventListener('click', function() {
+          const targetTab = this.getAttribute('data-tab');
+          if (targetTab === 'narration' && !hasNarration) return;
+          setActiveTab(targetTab);
+        });
+      });
     }
 
     if (document.readyState === 'loading') {
-      document.addEventListener('DOMContentLoaded', initComicLang);
+      document.addEventListener('DOMContentLoaded', initChapterControls);
     } else {
-      initComicLang();
+      initChapterControls();
     }
   })();
 </script>

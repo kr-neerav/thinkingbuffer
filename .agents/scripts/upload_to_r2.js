@@ -51,24 +51,41 @@ async function uploadImages() {
   let content = fs.readFileSync(markdownFilePath, 'utf-8');
   const markdownDir = path.dirname(markdownFilePath);
 
-  // Regex to match markdown images: ![alt](url)
+  // Regex to match markdown images: ![alt](url) and HTML img tags
   const imageRegex = /!\[([^\]]*)\]\(([^)]+)\)/g;
+  const htmlImgRegex = /<img\s+[^>]*src=["']([^"']+)["'][^>]*>/gi;
   let updatedContent = content;
   
-  // Find all matches first
-  const matches = [...content.matchAll(imageRegex)];
+  // Find all candidate image paths
+  const localPaths = new Set();
+  for (const match of content.matchAll(imageRegex)) {
+    localPaths.add(match[2].trim());
+  }
+  for (const match of content.matchAll(htmlImgRegex)) {
+    localPaths.add(match[1].trim());
+  }
 
-  for (const match of matches) {
-    const fullMatch = match[0];
-    const altText = match[1];
-    const imagePath = match[2];
+  // Also check frontmatter image fields
+  const fmRegex = /(?:image_url|heroImage|image_url_hi):\s*["']([^"']+)["']/g;
+  for (const match of content.matchAll(fmRegex)) {
+    localPaths.add(match[1].trim());
+  }
 
-    // Skip if the image is already a remote URL
+  for (const imagePath of localPaths) {
+    // Skip remote URLs
     if (imagePath.startsWith('http://') || imagePath.startsWith('https://')) {
       continue;
     }
 
-    const absoluteImagePath = path.resolve(markdownDir, imagePath);
+    let absoluteImagePath;
+    if (imagePath.startsWith('/')) {
+      absoluteImagePath = path.join(repoRoot, 'src/pages', imagePath);
+      if (!fs.existsSync(absoluteImagePath)) {
+        absoluteImagePath = path.join(repoRoot, 'public', imagePath);
+      }
+    } else {
+      absoluteImagePath = path.resolve(markdownDir, imagePath);
+    }
 
     if (!fs.existsSync(absoluteImagePath)) {
       console.warn(`Warning: Image not found locally: ${absoluteImagePath}`);
@@ -83,7 +100,7 @@ async function uploadImages() {
     let targetBucket = R2_BUCKET_NAME;
     let targetPublicUrl = R2_PUBLIC_URL;
 
-    if (s3Key.includes('src/pages/comics/')) {
+    if (s3Key.includes('comics/')) {
       targetBucket = COMICS_R2_BUCKET_NAME || R2_BUCKET_NAME; // Fallback to default if missing
       targetPublicUrl = COMICS_R2_PUBLIC_URL || R2_PUBLIC_URL;
     }
@@ -128,11 +145,7 @@ async function uploadImages() {
       
       console.log(`Successfully uploaded. New URL: ${newImageUrl}`);
       
-      // Update the markdown content
-      const newMatchStr = `![${altText}](${newImageUrl})`;
-      updatedContent = updatedContent.replace(fullMatch, newMatchStr);
-      
-      // Also globally replace any remaining references to the relative path (like in frontmatter)
+      // Globally replace all occurrences of this path string in content
       const escapedPath = imagePath.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
       const pathRegex = new RegExp(escapedPath, 'g');
       updatedContent = updatedContent.replace(pathRegex, newImageUrl);
@@ -140,6 +153,16 @@ async function uploadImages() {
       // Cleanup local file
       console.log(`Deleting local file: ${absoluteImagePath}`);
       fs.unlinkSync(absoluteImagePath);
+
+      // Clean up mirror file in other directory if present
+      const altPath = absoluteImagePath.includes('/public/comics/')
+        ? absoluteImagePath.replace('/public/comics/', '/src/pages/comics/')
+        : (absoluteImagePath.includes('/src/pages/comics/')
+          ? absoluteImagePath.replace('/src/pages/comics/', '/public/comics/')
+          : null);
+      if (altPath && fs.existsSync(altPath)) {
+        try { fs.unlinkSync(altPath); } catch (e) {}
+      }
     }
   }
 
@@ -151,13 +174,24 @@ async function uploadImages() {
   }
 
   // Clean up empty directories if left behind
-  const dirsToCheck = ['annotated', 'annotated_hi'];
+  const dirsToCheck = ['annotated', 'annotated_hi', 'slides'];
   for (const dirName of dirsToCheck) {
     const dirPath = path.join(markdownDir, dirName);
     try {
       if (fs.existsSync(dirPath) && fs.readdirSync(dirPath).length === 0) {
         fs.rmdirSync(dirPath);
         console.log(`Removed empty directory: ${dirPath}`);
+      }
+    } catch (e) {
+      // Ignore directory cleanup errors
+    }
+
+    const relToSrcPages = path.relative(path.join(repoRoot, 'src/pages'), markdownDir);
+    const pubDirPath = path.join(repoRoot, 'public', relToSrcPages, dirName);
+    try {
+      if (fs.existsSync(pubDirPath) && fs.readdirSync(pubDirPath).length === 0) {
+        fs.rmdirSync(pubDirPath);
+        console.log(`Removed empty directory: ${pubDirPath}`);
       }
     } catch (e) {
       // Ignore directory cleanup errors
