@@ -25,7 +25,7 @@ I recently read [*The Worlds I See: Curiosity, Exploration, and Discovery at the
 
 ## Why We Focus on Risks
 
-This perspective reflects how software teams ought to build systems. When drafting designs, teams often concentrate entirely on the happy path. However, accidental oversights create brittle software when traffic spikes or edge cases appear.
+Reading this passage sparked an immediate connection to my daily engineering work. When I review our modern development workflows, I recognize several clear parallels.
 
 Analogy (Civil Engineering): Bridge builders calculate wind shear and material fatigue before pouring asphalt on a suspension deck.
 
@@ -33,7 +33,19 @@ Engineers do not merely paint an attractive picture of cars crossing a gorge. Th
 
 ![Builders string steel cables to construct a suspension bridge over deep water](./suspension-bridge-construction.jpg)
 
-The bridge stands because its creators anticipated points of failure early. In the same manner, thoughtful engineers earn system resilience by testing hazards before deployment.
+The bridge stands because its creators anticipated points of failure early. Looking at our software workflows, I see that same discipline across shared organizational checkpoints:
+
+- Architecture proposal templates mandate explicit risk sections to force teams beyond optimistic timelines.
+- Peer code reviews scrutinize edge cases and failure modes to derisk changes before merging.
+- Project pre-mortem exercises prompt teams to confront potential project failures before writing software.
+- Production Readiness Reviews (PRRs) evaluate operational runbooks and monitoring coverage before launch.
+- Blameless post-mortems convert production incidents into prioritized remediation tickets with tracked completion dates.
+- Architectural threat modeling sessions identify privilege risks and data tampering paths during technical design.
+- Write-Audit-Publish (WAP) pipelines validate data assertions in staging before swapping production tables.
+- Canary deployment pipelines route small traffic slices and trigger automatic rollbacks when errors spike.
+- Chaos experiments intentionally terminate primary database instances in staging to verify failover automation.
+
+I now view these engineering practices through a completely different lens. They do not exist to slow builders down during delivery. Instead, these guardrails ensure that the future we engineer is genuinely safe and dependable.
 
 ## The Path to an Earned Future
 

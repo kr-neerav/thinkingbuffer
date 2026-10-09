@@ -10,11 +10,12 @@ When the user asks you to draft or help write a blog post using this skill, foll
 ## 1. Audience and Brand Outcome
 
 - **Audience:** [TBD: ask the user for the target reader role and level; do not assume an audience]. Do not draft until the user supplies the target reader role and level. While this [TBD] is open, ask outside the draft `What is the target reader role and level?` and stop until answered; do not write an `Assumed reader:` line as permission to draft on assumption.
-- **Brand outcome each post must achieve:** Every post MUST do all three:
+- **Brand outcome each post must achieve:** Every post MUST do all four:
   1. State the reader's takeaway in a `> Takeaway:` blockquote placed directly after the H1 heading. The blockquote MUST be one sentence of 10–25 words.
   2. End with a section headed `## What to do next` containing 1–3 imperative sentences (each starting with a verb).
   3. Use the brand voice defined in [TBD: ask the user for 3–5 named voice traits plus one example sentence; do not invent a voice].
-- **Acceptance check:** A critic rejects the draft if any of the three items above is missing or if any draft content was written while the audience [TBD] is still open (no assumed reader role or level is permitted).
+  4. Include the author's real-world personal experience connecting the core insight to concrete engineering practice.
+- **Acceptance check:** A critic rejects the draft if any of the four items above is missing or if any draft content was written while the audience [TBD] is still open (no assumed reader role or level is permitted).
 
 ## 2. Writing Style — Observable Checks
 
@@ -69,7 +70,7 @@ Every bullet below is checked by counting or by searching the text. If a check f
 
 Perform these steps in this order for every post. Sections 1–4 are applied inside step 2.
 
-1. **Gather context.** If the user has not supplied topic, outline or key points, and target reader role and level (while Section 1 [TBD] is open), ask for the missing items and stop until answered. Do not draft on assumed facts.
+1. **Gather context.** If the user has not supplied topic, outline or key points, target reader role and level (while Section 1 [TBD] is open), and personal experience connecting to the topic, ask for the missing items (specifically asking outside the draft `What personal experience or backstory connects you to this topic?`) and stop until answered. Do not draft on assumed facts or invent personal anecdotes.
 2. **Draft the Markdown.** Apply Sections 1–4. Start the file with YAML frontmatter containing exactly these fields in this order:
    ```yaml
    ---
