@@ -1,59 +1,551 @@
 ---
 import Layout from '../../layouts/Layout.astro';
 
-// We use import.meta.glob to fetch all markdown files in this directory and any subdirectories
-const posts = Object.values(import.meta.glob('./**/*.md', { eager: true }));
+// Fetch all markdown files in this directory and any subdirectories
+const posts = Object.values(import.meta.glob('./**/*.md', { eager: true })) as any[];
 
 // Sort posts by date, newest first
 posts.sort((a, b) => new Date(b.frontmatter.date).valueOf() - new Date(a.frontmatter.date).valueOf());
+
+function getItemImage(item: any) {
+  const url = item.frontmatter.heroImage || item.frontmatter.image_url;
+  if (!url) return null;
+  if (url.startsWith('http://') || url.startsWith('https://') || url.startsWith('/')) {
+    return url;
+  }
+  if (url.startsWith('./')) {
+    const cleanUrl = (item.url || '').replace(/\/$/, '');
+    return `/src/pages${cleanUrl}/${url.slice(2)}`;
+  }
+  return url;
+}
+
+function formatDateString(dateVal: string | Date) {
+  const d = new Date(dateVal);
+  const year = d.getUTCFullYear();
+  const month = String(d.getUTCMonth() + 1).padStart(2, '0');
+  const day = String(d.getUTCDate()).padStart(2, '0');
+  return `${year}-${month}-${day}`;
+}
+
+// Compute counts by date
+const dateCounts: Record<string, number> = {};
+posts.forEach((post) => {
+  const dateKey = formatDateString(post.frontmatter.date);
+  dateCounts[dateKey] = (dateCounts[dateKey] || 0) + 1;
+});
+
+// Unique sorted dates
+const uniqueDates = Object.keys(dateCounts).sort((a, b) => b.localeCompare(a));
 ---
 
-<Layout title="Blog - Thinking Buffer">
-	<h1>Blog</h1>
-	
-	<div class="posts">
-		{posts.map(post => (
-			<article class="card post-card">
-				<a href={post.url} class="post-link">
-					<h2>{post.frontmatter.title}</h2>
-				</a>
-				<p class="date">{new Date(post.frontmatter.date).toLocaleDateString('en-US', {
-					year: 'numeric',
-					month: 'long',
-					day: 'numeric'
-				})}</p>
-				<p class="description">{post.frontmatter.description}</p>
-				{post.frontmatter.tags && (
-					<div class="card-tags" style="margin-top: 1rem;">
-						{post.frontmatter.tags.map((tag: string) => (
-							<a href={`/tags/${tag}`} class="tag">{tag}</a>
-						))}
-					</div>
-				)}
-			</article>
-		))}
-	</div>
+<Layout title="All Articles - Thinking Buffer">
+  <div class="archive-header">
+    <a href="/" class="back-link">← Back to Home</a>
+    <div class="header-content">
+      <h1 class="archive-title">All Articles</h1>
+      <p class="archive-subtitle">
+        Ordered chronologically by publication date. Select a date on the right to view its articles.
+      </p>
+    </div>
+  </div>
+
+  <div class="archive-layout">
+    <!-- Main Articles Stream -->
+    <section class="archive-feed" aria-label="Articles Feed">
+      <div id="filter-banner" class="filter-banner" style="display: none;">
+        <span>Showing articles published on <strong id="filter-date-label"></strong></span>
+        <button type="button" id="clear-filter-btn" class="clear-filter-btn">Show all articles</button>
+      </div>
+
+      <div class="articles-list" id="articles-list">
+        {posts.map((post) => {
+          const dateKey = formatDateString(post.frontmatter.date);
+          const displayDate = new Date(post.frontmatter.date).toLocaleDateString('en-US', {
+            year: 'numeric',
+            month: 'long',
+            day: 'numeric',
+            timeZone: 'UTC'
+          });
+
+          return (
+            <article class="card archive-card" data-date={dateKey}>
+              {getItemImage(post) && (
+                <a href={post.url} class="card-thumb-link" tabindex="-1" aria-hidden="true">
+                  <div class="card-thumb-container">
+                    <img src={getItemImage(post)} alt={post.frontmatter.title} loading="lazy" />
+                  </div>
+                </a>
+              )}
+              <div class="card-body">
+                <div class="card-meta">
+                  <time datetime={dateKey} class="meta-date">{displayDate}</time>
+                  <span class="meta-divider">•</span>
+                  <span class="meta-date-iso">{dateKey}</span>
+                </div>
+                <h2 class="card-title">
+                  <a href={post.url} class="card-title-link">{post.frontmatter.title}</a>
+                </h2>
+                {post.frontmatter.description && (
+                  <p class="card-description">{post.frontmatter.description}</p>
+                )}
+                {post.frontmatter.tags && post.frontmatter.tags.length > 0 && (
+                  <div class="card-tags">
+                    {post.frontmatter.tags.map((tag: string) => (
+                      <a href={`/tags/${tag}`} class="tag">{tag}</a>
+                    ))}
+                  </div>
+                )}
+              </div>
+            </article>
+          );
+        })}
+      </div>
+
+      <div id="no-results" class="no-results" style="display: none;">
+        <p>No articles found for the selected date.</p>
+        <button type="button" id="reset-filter-btn" class="clear-filter-btn">Show all articles</button>
+      </div>
+    </section>
+
+    <!-- Right-Hand Dates Sidebar -->
+    <aside class="archive-sidebar" aria-label="Filter by Publication Date">
+      <div class="sidebar-card">
+        <div class="sidebar-header">
+          <h2 class="sidebar-title">Dates (YYYY-MM-DD)</h2>
+          <span class="sidebar-count">{posts.length} articles</span>
+        </div>
+        <div class="dates-list" role="tablist" aria-orientation="vertical">
+          <button
+            type="button"
+            class="date-nav-btn active"
+            data-date="all"
+            role="tab"
+            aria-selected="true"
+          >
+            <span class="date-text">All Dates</span>
+            <span class="date-badge">{posts.length}</span>
+          </button>
+
+          {uniqueDates.map((dateStr) => (
+            <button
+              type="button"
+              class="date-nav-btn"
+              data-date={dateStr}
+              role="tab"
+              aria-selected="false"
+            >
+              <span class="date-text">{dateStr}</span>
+              <span class="date-badge">{dateCounts[dateStr]}</span>
+            </button>
+          ))}
+        </div>
+      </div>
+    </aside>
+  </div>
 </Layout>
 
+<script>
+  function setupDateFilter() {
+    const dateButtons = document.querySelectorAll<HTMLButtonElement>('.date-nav-btn');
+    const articles = document.querySelectorAll<HTMLElement>('.archive-card');
+    const banner = document.getElementById('filter-banner');
+    const bannerLabel = document.getElementById('filter-date-label');
+    const clearBtn = document.getElementById('clear-filter-btn');
+    const resetBtn = document.getElementById('reset-filter-btn');
+    const noResults = document.getElementById('no-results');
+
+    function applyFilter(selectedDate: string, updateUrl: boolean = true) {
+      dateButtons.forEach((btn) => {
+        const isActive = btn.dataset.date === selectedDate;
+        btn.classList.toggle('active', isActive);
+        btn.setAttribute('aria-selected', isActive ? 'true' : 'false');
+      });
+
+      let matchCount = 0;
+      articles.forEach((card) => {
+        const cardDate = card.dataset.date;
+        if (selectedDate === 'all' || cardDate === selectedDate) {
+          card.style.display = 'grid';
+          matchCount++;
+        } else {
+          card.style.display = 'none';
+        }
+      });
+
+      if (noResults) {
+        noResults.style.display = matchCount === 0 ? 'block' : 'none';
+      }
+
+      if (banner && bannerLabel) {
+        if (selectedDate === 'all') {
+          banner.style.display = 'none';
+        } else {
+          banner.style.display = 'flex';
+          bannerLabel.textContent = `${selectedDate} (${matchCount} ${matchCount === 1 ? 'article' : 'articles'})`;
+        }
+      }
+
+      if (updateUrl) {
+        if (selectedDate === 'all') {
+          history.replaceState(null, '', window.location.pathname);
+        } else {
+          window.location.hash = selectedDate;
+        }
+      }
+    }
+
+    dateButtons.forEach((btn) => {
+      btn.addEventListener('click', () => {
+        const dateKey = btn.dataset.date || 'all';
+        applyFilter(dateKey);
+      });
+    });
+
+    if (clearBtn) {
+      clearBtn.addEventListener('click', () => applyFilter('all'));
+    }
+    if (resetBtn) {
+      resetBtn.addEventListener('click', () => applyFilter('all'));
+    }
+
+    // Handle initial hash in URL
+    if (window.location.hash) {
+      const hashDate = window.location.hash.replace(/^#/, '');
+      const matchingBtn = document.querySelector<HTMLButtonElement>(`.date-nav-btn[data-date="${hashDate}"]`);
+      if (matchingBtn) {
+        applyFilter(hashDate, false);
+      }
+    }
+  }
+
+  // Initialize on page load and Astro view transitions if any
+  document.addEventListener('DOMContentLoaded', setupDateFilter);
+  if (document.readyState === 'complete' || document.readyState === 'interactive') {
+    setupDateFilter();
+  }
+</script>
+
 <style>
-	.posts {
-		display: flex;
-		flex-direction: column;
-		gap: 2rem;
-	}
-	
-	.post-card h2 {
-		margin-bottom: 0.5rem;
-		font-size: 1.5rem;
-	}
-	
-	.date {
-		font-size: 0.9rem;
-		color: var(--text-muted);
-		margin-bottom: 1rem;
-	}
-	
-	.description {
-		margin-bottom: 0;
-	}
+  .archive-header {
+    margin-bottom: 2.5rem;
+  }
+
+  .back-link {
+    display: inline-block;
+    margin-bottom: 0.75rem;
+    font-size: 0.9rem;
+    font-weight: 500;
+    color: var(--text-muted);
+  }
+
+  .back-link:hover {
+    color: var(--text-color);
+  }
+
+  .archive-title {
+    font-size: 2.2rem;
+    font-weight: 700;
+    letter-spacing: -0.03em;
+    margin-bottom: 0.5rem;
+    color: #1A1A1A;
+  }
+
+  .archive-subtitle {
+    font-size: 1rem;
+    color: var(--text-muted);
+    margin-bottom: 0;
+  }
+
+  .archive-layout {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) 280px;
+    gap: 2.5rem;
+    align-items: start;
+  }
+
+  .filter-banner {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background: #FFFFFF;
+    padding: 0.75rem 1.25rem;
+    border-radius: 12px;
+    box-shadow: var(--shadow-soft);
+    margin-bottom: 1.5rem;
+    font-size: 0.9rem;
+    color: #1A1A1A;
+  }
+
+  .clear-filter-btn {
+    background: #F1F1F1;
+    border: none;
+    border-radius: 100px;
+    padding: 0.35rem 0.85rem;
+    font-family: inherit;
+    font-size: 0.8rem;
+    font-weight: 600;
+    color: #333333;
+    cursor: pointer;
+    transition: background 0.2s ease, color 0.2s ease;
+  }
+
+  .clear-filter-btn:hover {
+    background: #000000;
+    color: #FFFFFF;
+  }
+
+  .articles-list {
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+  }
+
+  .archive-card {
+    display: grid;
+    grid-template-columns: 240px minmax(0, 1fr);
+    gap: 1.5rem;
+    padding: 1.25rem;
+    border-radius: var(--radius-card);
+    background: var(--card-bg);
+    box-shadow: var(--shadow-soft);
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+  }
+
+  .archive-card:hover {
+    transform: translateY(-3px);
+    box-shadow: var(--shadow-hover);
+  }
+
+  .card-thumb-link {
+    display: block;
+  }
+
+  .card-thumb-container {
+    width: 100%;
+    aspect-ratio: 16/10;
+    border-radius: 10px;
+    overflow: hidden;
+    background-color: #F3E5DC;
+  }
+
+  .card-thumb-container img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+
+  .card-body {
+    display: flex;
+    flex-direction: column;
+    min-width: 0;
+  }
+
+  .card-meta {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    font-size: 0.8rem;
+    color: #666666;
+    margin-bottom: 0.5rem;
+  }
+
+  .meta-divider {
+    color: #CCCCCC;
+  }
+
+  .meta-date-iso {
+    font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+    font-size: 0.75rem;
+    background: #F1F5F9;
+    padding: 0.1rem 0.4rem;
+    border-radius: 4px;
+    color: #475569;
+  }
+
+  .card-title {
+    font-size: 1.2rem;
+    font-weight: 700;
+    line-height: 1.35;
+    margin-bottom: 0.6rem;
+  }
+
+  .card-title-link {
+    color: #1A1A1A;
+    text-decoration: none;
+  }
+
+  .card-title-link:hover {
+    color: #0066cc;
+  }
+
+  .card-description {
+    font-size: 0.9rem;
+    color: #555555;
+    line-height: 1.5;
+    margin-bottom: 1rem;
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+  }
+
+  .card-tags {
+    display: flex;
+    gap: 0.4rem;
+    flex-wrap: wrap;
+    margin-top: auto;
+  }
+
+  .tag {
+    font-size: 0.72rem;
+    background: #F1F1F1;
+    padding: 0.2rem 0.55rem;
+    border-radius: 100px;
+    color: #555555;
+    font-weight: 500;
+    text-decoration: none;
+    transition: background 0.2s ease, color 0.2s ease;
+  }
+
+  .tag:hover {
+    background: #E2E8F0;
+    color: #1A1A1A;
+  }
+
+  /* Right-hand Sidebar */
+  .archive-sidebar {
+    position: sticky;
+    top: 2rem;
+  }
+
+  .sidebar-card {
+    background: var(--card-bg);
+    border-radius: var(--radius-card);
+    box-shadow: var(--shadow-soft);
+    padding: 1.25rem;
+  }
+
+  .sidebar-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    margin-bottom: 1rem;
+    padding-bottom: 0.75rem;
+    border-bottom: 1px solid rgba(0, 0, 0, 0.06);
+  }
+
+  .sidebar-title {
+    font-size: 0.95rem;
+    font-weight: 700;
+    color: #1A1A1A;
+    margin-bottom: 0;
+  }
+
+  .sidebar-count {
+    font-size: 0.75rem;
+    color: var(--text-muted);
+  }
+
+  .dates-list {
+    display: flex;
+    flex-direction: column;
+    gap: 0.4rem;
+    max-height: calc(100vh - 12rem);
+    overflow-y: auto;
+  }
+
+  .date-nav-btn {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+    padding: 0.55rem 0.75rem;
+    border: none;
+    border-radius: 8px;
+    background: transparent;
+    cursor: pointer;
+    font-family: inherit;
+    font-size: 0.85rem;
+    color: #333333;
+    transition: background 0.15s ease, color 0.15s ease;
+    text-align: left;
+  }
+
+  .date-nav-btn .date-text {
+    font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+    font-weight: 500;
+    font-size: 0.82rem;
+  }
+
+  .date-nav-btn:hover {
+    background: #F1F5F9;
+    color: #000000;
+  }
+
+  .date-nav-btn.active {
+    background: #1A1A1A;
+    color: #FFFFFF;
+  }
+
+  .date-badge {
+    font-size: 0.72rem;
+    font-weight: 600;
+    padding: 0.15rem 0.45rem;
+    border-radius: 100px;
+    background: #ECEFF1;
+    color: #555555;
+    transition: background 0.15s ease, color 0.15s ease;
+  }
+
+  .date-nav-btn.active .date-badge {
+    background: rgba(255, 255, 255, 0.25);
+    color: #FFFFFF;
+  }
+
+  .no-results {
+    background: #FFFFFF;
+    padding: 2.5rem;
+    border-radius: var(--radius-card);
+    text-align: center;
+    box-shadow: var(--shadow-soft);
+  }
+
+  .no-results p {
+    color: var(--text-muted);
+    margin-bottom: 1rem;
+  }
+
+  @media (max-width: 900px) {
+    .archive-layout {
+      grid-template-columns: 1fr;
+      gap: 2rem;
+    }
+
+    .archive-sidebar {
+      position: static;
+      order: -1;
+    }
+
+    .dates-list {
+      flex-direction: row;
+      flex-wrap: wrap;
+      max-height: none;
+      gap: 0.5rem;
+    }
+
+    .date-nav-btn {
+      width: auto;
+      gap: 0.5rem;
+      border: 1px solid rgba(0, 0, 0, 0.08);
+    }
+
+    .archive-card {
+      grid-template-columns: 1fr;
+    }
+
+    .card-thumb-container {
+      aspect-ratio: 16/9;
+    }
+  }
 </style>

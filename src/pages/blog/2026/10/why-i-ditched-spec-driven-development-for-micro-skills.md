@@ -3,7 +3,7 @@ layout: ../../../../layouts/Layout.astro
 title: "Why I Ditched Spec-Driven Development for Micro-Skills"
 date: 2026-10-13
 description: "Upfront specification documents stall agent development, but composable micro-skills in a hub-and-spoke topology restore immediate execution velocity."
-tags: ["ai-agents", "software-engineering", "architecture", "developer-velocity"]
+tags: [AI Engineering, Architecture, Automation, Developer Velocity]
 heroImage: "https://pub-d8556b57257648feb0e7d903bdc8186f.r2.dev/src/pages/blog/2026/10/spec-driven-development-vs-micro-skills-hero.jpg"
 ---
 
