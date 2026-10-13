@@ -20,23 +20,73 @@ function getItemImage(item: any) {
   return url;
 }
 
-function formatDateString(dateVal: string | Date) {
-  const d = new Date(dateVal);
-  const year = d.getUTCFullYear();
-  const month = String(d.getUTCMonth() + 1).padStart(2, '0');
-  const day = String(d.getUTCDate()).padStart(2, '0');
-  return `${year}-${month}-${day}`;
+const monthNames = [
+  'January', 'February', 'March', 'April', 'May', 'June',
+  'July', 'August', 'September', 'October', 'November', 'December'
+];
+
+interface DateTree {
+  [year: string]: {
+    year: string;
+    count: number;
+    months: {
+      [monthKey: string]: {
+        monthKey: string;
+        monthName: string;
+        count: number;
+        days: {
+          [dateKey: string]: {
+            dateKey: string;
+            dayStr: string;
+            displayDate: string;
+            count: number;
+          };
+        };
+      };
+    };
+  };
 }
 
-// Compute counts by date
-const dateCounts: Record<string, number> = {};
+const dateTree: DateTree = {};
+
 posts.forEach((post) => {
-  const dateKey = formatDateString(post.frontmatter.date);
-  dateCounts[dateKey] = (dateCounts[dateKey] || 0) + 1;
+  const d = new Date(post.frontmatter.date);
+  const year = String(d.getUTCFullYear());
+  const monthNum = String(d.getUTCMonth() + 1).padStart(2, '0');
+  const monthName = monthNames[d.getUTCMonth()];
+  const monthKey = `${year}-${monthNum}`;
+  const dayStr = String(d.getUTCDate()).padStart(2, '0');
+  const dateKey = `${year}-${monthNum}-${dayStr}`;
+  const displayDate = `${monthName} ${dayStr}, ${year}`;
+
+  if (!dateTree[year]) {
+    dateTree[year] = { year, count: 0, months: {} };
+  }
+  dateTree[year].count++;
+
+  if (!dateTree[year].months[monthKey]) {
+    dateTree[year].months[monthKey] = {
+      monthKey,
+      monthName,
+      count: 0,
+      days: {}
+    };
+  }
+  dateTree[year].months[monthKey].count++;
+
+  if (!dateTree[year].months[monthKey].days[dateKey]) {
+    dateTree[year].months[monthKey].days[dateKey] = {
+      dateKey,
+      dayStr,
+      displayDate,
+      count: 0
+    };
+  }
+  dateTree[year].months[monthKey].days[dateKey].count++;
 });
 
-// Unique sorted dates
-const uniqueDates = Object.keys(dateCounts).sort((a, b) => b.localeCompare(a));
+// Sort years descending
+const sortedYears = Object.keys(dateTree).sort((a, b) => b.localeCompare(a));
 ---
 
 <Layout title="All Articles - Thinking Buffer">
@@ -45,7 +95,7 @@ const uniqueDates = Object.keys(dateCounts).sort((a, b) => b.localeCompare(a));
     <div class="header-content">
       <h1 class="archive-title">All Articles</h1>
       <p class="archive-subtitle">
-        Ordered chronologically by publication date. Select a date on the right to view its articles.
+        Ordered chronologically by publication date. Explore the archive by year, month, and date on the right.
       </p>
     </div>
   </div>
@@ -54,22 +104,28 @@ const uniqueDates = Object.keys(dateCounts).sort((a, b) => b.localeCompare(a));
     <!-- Main Articles Stream -->
     <section class="archive-feed" aria-label="Articles Feed">
       <div id="filter-banner" class="filter-banner" style="display: none;">
-        <span>Showing articles published on <strong id="filter-date-label"></strong></span>
+        <span>Showing articles for <strong id="filter-date-label"></strong></span>
         <button type="button" id="clear-filter-btn" class="clear-filter-btn">Show all articles</button>
       </div>
 
       <div class="articles-list" id="articles-list">
         {posts.map((post) => {
-          const dateKey = formatDateString(post.frontmatter.date);
-          const displayDate = new Date(post.frontmatter.date).toLocaleDateString('en-US', {
-            year: 'numeric',
-            month: 'long',
-            day: 'numeric',
-            timeZone: 'UTC'
-          });
+          const d = new Date(post.frontmatter.date);
+          const year = String(d.getUTCFullYear());
+          const monthNum = String(d.getUTCMonth() + 1).padStart(2, '0');
+          const monthKey = `${year}-${monthNum}`;
+          const dayStr = String(d.getUTCDate()).padStart(2, '0');
+          const dateKey = `${year}-${monthNum}-${dayStr}`;
+          const monthName = monthNames[d.getUTCMonth()];
+          const displayDate = `${monthName} ${dayStr}, ${year}`;
 
           return (
-            <article class="card archive-card" data-date={dateKey}>
+            <article
+              class="card archive-card"
+              data-year={year}
+              data-month={monthKey}
+              data-date={dateKey}
+            >
               {getItemImage(post) && (
                 <a href={post.url} class="card-thumb-link" tabindex="-1" aria-hidden="true">
                   <div class="card-thumb-container">
@@ -103,42 +159,106 @@ const uniqueDates = Object.keys(dateCounts).sort((a, b) => b.localeCompare(a));
       </div>
 
       <div id="no-results" class="no-results" style="display: none;">
-        <p>No articles found for the selected date.</p>
+        <p>No articles found for the selected timeframe.</p>
         <button type="button" id="reset-filter-btn" class="clear-filter-btn">Show all articles</button>
       </div>
     </section>
 
-    <!-- Right-Hand Dates Sidebar -->
+    <!-- Right-Hand Hierarchical Dates Sidebar -->
     <aside class="archive-sidebar" aria-label="Filter by Publication Date">
       <div class="sidebar-card">
         <div class="sidebar-header">
-          <h2 class="sidebar-title">Dates (YYYY-MM-DD)</h2>
+          <h2 class="sidebar-title">Archive</h2>
           <span class="sidebar-count">{posts.length} articles</span>
         </div>
-        <div class="dates-list" role="tablist" aria-orientation="vertical">
-          <button
-            type="button"
-            class="date-nav-btn active"
-            data-date="all"
-            role="tab"
-            aria-selected="true"
-          >
-            <span class="date-text">All Dates</span>
-            <span class="date-badge">{posts.length}</span>
-          </button>
 
-          {uniqueDates.map((dateStr) => (
-            <button
-              type="button"
-              class="date-nav-btn"
-              data-date={dateStr}
-              role="tab"
-              aria-selected="false"
-            >
-              <span class="date-text">{dateStr}</span>
-              <span class="date-badge">{dateCounts[dateStr]}</span>
-            </button>
-          ))}
+        <!-- All Articles reset button -->
+        <button
+          type="button"
+          class="tree-filter-btn all-articles-btn active"
+          data-type="all"
+          data-value="all"
+          data-label="All Articles"
+        >
+          <span class="tree-label">All Articles</span>
+          <span class="tree-badge">{posts.length}</span>
+        </button>
+
+        <div class="date-tree">
+          {sortedYears.map((yearKey) => {
+            const yearData = dateTree[yearKey];
+            const sortedMonthKeys = Object.keys(yearData.months).sort((a, b) => b.localeCompare(a));
+
+            return (
+              <details class="tree-details year-details" open data-year-container={yearKey}>
+                <summary class="tree-summary year-summary">
+                  <span class="chevron-wrapper" aria-hidden="true">
+                    <svg class="chevron-svg" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                      <polyline points="9 18 15 12 9 6"></polyline>
+                    </svg>
+                  </span>
+                  <button
+                    type="button"
+                    class="tree-filter-btn year-btn"
+                    data-type="year"
+                    data-value={yearKey}
+                    data-label={`${yearKey}`}
+                  >
+                    <span class="tree-label">{yearKey}</span>
+                    <span class="tree-badge">{yearData.count}</span>
+                  </button>
+                </summary>
+
+                <div class="tree-children months-container">
+                  {sortedMonthKeys.map((monthKey) => {
+                    const monthData = yearData.months[monthKey];
+                    const sortedDateKeys = Object.keys(monthData.days).sort((a, b) => b.localeCompare(a));
+
+                    return (
+                      <details class="tree-details month-details" open data-month-container={monthKey}>
+                        <summary class="tree-summary month-summary">
+                          <span class="chevron-wrapper" aria-hidden="true">
+                            <svg class="chevron-svg" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                              <polyline points="9 18 15 12 9 6"></polyline>
+                            </svg>
+                          </span>
+                          <button
+                            type="button"
+                            class="tree-filter-btn month-btn"
+                            data-type="month"
+                            data-value={monthKey}
+                            data-label={`${monthData.monthName} ${yearKey}`}
+                          >
+                            <span class="tree-label">{monthData.monthName}</span>
+                            <span class="tree-badge">{monthData.count}</span>
+                          </button>
+                        </summary>
+
+                        <div class="tree-children days-container">
+                          {sortedDateKeys.map((dateKey) => {
+                            const dayData = monthData.days[dateKey];
+
+                            return (
+                              <button
+                                type="button"
+                                class="tree-filter-btn day-btn"
+                                data-type="date"
+                                data-value={dateKey}
+                                data-label={`${monthData.monthName} ${dayData.dayStr}, ${yearKey}`}
+                              >
+                                <span class="tree-label">{dayData.dayStr}</span>
+                                <span class="tree-badge">{dayData.count}</span>
+                              </button>
+                            );
+                          })}
+                        </div>
+                      </details>
+                    );
+                  })}
+                </div>
+              </details>
+            );
+          })}
         </div>
       </div>
     </aside>
@@ -147,7 +267,7 @@ const uniqueDates = Object.keys(dateCounts).sort((a, b) => b.localeCompare(a));
 
 <script>
   function setupDateFilter() {
-    const dateButtons = document.querySelectorAll<HTMLButtonElement>('.date-nav-btn');
+    const filterButtons = document.querySelectorAll<HTMLButtonElement>('.tree-filter-btn');
     const articles = document.querySelectorAll<HTMLElement>('.archive-card');
     const banner = document.getElementById('filter-banner');
     const bannerLabel = document.getElementById('filter-date-label');
@@ -155,17 +275,31 @@ const uniqueDates = Object.keys(dateCounts).sort((a, b) => b.localeCompare(a));
     const resetBtn = document.getElementById('reset-filter-btn');
     const noResults = document.getElementById('no-results');
 
-    function applyFilter(selectedDate: string, updateUrl: boolean = true) {
-      dateButtons.forEach((btn) => {
-        const isActive = btn.dataset.date === selectedDate;
-        btn.classList.toggle('active', isActive);
-        btn.setAttribute('aria-selected', isActive ? 'true' : 'false');
+    function applyFilter(filterType: string, filterValue: string, labelText?: string, updateUrl: boolean = true) {
+      filterButtons.forEach((btn) => {
+        const isMatch = btn.dataset.type === filterType && btn.dataset.value === filterValue;
+        btn.classList.toggle('active', isMatch);
+        btn.setAttribute('aria-pressed', isMatch ? 'true' : 'false');
       });
 
       let matchCount = 0;
       articles.forEach((card) => {
+        const cardYear = card.dataset.year;
+        const cardMonth = card.dataset.month;
         const cardDate = card.dataset.date;
-        if (selectedDate === 'all' || cardDate === selectedDate) {
+
+        let isMatch = false;
+        if (filterType === 'all') {
+          isMatch = true;
+        } else if (filterType === 'year' && cardYear === filterValue) {
+          isMatch = true;
+        } else if (filterType === 'month' && cardMonth === filterValue) {
+          isMatch = true;
+        } else if (filterType === 'date' && cardDate === filterValue) {
+          isMatch = true;
+        }
+
+        if (isMatch) {
           card.style.display = 'grid';
           matchCount++;
         } else {
@@ -178,48 +312,66 @@ const uniqueDates = Object.keys(dateCounts).sort((a, b) => b.localeCompare(a));
       }
 
       if (banner && bannerLabel) {
-        if (selectedDate === 'all') {
+        if (filterType === 'all') {
           banner.style.display = 'none';
         } else {
           banner.style.display = 'flex';
-          bannerLabel.textContent = `${selectedDate} (${matchCount} ${matchCount === 1 ? 'article' : 'articles'})`;
+          const label = labelText || filterValue;
+          bannerLabel.textContent = `${label} (${matchCount} ${matchCount === 1 ? 'article' : 'articles'})`;
         }
       }
 
       if (updateUrl) {
-        if (selectedDate === 'all') {
+        if (filterType === 'all') {
           history.replaceState(null, '', window.location.pathname);
         } else {
-          window.location.hash = selectedDate;
+          window.location.hash = filterValue;
         }
       }
     }
 
-    dateButtons.forEach((btn) => {
-      btn.addEventListener('click', () => {
-        const dateKey = btn.dataset.date || 'all';
-        applyFilter(dateKey);
+    filterButtons.forEach((btn) => {
+      btn.addEventListener('click', (e) => {
+        e.stopPropagation(); // prevent collapsing summary when filtering
+        const parentDetails = btn.closest('details');
+        if (parentDetails && !parentDetails.open) {
+          parentDetails.open = true;
+        }
+        const filterType = btn.dataset.type || 'all';
+        const filterValue = btn.dataset.value || 'all';
+        const label = btn.dataset.label || btn.innerText;
+        applyFilter(filterType, filterValue, label);
       });
     });
 
     if (clearBtn) {
-      clearBtn.addEventListener('click', () => applyFilter('all'));
+      clearBtn.addEventListener('click', () => applyFilter('all', 'all', 'All Articles'));
     }
     if (resetBtn) {
-      resetBtn.addEventListener('click', () => applyFilter('all'));
+      resetBtn.addEventListener('click', () => applyFilter('all', 'all', 'All Articles'));
     }
 
-    // Handle initial hash in URL
+    // Handle initial hash in URL (e.g. #2026, #2026-10, #2026-10-13)
     if (window.location.hash) {
-      const hashDate = window.location.hash.replace(/^#/, '');
-      const matchingBtn = document.querySelector<HTMLButtonElement>(`.date-nav-btn[data-date="${hashDate}"]`);
+      const hashVal = window.location.hash.replace(/^#/, '');
+      const matchingBtn = document.querySelector<HTMLButtonElement>(`.tree-filter-btn[data-value="${hashVal}"]`);
       if (matchingBtn) {
-        applyFilter(hashDate, false);
+        // Ensure its parent details elements are opened
+        let parent = matchingBtn.parentElement;
+        while (parent) {
+          if (parent.tagName === 'DETAILS') {
+            (parent as HTMLDetailsElement).open = true;
+          }
+          parent = parent.parentElement;
+        }
+        const filterType = matchingBtn.dataset.type || 'all';
+        const label = matchingBtn.dataset.label || matchingBtn.innerText;
+        applyFilter(filterType, hashVal, label, false);
       }
     }
   }
 
-  // Initialize on page load and Astro view transitions if any
+  // Initialize on page load
   document.addEventListener('DOMContentLoaded', setupDateFilter);
   if (document.readyState === 'complete' || document.readyState === 'interactive') {
     setupDateFilter();
@@ -447,48 +599,98 @@ const uniqueDates = Object.keys(dateCounts).sort((a, b) => b.localeCompare(a));
     color: var(--text-muted);
   }
 
-  .dates-list {
-    display: flex;
-    flex-direction: column;
-    gap: 0.4rem;
-    max-height: calc(100vh - 12rem);
-    overflow-y: auto;
+  .all-articles-btn {
+    width: 100%;
+    margin-bottom: 0.75rem;
   }
 
-  .date-nav-btn {
+  /* Tree hierarchy styling */
+  .date-tree {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+    max-height: calc(100vh - 14rem);
+    overflow-y: auto;
+    padding-right: 0.25rem;
+  }
+
+  .tree-details {
+    width: 100%;
+  }
+
+  .tree-summary {
+    list-style: none;
+    display: flex;
+    align-items: center;
+    cursor: pointer;
+    user-select: none;
+    padding: 0.15rem 0;
+  }
+
+  .tree-summary::-webkit-details-marker {
+    display: none;
+  }
+
+  .chevron-wrapper {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 18px;
+    height: 18px;
+    color: #888888;
+    transition: transform 0.2s ease, color 0.2s ease;
+    flex-shrink: 0;
+  }
+
+  .tree-details[open] > .tree-summary > .chevron-wrapper {
+    transform: rotate(90deg);
+    color: #1A1A1A;
+  }
+
+  .tree-filter-btn {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    width: 100%;
-    padding: 0.55rem 0.75rem;
+    flex: 1;
+    padding: 0.45rem 0.65rem;
     border: none;
     border-radius: 8px;
     background: transparent;
     cursor: pointer;
     font-family: inherit;
-    font-size: 0.85rem;
     color: #333333;
     transition: background 0.15s ease, color 0.15s ease;
     text-align: left;
   }
 
-  .date-nav-btn .date-text {
-    font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
-    font-weight: 500;
-    font-size: 0.82rem;
-  }
-
-  .date-nav-btn:hover {
+  .tree-filter-btn:hover {
     background: #F1F5F9;
     color: #000000;
   }
 
-  .date-nav-btn.active {
+  .tree-filter-btn.active {
     background: #1A1A1A;
     color: #FFFFFF;
   }
 
-  .date-badge {
+  .year-btn .tree-label {
+    font-weight: 700;
+    font-size: 0.95rem;
+    letter-spacing: -0.01em;
+  }
+
+  .month-btn .tree-label {
+    font-weight: 600;
+    font-size: 0.88rem;
+  }
+
+  .day-btn .tree-label {
+    font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+    font-weight: 500;
+    font-size: 0.84rem;
+  }
+
+  .tree-badge {
     font-size: 0.72rem;
     font-weight: 600;
     padding: 0.15rem 0.45rem;
@@ -498,9 +700,32 @@ const uniqueDates = Object.keys(dateCounts).sort((a, b) => b.localeCompare(a));
     transition: background 0.15s ease, color 0.15s ease;
   }
 
-  .date-nav-btn.active .date-badge {
+  .tree-filter-btn.active .tree-badge {
     background: rgba(255, 255, 255, 0.25);
     color: #FFFFFF;
+  }
+
+  /* Indented tree levels */
+  .months-container {
+    display: flex;
+    flex-direction: column;
+    gap: 0.35rem;
+    padding-left: 0.85rem;
+    margin-top: 0.25rem;
+    border-left: 1px solid rgba(0, 0, 0, 0.06);
+  }
+
+  .days-container {
+    display: flex;
+    flex-direction: column;
+    gap: 0.25rem;
+    padding-left: 1.1rem;
+    margin-top: 0.2rem;
+    border-left: 1px solid rgba(0, 0, 0, 0.06);
+  }
+
+  .day-btn {
+    padding: 0.35rem 0.65rem;
   }
 
   .no-results {
@@ -527,17 +752,8 @@ const uniqueDates = Object.keys(dateCounts).sort((a, b) => b.localeCompare(a));
       order: -1;
     }
 
-    .dates-list {
-      flex-direction: row;
-      flex-wrap: wrap;
+    .date-tree {
       max-height: none;
-      gap: 0.5rem;
-    }
-
-    .date-nav-btn {
-      width: auto;
-      gap: 0.5rem;
-      border: 1px solid rgba(0, 0, 0, 0.08);
     }
 
     .archive-card {
