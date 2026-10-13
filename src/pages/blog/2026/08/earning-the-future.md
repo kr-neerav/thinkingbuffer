@@ -4,14 +4,14 @@ title: "Earning the Bright Future: Why We Can't Leave Tomorrow to Chance"
 date: 2026-08-07
 description: "Reflecting on Dr. Fei-Fei Li's words on why technological progress requires active risk mitigation rather than passive optimism."
 tags: ["ai", "books", "philosophy"]
-heroImage: "./earning-the-future-hero.jpg"
+heroImage: "https://pub-d8556b57257648feb0e7d903bdc8186f.r2.dev/src/pages/blog/2026/08/earning-the-future-hero.jpg"
 ---
 
 # Earning the Bright Future: Why We Can't Leave Tomorrow to Chance
 
 > Takeaway: A dependable future is never an accident; builders must actively mitigate foreseeable hazards to earn reliable outcomes.
 
-![Engineers inspect blueprints on site to mitigate structural construction risks](./earning-the-future-hero.jpg)
+![Engineers inspect blueprints on site to mitigate structural construction risks](https://pub-d8556b57257648feb0e7d903bdc8186f.r2.dev/src/pages/blog/2026/08/earning-the-future-hero.jpg)
 *Caption: Engineering teams review structural blueprints on site to mitigate critical project risks.*
 
 The growth of Artificial Intelligence (AI) looks promising to researchers and builders alike. However, lasting success is never guaranteed without deliberate preparation. We cannot rely on good intentions alone; building a dependable future requires us to test our assumptions with care.
@@ -31,7 +31,7 @@ Analogy (Civil Engineering): Bridge builders calculate wind shear and material f
 
 Engineers do not merely paint an attractive picture of cars crossing a gorge. They install structural dampers and inspect steel joints to survive heavy storms.
 
-![Builders string steel cables to construct a suspension bridge over deep water](./suspension-bridge-construction.jpg)
+![Builders string steel cables to construct a suspension bridge over deep water](https://pub-d8556b57257648feb0e7d903bdc8186f.r2.dev/src/pages/blog/2026/08/suspension-bridge-construction.jpg)
 
 The bridge stands because its creators anticipated points of failure early. Looking at our software workflows, I see that same discipline across shared organizational checkpoints:
 
