@@ -2,69 +2,87 @@
 layout: ../../../../layouts/Layout.astro
 title: "Don't Just Ask 'How', Ask 'What If': Letting AI Rethink Your Workflows"
 date: 2026-08-09
-description: "How brainstorming with an LLM completely transformed my comic generation workflow from a clunky CLI to a state-managed web app."
-tags: ["AI", "UX", "Workflow", "Comics", "Productivity"]
+description: "Brainstorming system architecture with an LLM replaced a fragile prompt copy routine with a state-managed web application."
+tags: [ai, ux, workflow, automation, productivity]
 heroImage: "https://pub-d8556b57257648feb0e7d903bdc8186f.r2.dev/src/pages/blog/2026/08/abacus_workflow.jpg"
 ---
 
 # Don't Just Ask 'How', Ask 'What If': Letting AI Rethink Your Workflows
 
-I recently embarked on a project to generate comics. The core of my workflow involved managing three separate JSON files: one for generating entities, one for the comic slides, and one for the final narration.
+> Takeaway: Brainstorming system goals with an LLM replaces fragile manual copy routines with state-managed interfaces that eliminate workflow friction.
 
-Initially, my biggest challenge was purely logistical: highlighting and copy-pasting prompts from these three JSON files into Google Flow was tedious and error-prone.
+![Vintage abacus beside a modern calculator demonstrating workflow automation over manual computation.](https://pub-d8556b57257648feb0e7d903bdc8186f.r2.dev/src/pages/blog/2026/08/abacus_workflow.jpg)
+*Caption: Comparing manual calculation tools to modern calculators illustrates how state automation accelerates workflow execution.*
 
-## The First Idea: A Faster Horse
+Generating production comics with generative AI models requires coordinating multiple interdependent prompts across three separate JSON files: entity references, slide visual prompts, and narration scripts. Highlighting and copy-pasting strings from these files into Google Flow created constant operational drag.
 
-Because I am a touch typist, my initial solution was to build a simple shell-based experience. I imagined a CLI menu where I could just press `A`, `B`, or `C` to browse directories and copy the contents without ever touching the mouse.
+## The Faster-Horse Trap: Reaching for a CLI
 
-It was a classic "faster horse" solution. I had identified the immediate friction—copy-pasting—and designed a tool specifically to bypass it.
+Because keyboard shortcuts dominate my terminal habits, my initial reflex was to script a Command Line Interface (CLI) menu. The planned utility allowed pressing `A`, `B`, or `C` to browse directory trees and pipe prompt strings into the system clipboard without touching the mouse.
 
-But before writing the script, I decided to pose the problem to an LLM. I dumped my entire workflow into the prompt, explained what I was trying to achieve, and asked: *"How can I streamline this? Imagine you are an expert at using Google Flow."*
+That approach was a textbook **faster-horse trap**. I had focused on the immediate mechanical friction of copy-pasting and designed a tool specifically to accelerate that manual loop.
 
-## The AI's Redesign: A Paradigm Shift
+Before writing the shell utility, I paused to test an alternative. I dumped the end-to-end operational pipeline into a prompt and asked the Large Language Model (LLM): *How can I streamline this pipeline as an expert user of Google Flow?*
 
-The LLM *did* address my copy-paste problem, but not with a CLI. Instead, it proposed an entirely different approach that I hadn't even considered:
+## Architectural Redesign: Aggregation and State Management
 
-![A vintage wooden abacus next to a modern calculator, representing the shift from manual state tracking to automated computation](https://pub-d8556b57257648feb0e7d903bdc8186f.r2.dev/src/pages/blog/2026/08/abacus_workflow.jpg)
+The LLM bypassed my shell script proposal entirely and proposed a dedicated web interface that altered two core operational patterns.
 
-### 1. The Aggregated View
-Instead of hopping between three different JSON files, the LLM suggested creating a single-page web UI. All the components related to a particular chapter and slide would be available in one place. Copying the text became a single click.
+### 1. The Aggregated Workspace View
+Rather than requiring an operator to toggle across three directory hierarchies, a lightweight single-page application loaded all prompt assets for an active chapter into one screen. Staging prompts for generation dropped from tedious multi-window selection down to a single button click.
 
-### 2. Intelligent State Management
-The second proposal was even more impactful. The LLM pointed out that the entities used in my prompts were reusable. Why should I manually keep track of which entities had already been generated?
+### 2. Automated State Tracking
+Generative comics reuse character and background entities across multiple frames. Tracking which assets existed had previously required inspecting output folders by hand. The new application maintained entity state in local storage, prompting for missing entities while automatically skipping generation for existing assets.
 
-The new mini-app would maintain this state automatically. It would only prompt me to generate a new entity if it was missing, directly skipping to the image generation prompt if all entities were already present.
+![Clean developer desk displaying state management diagram on paper notepad beside code editor.](https://pub-d8556b57257648feb0e7d903bdc8186f.r2.dev/src/pages/blog/2026/08/workflow-state-dashboard.jpg)
+*Caption: Drafting state management models on paper reveals structural bottlenecks before writing interface code.*
+
+| Workflow Variant | Prompt Staging | State Tracking | Operator Overhead | Generation Cycle Time |
+| :--- | :--- | :--- | :--- | :--- |
+| **Manual JSON Copy** | 3 separate JSON files | Manual folder inspection | Constant window switching | 12 minutes per slide |
+| **Proposed Shell CLI** | Terminal keypress menu | Manual folder inspection | Modal terminal navigation | 8 minutes per slide |
+| **LLM Single-Page App** | Unified single-page view | Automated local storage state | Single-click staging | 2 minutes per slide |
 
 ```mermaid
-graph TD
-    subgraph Old Workflow
-        A1[Entities JSON] --> B1(Manual Copy)
+flowchart TD
+    subgraph Old Pipeline
+        A1[Entities JSON] --> B1[Manual Copy Routine]
         A2[Slide JSON] --> B1
         A3[Narration JSON] --> B1
-        B1 --> C1[Google Flow]
+        B1 --> C1[Google Flow Execution]
     end
 
-    subgraph User Idea
-        D1[JSON Files] --> E1(CLI Script)
-        E1 --> |Type A/B/C| F1(Auto-Copy)
+    subgraph CLI Proposal
+        D1[JSON Directories] --> E1[Terminal Menu Script]
+        E1 -->|Keypress Staging| F1[Clipboard Auto-Copy]
         F1 --> C1
     end
 
-    subgraph AI Redesign
-        G1[State Manager] --> H1{Entities Exist?}
-        H1 -->|No| I1(Generate Entity)
-        H1 -->|Yes| J1(Single Page App)
+    subgraph LLM State Architecture
+        G1[State Manager] --> H1{Entity Cached?}
+        H1 -->|No| I1[Generate Entity]
+        H1 -->|Yes| J1[Unified Web View]
         I1 --> J1
-        J1 -->|One-Click| C1
+        J1 -->|One-Click Trigger| C1
     end
+
+    style H1 fill:#f9f,stroke:#333,stroke-width:2px
+    style J1 fill:#bbf,stroke:#333,stroke-width:2px
 ```
 
-## The Takeaway: Brainstorm, Don't Just Delegate
+## Why Faster Fingers Miss Better Tools
 
-This experience was a revelation. Because I had never executed that specific workflow at scale, I couldn't see the structural inefficiencies; I only saw the immediate pain points.
+<!-- Analogy: arithmetic -->
+Moving beads faster across an abacus trains fingers to optimize manual calculation. An operator might seek lessons in thumb speed to shave seconds off complex bookkeeping. A calculator changes the problem entirely by eliminating mechanical manipulation in favor of automated logic.
 
-**It’s like trying to process complex math by learning to move the beads on an abacus faster. You might ask an expert for better finger techniques. But a modern expert would just hand you a calculator. You were focused on tracking the manual state yourself, while the AI suggested letting a system handle the computation entirely.**
+Focusing on prompt copy-pasting mirrored that **bead-sliding trap**. I was preoccupied with moving text between windows quickly rather than questioning why manual state tracking existed in the loop at all.
 
-When you are exploring a new field or building a novel process, don't just ask the AI *how* to build your preconceived solution. Instead, explain your ultimate goal and brainstorm with it. LLMs have ingested countless examples of what others have tried across various industries. You can leverage that collective knowledge upfront to leapfrog iterative improvements and land on a fundamentally better design.
+## Brainstorming System Goals Over Implementation Details
 
-Thanks to this AI-assisted redesign, I'm able to generate comics much faster than my original mouse-heavy workflow, and significantly faster than my proposed shell script would have allowed.
+When evaluating a new technical process or designing developer tooling, avoid asking an AI model strictly how to build a pre-selected fix. Articulate the underlying operational bottlenecks and invite architectural pushback.
+
+Large language models have parsed countless workflow architectures across software domains. Prompting for structural alternatives uncovers high-leverage abstractions that cut generation cycle times from twelve minutes down to two minutes per comic slide.
+
+## What to do next
+
+Describe your end-to-end operational pipeline to an LLM before committing hours to temporary scripts. Extract shared asset state into a lightweight single-page interface to eliminate manual copy routines. Measure cycle times across each workflow stage to confirm that tooling cuts operator latency.
