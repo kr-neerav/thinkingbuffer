@@ -21,7 +21,8 @@ Tracked backlog of upcoming technical blog posts sourced from weekly journal ref
 
 ## 2. Understanding Systems, Not Syntax: Managing Cognitive Load in the Age of Frontier Models
 * **Source:** `../journal/2026/10/15.md` (Thursday, Oct 15, lines 54-56)
-* **Status:** Queued
+* **File:** `src/pages/blog/2026/10/systems-not-syntax.md`
+* **Status:** Completed (Published)
 * **Thesis:** As AI models surface combinatorial edge cases, trying to out-memorize syntax or asking open-ended questions like "what do you recommend?" causes cognitive exhaustion and analysis paralysis. Senior leverage comes from mastering system mental models, operational invariants, and organizational context, while treating syntax generation as a disposable commodity.
 * **Core Pillars & Narrative Arc:**
   1. **Cognitive Overwhelm:** Frontier models dumping exhaustive configurations and obscure parameters beyond human working memory.
