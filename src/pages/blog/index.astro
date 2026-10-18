@@ -34,14 +34,6 @@ interface DateTree {
         monthKey: string;
         monthName: string;
         count: number;
-        days: {
-          [dateKey: string]: {
-            dateKey: string;
-            dayStr: string;
-            displayDate: string;
-            count: number;
-          };
-        };
       };
     };
   };
@@ -55,9 +47,6 @@ posts.forEach((post) => {
   const monthNum = String(d.getUTCMonth() + 1).padStart(2, '0');
   const monthName = monthNames[d.getUTCMonth()];
   const monthKey = `${year}-${monthNum}`;
-  const dayStr = String(d.getUTCDate()).padStart(2, '0');
-  const dateKey = `${year}-${monthNum}-${dayStr}`;
-  const displayDate = `${monthName} ${dayStr}, ${year}`;
 
   if (!dateTree[year]) {
     dateTree[year] = { year, count: 0, months: {} };
@@ -68,21 +57,10 @@ posts.forEach((post) => {
     dateTree[year].months[monthKey] = {
       monthKey,
       monthName,
-      count: 0,
-      days: {}
-    };
-  }
-  dateTree[year].months[monthKey].count++;
-
-  if (!dateTree[year].months[monthKey].days[dateKey]) {
-    dateTree[year].months[monthKey].days[dateKey] = {
-      dateKey,
-      dayStr,
-      displayDate,
       count: 0
     };
   }
-  dateTree[year].months[monthKey].days[dateKey].count++;
+  dateTree[year].months[monthKey].count++;
 });
 
 // Sort years descending
@@ -95,7 +73,7 @@ const sortedYears = Object.keys(dateTree).sort((a, b) => b.localeCompare(a));
     <div class="header-content">
       <h1 class="archive-title">All Articles</h1>
       <p class="archive-subtitle">
-        Ordered chronologically by publication date. Explore the archive by year, month, and date on the right.
+        Ordered chronologically by publication date. Explore the archive by year and month on the right.
       </p>
     </div>
   </div>
@@ -212,47 +190,18 @@ const sortedYears = Object.keys(dateTree).sort((a, b) => b.localeCompare(a));
                 <div class="tree-children months-container">
                   {sortedMonthKeys.map((monthKey) => {
                     const monthData = yearData.months[monthKey];
-                    const sortedDateKeys = Object.keys(monthData.days).sort((a, b) => b.localeCompare(a));
 
                     return (
-                      <details class="tree-details month-details" open data-month-container={monthKey}>
-                        <summary class="tree-summary month-summary">
-                          <span class="chevron-wrapper" aria-hidden="true">
-                            <svg class="chevron-svg" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
-                              <polyline points="9 18 15 12 9 6"></polyline>
-                            </svg>
-                          </span>
-                          <button
-                            type="button"
-                            class="tree-filter-btn month-btn"
-                            data-type="month"
-                            data-value={monthKey}
-                            data-label={`${monthData.monthName} ${yearKey}`}
-                          >
-                            <span class="tree-label">{monthData.monthName}</span>
-                            <span class="tree-badge">{monthData.count}</span>
-                          </button>
-                        </summary>
-
-                        <div class="tree-children days-container">
-                          {sortedDateKeys.map((dateKey) => {
-                            const dayData = monthData.days[dateKey];
-
-                            return (
-                              <button
-                                type="button"
-                                class="tree-filter-btn day-btn"
-                                data-type="date"
-                                data-value={dateKey}
-                                data-label={`${monthData.monthName} ${dayData.dayStr}, ${yearKey}`}
-                              >
-                                <span class="tree-label">{dayData.dayStr}</span>
-                                <span class="tree-badge">{dayData.count}</span>
-                              </button>
-                            );
-                          })}
-                        </div>
-                      </details>
+                      <button
+                        type="button"
+                        class="tree-filter-btn month-btn"
+                        data-type="month"
+                        data-value={monthKey}
+                        data-label={`${monthData.monthName} ${yearKey}`}
+                      >
+                        <span class="tree-label">{monthData.monthName}</span>
+                        <span class="tree-badge">{monthData.count}</span>
+                      </button>
                     );
                   })}
                 </div>
@@ -294,8 +243,6 @@ const sortedYears = Object.keys(dateTree).sort((a, b) => b.localeCompare(a));
         } else if (filterType === 'year' && cardYear === filterValue) {
           isMatch = true;
         } else if (filterType === 'month' && cardMonth === filterValue) {
-          isMatch = true;
-        } else if (filterType === 'date' && cardDate === filterValue) {
           isMatch = true;
         }
 
@@ -351,10 +298,15 @@ const sortedYears = Object.keys(dateTree).sort((a, b) => b.localeCompare(a));
       resetBtn.addEventListener('click', () => applyFilter('all', 'all', 'All Articles'));
     }
 
-    // Handle initial hash in URL (e.g. #2026, #2026-10, #2026-10-13)
+    // Handle initial hash in URL (e.g. #2026, #2026-10)
     if (window.location.hash) {
       const hashVal = window.location.hash.replace(/^#/, '');
-      const matchingBtn = document.querySelector<HTMLButtonElement>(`.tree-filter-btn[data-value="${hashVal}"]`);
+      let matchingBtn = document.querySelector<HTMLButtonElement>(`.tree-filter-btn[data-value="${hashVal}"]`);
+      if (!matchingBtn && hashVal.length > 7) {
+        // Fallback for legacy date hashes (YYYY-MM-DD -> YYYY-MM)
+        const monthPrefix = hashVal.slice(0, 7);
+        matchingBtn = document.querySelector<HTMLButtonElement>(`.tree-filter-btn[data-value="${monthPrefix}"]`);
+      }
       if (matchingBtn) {
         // Ensure its parent details elements are opened
         let parent = matchingBtn.parentElement;
@@ -366,7 +318,7 @@ const sortedYears = Object.keys(dateTree).sort((a, b) => b.localeCompare(a));
         }
         const filterType = matchingBtn.dataset.type || 'all';
         const label = matchingBtn.dataset.label || matchingBtn.innerText;
-        applyFilter(filterType, hashVal, label, false);
+        applyFilter(filterType, matchingBtn.dataset.value || hashVal, label, false);
       }
     }
   }
@@ -680,14 +632,12 @@ const sortedYears = Object.keys(dateTree).sort((a, b) => b.localeCompare(a));
   }
 
   .month-btn .tree-label {
-    font-weight: 600;
+    font-weight: 500;
     font-size: 0.88rem;
   }
 
-  .day-btn .tree-label {
-    font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
-    font-weight: 500;
-    font-size: 0.84rem;
+  .month-btn {
+    padding: 0.35rem 0.65rem;
   }
 
   .tree-badge {
@@ -709,23 +659,10 @@ const sortedYears = Object.keys(dateTree).sort((a, b) => b.localeCompare(a));
   .months-container {
     display: flex;
     flex-direction: column;
-    gap: 0.35rem;
-    padding-left: 0.85rem;
+    gap: 0.25rem;
+    padding-left: 1.2rem;
     margin-top: 0.25rem;
     border-left: 1px solid rgba(0, 0, 0, 0.06);
-  }
-
-  .days-container {
-    display: flex;
-    flex-direction: column;
-    gap: 0.25rem;
-    padding-left: 1.1rem;
-    margin-top: 0.2rem;
-    border-left: 1px solid rgba(0, 0, 0, 0.06);
-  }
-
-  .day-btn {
-    padding: 0.35rem 0.65rem;
   }
 
   .no-results {
