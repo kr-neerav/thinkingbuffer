@@ -281,7 +281,7 @@ def update_chapter_file(file_path: Path, entry: dict):
 
     # Strip any existing or misplaced pane-media block in body
     body = re.sub(
-        r'<!-- TAB 3: AUDIO & VIDEO -->\s*<div class="tab-pane"[^>]*id="pane-media".*?</div>\s*</div>\s*</div>\s*',
+        r'<!-- TAB 3: AUDIO & VIDEO -->.*?(?=\s*<div class="nav-links-chapter">|\Z)',
         '',
         body,
         flags=re.DOTALL
@@ -314,7 +314,21 @@ def main():
     target_files = {
         "intro": COMICS_DIR / "introduction" / "index.md",
         "1:1": COMICS_DIR / "Book_01_Bala_Kanda" / "Book_1_Bala_Kanda_Chapter_1" / "index.md",
+        "1:2": COMICS_DIR / "Book_01_Bala_Kanda" / "Book_1_Bala_Kanda_Chapter_2" / "index.md",
     }
+
+    # Dynamically discover any remaining targets in the database
+    for key, entry in db.items():
+        if key in target_files:
+            continue
+        book_num = entry.get("book_num")
+        chap_num = entry.get("chapter_num")
+        if book_num is not None and chap_num is not None:
+            matches = list(COMICS_DIR.glob(f"Book_{book_num:02d}_*/Book_{book_num}_*_Chapter_{chap_num}/index.md"))
+            if not matches:
+                matches = list(COMICS_DIR.glob(f"Book_{book_num}_*/Book_{book_num}_*_Chapter_{chap_num}/index.md"))
+            if matches:
+                target_files[key] = matches[0]
 
     for key, path in target_files.items():
         if key in db and path.exists():

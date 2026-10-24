@@ -14,9 +14,14 @@ sanskrit_title: "Krauñca Vadha & Śloka Utpatti"
 english_title: "Valmiki witnesses the hunter killing a krauncha bird; spontaneous emergence of the first Shloka"
 has_hindi: true
 has_narration: true
+has_media: true
+spotify_en: "https://open.spotify.com/episode/0AZd100zHipvVPOJd5pyn6"
+spotify_hi: "https://open.spotify.com/episode/21D9IFJPHxxSeLyBZJMGex"
+youtube_url: "https://www.youtube.com/watch?v=h-rQ9YYxEvg"
+youtube_en: "https://www.youtube.com/watch?v=h-rQ9YYxEvg"
+youtube_hi: "https://www.youtube.com/watch?v=ldn-7TTpV9s"
 status: "published"
 ---
-
 <div class="nav-links-chapter">
 <a href="/comics/ramayana/Book_01_Bala_Kanda/Book_1_Bala_Kanda_Chapter_1/" class="prev-link">← Previous Chapter</a>
 <a href="/comics/ramayana/Book_01_Bala_Kanda/Book_1_Bala_Kanda_Chapter_3/" class="next-link">Next Chapter →</a>
@@ -530,6 +535,109 @@ status: "published"
 </article>
 </div>
 </section>
+
+</div>
+</div>
+
+<!-- TAB 3: AUDIO & VIDEO -->
+<div class="tab-pane" id="pane-media" data-pane="media">
+<div class="media-view-container">
+
+<div class="section-title-bar">
+<span class="section-badge">Listen & Watch</span>
+<h2 class="section-heading lang-en">Audio & Video Episodes</h2>
+<h2 class="section-heading lang-hi">ऑडियो एवं वीडियो प्रसंग</h2>
+<p class="section-subheading lang-en">Experience this chapter through sound and screen: stream the narrated podcast on Spotify or watch the inline video.</p>
+<p class="section-subheading lang-hi">ध्वनि और दृश्य के माध्यम से प्रसंग का अनुभव करें: स्पॉटिफ़ाई पर पॉडकास्ट सुनें या सीधे यहीं वीडियो देखें।</p>
+</div>
+
+<div class="media-sections-wrapper">
+
+<!-- Audio Card: Spotify -->
+<section class="media-card audio-media-card">
+<div class="media-card-header">
+<div class="media-card-header-left">
+<span class="media-type-badge audio-badge">
+<svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor">
+<path d="M12 2C6.477 2 2 6.477 2 12c0 4.991 3.657 9.128 8.438 9.879V14.89h-2.54V12h2.54V9.797c0-2.506 1.492-3.89 3.777-3.89 1.094 0 2.238.195 2.238.195v2.46h-1.26c-1.243 0-1.63.771-1.63 1.562V12h2.773l-.443 2.89h-2.33v6.988C18.343 21.128 22 16.991 22 12c0-5.523-4.477-10-10-10z"/>
+</svg>
+Spotify Audio
+</span>
+<h3 class="media-card-title lang-en">Narrated Podcast Episode</h3>
+<h3 class="media-card-title lang-hi">कथा पॉडकास्ट प्रसंग</h3>
+</div>
+<div class="media-track-indicator">
+<span class="track-pill lang-en">English Edition • Narrated by Kavya</span>
+<span class="track-pill lang-hi">हिन्दी संस्करण • काव्या द्वारा प्रस्तुत</span>
+</div>
+</div>
+
+<div class="media-player-container">
+<!-- English Spotify Embed -->
+<div class="spotify-embed-wrapper lang-en">
+<iframe style="border-radius:12px" src="https://open.spotify.com/embed/episode/0AZd100zHipvVPOJd5pyn6?utm_source=generator" width="100%" height="232" frameBorder="0" allowfullscreen="" allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture" loading="lazy"></iframe>
+</div>
+<!-- Hindi Spotify Embed -->
+<div class="spotify-embed-wrapper lang-hi">
+<iframe style="border-radius:12px" src="https://open.spotify.com/embed/episode/21D9IFJPHxxSeLyBZJMGex?utm_source=generator" width="100%" height="232" frameBorder="0" allowfullscreen="" allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture" loading="lazy"></iframe>
+</div>
+</div>
+
+<div class="media-card-footer">
+<p class="media-hint lang-en">
+💡 <em>Want to listen in Hindi? Use the toolbar language toggle above or <a href="javascript:void(0)" class="quick-lang-switch" data-switch-to="hi">switch to हिन्दी audio</a>.</em>
+</p>
+<p class="media-hint lang-hi">
+💡 <em>अंग्रेज़ी में सुनना चाहते हैं? ऊपर भाषा टॉगल का उपयोग करें या <a href="javascript:void(0)" class="quick-lang-switch" data-switch-to="en">English ऑडियो पर जाएँ</a>।</em>
+</p>
+</div>
+</section>
+
+<!-- Video Card: YouTube -->
+<section class="media-card video-media-card">
+<div class="media-card-header">
+<div class="media-card-header-left">
+<span class="media-type-badge video-badge">
+<svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor">
+<path d="M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z"/>
+</svg>
+YouTube Video
+</span>
+<h3 class="media-card-title lang-en">Visual Chronicle</h3>
+<h3 class="media-card-title lang-hi">सचित्र वीडियो कथा</h3>
+</div>
+<div class="media-track-indicator">
+<span class="track-pill lang-en">English Edition</span>
+<span class="track-pill lang-hi">हिन्दी संस्करण</span>
+</div>
+</div>
+
+<div class="media-player-container">
+<!-- English YouTube Embed -->
+<div class="video-embed-wrapper lang-en">
+<div class="video-embed-container">
+<iframe src="https://www.youtube-nocookie.com/embed/h-rQ9YYxEvg" title="Chapter Video (English)" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen loading="lazy"></iframe>
+</div>
+</div>
+<!-- Hindi YouTube Embed -->
+<div class="video-embed-wrapper lang-hi">
+<div class="video-embed-container">
+<iframe src="https://www.youtube-nocookie.com/embed/ldn-7TTpV9s" title="Chapter Video (Hindi)" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen loading="lazy"></iframe>
+</div>
+</div>
+</div>
+
+<div class="media-card-footer">
+<p class="media-hint lang-en">
+💡 <em>Want to watch in Hindi? Use the toolbar language toggle above or <a href="javascript:void(0)" class="quick-lang-switch" data-switch-to="hi">switch to हिन्दी</a>.</em>
+</p>
+<p class="media-hint lang-hi">
+💡 <em>अंग्रेज़ी में देखना चाहते हैं? ऊपर भाषा टॉगल का उपयोग करें या <a href="javascript:void(0)" class="quick-lang-switch" data-switch-to="en">English पर जाएँ</a>।</em>
+</p>
+</div>
+</section>
+
+</div>
 
 </div>
 </div>
