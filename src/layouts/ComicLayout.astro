@@ -613,6 +613,13 @@ const isIntro = urlPath.includes('/introduction') || derivedSectionNum === 0 || 
     text-align: center;
   }
 
+  .insights-divider {
+    margin-top: 3.5rem;
+    margin-bottom: 2rem;
+    padding-top: 2rem;
+    border-top: 1px dashed rgba(0, 0, 0, 0.08);
+  }
+
   .section-badge {
     font-size: 0.78rem;
     font-weight: 700;
@@ -838,7 +845,8 @@ const isIntro = urlPath.includes('/introduction') || derivedSectionNum === 0 || 
     padding: 1.5rem;
   }
 
-  .spotify-embed-wrapper {
+  .spotify-embed-wrapper,
+  .video-embed-wrapper {
     width: 100%;
     border-radius: 12px;
     overflow: hidden;

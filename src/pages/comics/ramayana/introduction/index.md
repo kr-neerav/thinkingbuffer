@@ -1,7 +1,7 @@
 ---
-layout: ../../../../layouts/ComicLayout.astro
+layout: "../../../../layouts/ComicLayout.astro"
 title: "Introduction: Welcome to the Odyssey"
-date: 2026-08-23
+date: "2026-08-23"
 tags: ["Ramayana", "Comics", "Mythology", "Introduction"]
 image_url: "https://pub-922d698a65e14ae9aeb30a4c6aacdaed.r2.dev/src/pages/comics/ramayana/introduction/slides/slide_01_final.jpg"
 heroImage: "https://pub-922d698a65e14ae9aeb30a4c6aacdaed.r2.dev/src/pages/comics/ramayana/introduction/slides/slide_01_final.jpg"
@@ -17,10 +17,11 @@ has_narration: false
 has_media: true
 spotify_en: "https://open.spotify.com/episode/4pAbbGom38zKsf5oLanUkt"
 spotify_hi: "https://open.spotify.com/episode/6ejakwTisIvNWD7Ef8DPSQ"
-youtube_url: ""
+youtube_url: "https://www.youtube.com/watch?v=_v_VUHrMpP0"
+youtube_en: "https://www.youtube.com/watch?v=_v_VUHrMpP0"
+youtube_hi: "https://www.youtube.com/watch?v=by73BoDebzE"
 status: "published"
 ---
-
 <div class="nav-links-chapter">
 <a href="/comics/ramayana/" class="prev-link">← Ramayana Master Index</a>
 <a href="/comics/ramayana/Book_01_Bala_Kanda/Book_1_Bala_Kanda_Chapter_1/" class="next-link">Book 1, Chapter 1: The Sage's Question →</a>
@@ -77,27 +78,11 @@ status: "published"
 <article class="comic-slide-card" id="slide-04">
 <div class="slide-card-header">
 <span class="slide-badge">Slide 04</span>
-<span class="slide-type-badge">Insight</span>
-<h3 class="slide-title lang-en">Transforming Lore into Life</h3>
-<h3 class="slide-title lang-hi">Transforming Lore into Life</h3>
-</div>
-<div class="slide-image-wrapper">
-<img src="https://pub-922d698a65e14ae9aeb30a4c6aacdaed.r2.dev/src/pages/comics/ramayana/introduction/slides/slide_04_final.jpg" alt="Slide 04 - Transforming Lore into Life" loading="lazy" />
-</div>
-<div class="slide-caption-wrapper">
-<p class="slide-caption-text lang-en">Why do we pair deep dive questions with every chapter? Because mythology is the mirror of human consciousness. By examining the complex choices of these characters, we extract actionable real - world lessons - making timeless wisdom easy to understand, remember, and apply to our modern personal, professional, and ethical decisions.</p>
-<p class="slide-caption-text lang-hi">हर अध्याय के साथ गहन प्रश्न क्यों? क्योंकि पौराणिक कथाएँ मानव चेतना का दर्पण हैं। इन पात्रों के जटिल निर्णयों का परीक्षण करके हम ऐसे पाठ निकालते हैं जो आज के व्यक्तिगत, व्यावसायिक और नैतिक निर्णयों में समझने, याद रखने और अपनाने में सरल हों।</p>
-</div>
-</article>
-
-<article class="comic-slide-card" id="slide-05">
-<div class="slide-card-header">
-<span class="slide-badge">Slide 05</span>
 <h3 class="slide-title lang-en">The Executive Summary Chapters</h3>
 <h3 class="slide-title lang-hi">The Executive Summary Chapters</h3>
 </div>
 <div class="slide-image-wrapper">
-<img src="https://pub-922d698a65e14ae9aeb30a4c6aacdaed.r2.dev/src/pages/comics/ramayana/introduction/slides/slide_05_final.jpg" alt="Slide 05 - The Executive Summary Chapters" loading="lazy" />
+<img src="https://pub-922d698a65e14ae9aeb30a4c6aacdaed.r2.dev/src/pages/comics/ramayana/introduction/slides/slide_05_final.jpg" alt="Slide 04 - The Executive Summary Chapters" loading="lazy" />
 </div>
 <div class="slide-caption-wrapper">
 <p class="slide-caption-text lang-en">A vital note as we begin: the opening chapters of Bala Kanda serve as the epic’s 'Executive Summary.' Much like the concise overview at the start of a massive document, Maharishi Valmiki compressed Rama's entire lifetime arc into these initial cantos to establish the grand overarching framework before diving into detail.</p>
@@ -105,18 +90,41 @@ status: "published"
 </div>
 </article>
 
-<article class="comic-slide-card" id="slide-06">
+<article class="comic-slide-card" id="slide-05">
 <div class="slide-card-header">
-<span class="slide-badge">Slide 06</span>
+<span class="slide-badge">Slide 05</span>
 <h3 class="slide-title lang-en">The Unfolding Chronicle Ahead</h3>
 <h3 class="slide-title lang-hi">The Unfolding Chronicle Ahead</h3>
 </div>
 <div class="slide-image-wrapper">
-<img src="https://pub-922d698a65e14ae9aeb30a4c6aacdaed.r2.dev/src/pages/comics/ramayana/introduction/slides/slide_06_final.jpg" alt="Slide 06 - The Unfolding Chronicle Ahead" loading="lazy" />
+<img src="https://pub-922d698a65e14ae9aeb30a4c6aacdaed.r2.dev/src/pages/comics/ramayana/introduction/slides/slide_06_final.jpg" alt="Slide 05 - The Unfolding Chronicle Ahead" loading="lazy" />
 </div>
 <div class="slide-caption-wrapper">
 <p class="slide-caption-text lang-en">Because these early chapters summarize the entire epic, the pacing is swift and you might feel some context is condensed. Rest assured, the detailed, scene - by - scene chronicle begins just a few chapters down the line. We have faithfully preserved this original narrative structure exactly as Maharishi Valmiki composed it.</p>
 <p class="slide-caption-text lang-hi">चूँकि ये आरंभिक अध्याय पूरे महाकाव्य का सार प्रस्तुत करते हैं, गति तेज़ लगेगी और कुछ संदर्भ संक्षिप्त प्रतीत हो सकते हैं। निश्चिंत रहें - विस्तृत, दृश्य - दर - दृश्य वृत्तांत कुछ ही अध्यायों बाद आरंभ होता है। हमने यह मूल कथा - संरचना ठीक वैसे ही बनाए रखी है जैसे महर्षि वाल्मीकि ने रची थी।</p>
+</div>
+</article>
+
+<!-- CHAPTER INSIGHTS -->
+<div class="section-title-bar insights-divider">
+<span class="section-badge">Chapter Insights</span>
+<h2 class="section-heading lang-en">Reflections & Key Insights</h2>
+<h2 class="section-heading lang-hi">दार्शनिक अंतर्दृष्टि एवं विचार</h2>
+</div>
+
+<article class="comic-slide-card" id="slide-06">
+<div class="slide-card-header">
+<span class="slide-badge">Slide 06</span>
+<span class="slide-type-badge">Insight</span>
+<h3 class="slide-title lang-en">Transforming Lore into Life</h3>
+<h3 class="slide-title lang-hi">Transforming Lore into Life</h3>
+</div>
+<div class="slide-image-wrapper">
+<img src="https://pub-922d698a65e14ae9aeb30a4c6aacdaed.r2.dev/src/pages/comics/ramayana/introduction/slides/slide_04_final.jpg" alt="Slide 06 - Transforming Lore into Life" loading="lazy" />
+</div>
+<div class="slide-caption-wrapper">
+<p class="slide-caption-text lang-en">Why do we pair deep dive questions with every chapter? Because mythology is the mirror of human consciousness. By examining the complex choices of these characters, we extract actionable real - world lessons - making timeless wisdom easy to understand, remember, and apply to our modern personal, professional, and ethical decisions.</p>
+<p class="slide-caption-text lang-hi">हर अध्याय के साथ गहन प्रश्न क्यों? क्योंकि पौराणिक कथाएँ मानव चेतना का दर्पण हैं। इन पात्रों के जटिल निर्णयों का परीक्षण करके हम ऐसे पाठ निकालते हैं जो आज के व्यक्तिगत, व्यावसायिक और नैतिक निर्णयों में समझने, याद रखने और अपनाने में सरल हों।</p>
 </div>
 </article>
 
@@ -150,6 +158,21 @@ status: "published"
 </div>
 </div>
 
+<div class="media-card-footer">
+<p class="media-hint lang-en">
+💡 <em>Want to watch in Hindi? Use the toolbar language toggle above or <a href="javascript:void(0)" class="quick-lang-switch" data-switch-to="hi">switch to हिन्दी</a>.</em>
+</p>
+<p class="media-hint lang-hi">
+💡 <em>अंग्रेज़ी में देखना चाहते हैं? ऊपर भाषा टॉगल का उपयोग करें या <a href="javascript:void(0)" class="quick-lang-switch" data-switch-to="en">English पर जाएँ</a>।</em>
+</p>
+</div>
+</section>
+
+</div>
+
+</div>
+</div>
+
 <!-- TAB 3: AUDIO & VIDEO -->
 <div class="tab-pane" id="pane-media" data-pane="media">
 <div class="media-view-container">
@@ -158,8 +181,8 @@ status: "published"
 <span class="section-badge">Listen & Watch</span>
 <h2 class="section-heading lang-en">Audio & Video Episodes</h2>
 <h2 class="section-heading lang-hi">ऑडियो एवं वीडियो प्रसंग</h2>
-<p class="section-subheading lang-en">Experience the introduction through sound and screen: stream the narrated podcast on Spotify or watch the inline video.</p>
-<p class="section-subheading lang-hi">ध्वनि और दृश्य के माध्यम से प्रस्तावना का अनुभव करें: स्पॉटिफ़ाई पर पॉडकास्ट सुनें या सीधे यहीं वीडियो देखें।</p>
+<p class="section-subheading lang-en">Experience this chapter through sound and screen: stream the narrated podcast on Spotify or watch the inline video.</p>
+<p class="section-subheading lang-hi">ध्वनि और दृश्य के माध्यम से प्रसंग का अनुभव करें: स्पॉटिफ़ाई पर पॉडकास्ट सुनें या सीधे यहीं वीडियो देखें।</p>
 </div>
 
 <div class="media-sections-wrapper">
@@ -186,30 +209,11 @@ Spotify Audio
 <div class="media-player-container">
 <!-- English Spotify Embed -->
 <div class="spotify-embed-wrapper lang-en">
-<iframe
-  style="border-radius:12px"
-  src="https://open.spotify.com/embed/episode/4pAbbGom38zKsf5oLanUkt?utm_source=generator"
-  width="100%"
-  height="232"
-  frameBorder="0"
-  allowfullscreen=""
-  allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture"
-  loading="lazy">
-</iframe>
+<iframe style="border-radius:12px" src="https://open.spotify.com/embed/episode/4pAbbGom38zKsf5oLanUkt?utm_source=generator" width="100%" height="232" frameBorder="0" allowfullscreen="" allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture" loading="lazy"></iframe>
 </div>
-
 <!-- Hindi Spotify Embed -->
 <div class="spotify-embed-wrapper lang-hi">
-<iframe
-  style="border-radius:12px"
-  src="https://open.spotify.com/embed/episode/6ejakwTisIvNWD7Ef8DPSQ?utm_source=generator"
-  width="100%"
-  height="232"
-  frameBorder="0"
-  allowfullscreen=""
-  allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture"
-  loading="lazy">
-</iframe>
+<iframe style="border-radius:12px" src="https://open.spotify.com/embed/episode/6ejakwTisIvNWD7Ef8DPSQ?utm_source=generator" width="100%" height="232" frameBorder="0" allowfullscreen="" allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture" loading="lazy"></iframe>
 </div>
 </div>
 
@@ -236,24 +240,34 @@ YouTube Video
 <h3 class="media-card-title lang-en">Visual Chronicle</h3>
 <h3 class="media-card-title lang-hi">सचित्र वीडियो कथा</h3>
 </div>
-<span class="media-status-pill">Coming Soon / शीघ्र उपलब्ध</span>
+<div class="media-track-indicator">
+<span class="track-pill lang-en">English Edition</span>
+<span class="track-pill lang-hi">हिन्दी संस्करण</span>
+</div>
 </div>
 
 <div class="media-player-container">
-<!-- Video Placeholder for Coming Soon -->
-<div class="video-placeholder-box">
-<div class="video-placeholder-inner">
-<div class="video-play-mock-btn">
-<svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-<polygon points="5 3 19 12 5 21 5 3" fill="currentColor"></polygon>
-</svg>
-</div>
-<h4 class="video-placeholder-title lang-en">YouTube Video Premiere Coming Soon</h4>
-<h4 class="video-placeholder-title lang-hi">यूट्यूब वीडियो प्रसारण शीघ्र आ रहा है</h4>
-<p class="video-placeholder-text lang-en">The high-definition animated graphic video will be embedded here for direct inline viewing as soon as it premieres.</p>
-<p class="video-placeholder-text lang-hi">उच्च-गुणवत्ता सचित्र एनिमेटेड वीडियो प्रसारण के तुरंत बाद सीधे यहीं इनलाइन देखा जा सकेगा।</p>
+<!-- English YouTube Embed -->
+<div class="video-embed-wrapper lang-en">
+<div class="video-embed-container">
+<iframe src="https://www.youtube-nocookie.com/embed/_v_VUHrMpP0" title="Chapter Video (English)" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen loading="lazy"></iframe>
 </div>
 </div>
+<!-- Hindi YouTube Embed -->
+<div class="video-embed-wrapper lang-hi">
+<div class="video-embed-container">
+<iframe src="https://www.youtube-nocookie.com/embed/by73BoDebzE" title="Chapter Video (Hindi)" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen loading="lazy"></iframe>
+</div>
+</div>
+</div>
+
+<div class="media-card-footer">
+<p class="media-hint lang-en">
+💡 <em>Want to watch in Hindi? Use the toolbar language toggle above or <a href="javascript:void(0)" class="quick-lang-switch" data-switch-to="hi">switch to हिन्दी</a>.</em>
+</p>
+<p class="media-hint lang-hi">
+💡 <em>अंग्रेज़ी में देखना चाहते हैं? ऊपर भाषा टॉगल का उपयोग करें या <a href="javascript:void(0)" class="quick-lang-switch" data-switch-to="en">English पर जाएँ</a>।</em>
+</p>
 </div>
 </section>
 

@@ -39,7 +39,25 @@ This script:
    - **Tab 3: Audio & Video**: Embedded inline Spotify episode players (bilingual English + Hindi) and embedded YouTube video player (or coming soon preview card).
    - **Language Toggle**: Synchronized switcher for English and Hindi active across all tabs.
 
-### 3. Upload Images to R2
+### 3. Audio & Video Links
+When instructed to fetch or populate audio/video links for a chapter, access these sources:
+
+- **YouTube Playlists**:
+  - English: `https://www.youtube.com/playlist?list=PLZGq6jRnwVEo`
+  - Hindi: `https://www.youtube.com/playlist?list=PLO9UZttFOQmU`
+- **Spotify Shows**:
+  - English: `https://open.spotify.com/show/76thxc8Hsaqmg8Jkkm9Vmt?si=cr05k4mwTg2osNu26mowTw`
+  - Hindi: `https://open.spotify.com/show/7qSDnzLNps4zMretdDh65K?si=1nEWqwAISlOYZouXf7K63w`
+
+Match the chapter title/number to the corresponding items in the playlist/show, extract the episode and video URLs, and save them in the chapter frontmatter:
+```yaml
+has_media: true
+spotify_en: "https://open.spotify.com/episode/<episode_id>"
+spotify_hi: "https://open.spotify.com/episode/<episode_id>"
+youtube_url: "https://www.youtube.com/watch?v=<video_id>"
+```
+
+### 4. Upload Images to R2
 After verifying the local post, upload images to Cloudflare R2:
 ```bash
 node .agents/scripts/upload_to_r2.js src/pages/comics/ramayana/Book_XX_.../Book_X_..._Chapter_Y/index.md
@@ -48,5 +66,5 @@ node .agents/scripts/upload_to_r2.js src/pages/comics/ramayana/introduction/inde
 ```
 This command uploads the local slide images to the Cloudflare R2 bucket, updates the URLs in markdown and frontmatter, and deletes local temporary image files.
 
-### 4. Verification
+### 5. Verification
 Run `npm run build` or inspect with `astro dev` to verify that tabs and language toggles function properly.

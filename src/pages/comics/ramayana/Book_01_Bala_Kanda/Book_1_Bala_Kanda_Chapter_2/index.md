@@ -73,27 +73,11 @@ status: "published"
 <article class="comic-slide-card" id="slide-04">
 <div class="slide-card-header">
 <span class="slide-badge">Slide 04</span>
-<span class="slide-type-badge">Insight</span>
-<h3 class="slide-title lang-en">Clear Mind Sees Pain</h3>
-<h3 class="slide-title lang-hi">Clear Mind Sees Pain</h3>
-</div>
-<div class="slide-image-wrapper">
-<img src="https://pub-922d698a65e14ae9aeb30a4c6aacdaed.r2.dev/src/pages/comics/ramayana/Book_01_Bala_Kanda/Book_1_Bala_Kanda_Chapter_2/slides/slide_04_final.jpg" alt="Slide 04 - Clear Mind Sees Pain" loading="lazy" />
-</div>
-<div class="slide-caption-wrapper">
-<p class="slide-caption-text lang-en">Why call Tamasa's clean bank like a good mind? Because muddy water hides your face, and a noisy mind hides others' pain. Valmiki found clean water and gained clean sight. Sit ten quiet minutes daily with no phone, and notice whose hurt you see first.</p>
-<p class="slide-caption-text lang-hi">क्यों तमसा का साफ किनारा अच्छे मन जैसा लगता है? क्योंकि गंदा पानी तुम्हारा चेहरा छिपा देता है, और शोर भरा मन दूसरों का दर्द छिपा देता है। वाल्मीकि को साफ जल में साफ दृष्टि मिली। रोज़ बिना फोन दस शांत मिनट बैठो, और पहले देखो किसे दुख है।</p>
-</div>
-</article>
-
-<article class="comic-slide-card" id="slide-05">
-<div class="slide-card-header">
-<span class="slide-badge">Slide 05</span>
 <h3 class="slide-title lang-en">The Bark Cloth</h3>
 <h3 class="slide-title lang-hi">The Bark Cloth</h3>
 </div>
 <div class="slide-image-wrapper">
-<img src="https://pub-922d698a65e14ae9aeb30a4c6aacdaed.r2.dev/src/pages/comics/ramayana/Book_01_Bala_Kanda/Book_1_Bala_Kanda_Chapter_2/slides/slide_05_final.jpg" alt="Slide 05 - The Bark Cloth" loading="lazy" />
+<img src="https://pub-922d698a65e14ae9aeb30a4c6aacdaed.r2.dev/src/pages/comics/ramayana/Book_01_Bala_Kanda/Book_1_Bala_Kanda_Chapter_2/slides/slide_05_final.jpg" alt="Slide 04 - The Bark Cloth" loading="lazy" />
 </div>
 <div class="slide-caption-wrapper">
 <p class="slide-caption-text lang-en">Bharadwaja quickly obeys his teacher and brings the soft bark cloth. Valmiki takes it with kind thanks. Before he steps into the water, he walks slowly among the green trees. He looks around at leaves, light, and life with happy eyes.</p>
@@ -101,14 +85,14 @@ status: "published"
 </div>
 </article>
 
-<article class="comic-slide-card" id="slide-06">
+<article class="comic-slide-card" id="slide-05">
 <div class="slide-card-header">
-<span class="slide-badge">Slide 06</span>
+<span class="slide-badge">Slide 05</span>
 <h3 class="slide-title lang-en">Two Happy Birds</h3>
 <h3 class="slide-title lang-hi">Two Happy Birds</h3>
 </div>
 <div class="slide-image-wrapper">
-<img src="https://pub-922d698a65e14ae9aeb30a4c6aacdaed.r2.dev/src/pages/comics/ramayana/Book_01_Bala_Kanda/Book_1_Bala_Kanda_Chapter_2/slides/slide_06_final.jpg" alt="Slide 06 - Two Happy Birds" loading="lazy" />
+<img src="https://pub-922d698a65e14ae9aeb30a4c6aacdaed.r2.dev/src/pages/comics/ramayana/Book_01_Bala_Kanda/Book_1_Bala_Kanda_Chapter_2/slides/slide_06_final.jpg" alt="Slide 05 - Two Happy Birds" loading="lazy" />
 </div>
 <div class="slide-caption-wrapper">
 <p class="slide-caption-text lang-en">Near a wide tree Valmiki sees two krauncha birds side by side. They are mates, singing sweet songs together. They hop and play with joy in the warm sun. Their music fills the quiet forest like happy laughter between best friends.</p>
@@ -116,14 +100,14 @@ status: "published"
 </div>
 </article>
 
-<article class="comic-slide-card" id="slide-07">
+<article class="comic-slide-card" id="slide-06">
 <div class="slide-card-header">
-<span class="slide-badge">Slide 07</span>
+<span class="slide-badge">Slide 06</span>
 <h3 class="slide-title lang-en">The Cruel Arrow</h3>
 <h3 class="slide-title lang-hi">The Cruel Arrow</h3>
 </div>
 <div class="slide-image-wrapper">
-<img src="https://pub-922d698a65e14ae9aeb30a4c6aacdaed.r2.dev/src/pages/comics/ramayana/Book_01_Bala_Kanda/Book_1_Bala_Kanda_Chapter_2/slides/slide_07_final.jpg" alt="Slide 07 - The Cruel Arrow" loading="lazy" />
+<img src="https://pub-922d698a65e14ae9aeb30a4c6aacdaed.r2.dev/src/pages/comics/ramayana/Book_01_Bala_Kanda/Book_1_Bala_Kanda_Chapter_2/slides/slide_07_final.jpg" alt="Slide 06 - The Cruel Arrow" loading="lazy" />
 </div>
 <div class="slide-caption-wrapper">
 <p class="slide-caption-text lang-en">Suddenly a Nishada fowler lifts his bow with no anger and no reason. He lets the sharp arrow fly. The male bird falls, covered in red blood and shaking in pain. His mate cries out loudly, flapping and weeping for her lost love.</p>
@@ -131,14 +115,14 @@ status: "published"
 </div>
 </article>
 
-<article class="comic-slide-card" id="slide-08">
+<article class="comic-slide-card" id="slide-07">
 <div class="slide-card-header">
-<span class="slide-badge">Slide 08</span>
+<span class="slide-badge">Slide 07</span>
 <h3 class="slide-title lang-en">The Curse of Sorrow</h3>
 <h3 class="slide-title lang-hi">The Curse of Sorrow</h3>
 </div>
 <div class="slide-image-wrapper">
-<img src="https://pub-922d698a65e14ae9aeb30a4c6aacdaed.r2.dev/src/pages/comics/ramayana/Book_01_Bala_Kanda/Book_1_Bala_Kanda_Chapter_2/slides/slide_08_final.jpg" alt="Slide 08 - The Curse of Sorrow" loading="lazy" />
+<img src="https://pub-922d698a65e14ae9aeb30a4c6aacdaed.r2.dev/src/pages/comics/ramayana/Book_01_Bala_Kanda/Book_1_Bala_Kanda_Chapter_2/slides/slide_08_final.jpg" alt="Slide 07 - The Curse of Sorrow" loading="lazy" />
 </div>
 <div class="slide-caption-wrapper">
 <p class="slide-caption-text lang-en">O Nishada, you killed one of a loving pair lost in joy for no reason. You broke a happy song with cruel force. For this heartless act you shall never find honour or lasting glory. Learn that love must never be shot down.</p>
@@ -146,46 +130,14 @@ status: "published"
 </div>
 </article>
 
-<article class="comic-slide-card" id="slide-09">
+<article class="comic-slide-card" id="slide-08">
 <div class="slide-card-header">
-<span class="slide-badge">Slide 09</span>
-<span class="slide-type-badge">Insight</span>
-<h3 class="slide-title lang-en">Curse Born of Love</h3>
-<h3 class="slide-title lang-hi">Curse Born of Love</h3>
-</div>
-<div class="slide-image-wrapper">
-<img src="https://pub-922d698a65e14ae9aeb30a4c6aacdaed.r2.dev/src/pages/comics/ramayana/Book_01_Bala_Kanda/Book_1_Bala_Kanda_Chapter_2/slides/slide_09_final.jpg" alt="Slide 09 - Curse Born of Love" loading="lazy" />
-</div>
-<div class="slide-caption-wrapper">
-<p class="slide-caption-text lang-en">Why start a holy tale with a curse and not a blessing? Because deep sorrow first bursts out as hot anger, and anger is only love boiling over. Shaped pain turns into song that lasts. When anger burns you this week, write four short lines and make your own small shloka.</p>
-<p class="slide-caption-text lang-hi">क्यों पवित्र कथा आशीर्वाद से नहीं, शाप से शुरू होती है? क्योंकि गहरा दुख पहले तेज गुस्से में फूटता है, और गुस्सा बस उबलता हुआ प्रेम है। सँवरा हुआ दर्द हमेशा रहने वाला गीत बन जाता है। इस हफ्ते जब तुम्हें गुस्सा आए तो चार छोटी पंक्तियाँ लिखो और अपना छोटा श्लोक बनाओ।</p>
-</div>
-</article>
-
-<article class="comic-slide-card" id="slide-10">
-<div class="slide-card-header">
-<span class="slide-badge">Slide 10</span>
-<span class="slide-type-badge">Insight</span>
-<h3 class="slide-title lang-en">Do Not Break Play</h3>
-<h3 class="slide-title lang-hi">Do Not Break Play</h3>
-</div>
-<div class="slide-image-wrapper">
-<img src="https://pub-922d698a65e14ae9aeb30a4c6aacdaed.r2.dev/src/pages/comics/ramayana/Book_01_Bala_Kanda/Book_1_Bala_Kanda_Chapter_2/slides/slide_10_final.jpg" alt="Slide 10 - Do Not Break Play" loading="lazy" />
-</div>
-<div class="slide-caption-wrapper">
-<p class="slide-caption-text lang-en">Why blame a hunter just doing his daily work? Because he shot without hate and without need into singing love at play. Breaking joy for fun is true cruelty. Watch this week where you mock or troll, and choose kind silence instead of shooting your arrow.</p>
-<p class="slide-caption-text lang-hi">क्यों शिकारी को उसके रोज़ के काम के लिए दोष दें? क्योंकि उसने बिना नफरत और बिना ज़रूरत गाते हुए प्रेम पर तीर चलाया। मस्ती के लिए खुशी तोड़ना ही सच्ची क्रूरता है। इस हफ्ते देखो तुम कहाँ मज़ाक या ताना मारते हो, और तीर चलाने की जगह दयालु चुप्पी चुनो।</p>
-</div>
-</article>
-
-<article class="comic-slide-card" id="slide-11">
-<div class="slide-card-header">
-<span class="slide-badge">Slide 11</span>
+<span class="slide-badge">Slide 08</span>
 <h3 class="slide-title lang-en">What Left My Mouth</h3>
 <h3 class="slide-title lang-hi">What Left My Mouth</h3>
 </div>
 <div class="slide-image-wrapper">
-<img src="https://pub-922d698a65e14ae9aeb30a4c6aacdaed.r2.dev/src/pages/comics/ramayana/Book_01_Bala_Kanda/Book_1_Bala_Kanda_Chapter_2/slides/slide_11_final.jpg" alt="Slide 11 - What Left My Mouth" loading="lazy" />
+<img src="https://pub-922d698a65e14ae9aeb30a4c6aacdaed.r2.dev/src/pages/comics/ramayana/Book_01_Bala_Kanda/Book_1_Bala_Kanda_Chapter_2/slides/slide_11_final.jpg" alt="Slide 08 - What Left My Mouth" loading="lazy" />
 </div>
 <div class="slide-caption-wrapper">
 <p class="slide-caption-text lang-en">What words have just left my mouth? Look, Bharadwaja, these lines stand in equal feet and sweet rhythm. They can be sung to the veena's strings. Born from my deep sorrow, this new music shall be called a shloka for all time.</p>
@@ -193,30 +145,14 @@ status: "published"
 </div>
 </article>
 
-<article class="comic-slide-card" id="slide-12">
+<article class="comic-slide-card" id="slide-09">
 <div class="slide-card-header">
-<span class="slide-badge">Slide 12</span>
-<span class="slide-type-badge">Insight</span>
-<h3 class="slide-title lang-en">Catch Your True Line</h3>
-<h3 class="slide-title lang-hi">Catch Your True Line</h3>
-</div>
-<div class="slide-image-wrapper">
-<img src="https://pub-922d698a65e14ae9aeb30a4c6aacdaed.r2.dev/src/pages/comics/ramayana/Book_01_Bala_Kanda/Book_1_Bala_Kanda_Chapter_2/slides/slide_12_final.jpg" alt="Slide 12 - Catch Your True Line" loading="lazy" />
-</div>
-<div class="slide-caption-wrapper">
-<p class="slide-caption-text lang-en">Why did Valmiki gasp at his own mouth? Because true making comes first and knowing comes later. Grief sang an even beat by itself, like music flowing. New sparks fade fast. When a true line jumps from your heart this week, write it down at once and show a trusted friend.</p>
-<p class="slide-caption-text lang-hi">वाल्मीकि अपने ही मुँह को देखकर क्यों चौंक गए? क्योंकि सच्ची रचना पहले आती है, समझ बाद में आती है। दुःख ने खुद सम लय में गीत गाया, जैसे बहता संगीत। नई चिंगारी जल्दी बुझ जाती है। इस सप्ताह जब दिल से सच्ची पंक्ति निकले, उसे तुरंत लिख लो और किसी भरोसेमंद मित्र को दिखाओ।</p>
-</div>
-</article>
-
-<article class="comic-slide-card" id="slide-13">
-<div class="slide-card-header">
-<span class="slide-badge">Slide 13</span>
+<span class="slide-badge">Slide 09</span>
 <h3 class="slide-title lang-en">Bath and Return</h3>
 <h3 class="slide-title lang-hi">Bath and Return</h3>
 </div>
 <div class="slide-image-wrapper">
-<img src="https://pub-922d698a65e14ae9aeb30a4c6aacdaed.r2.dev/src/pages/comics/ramayana/Book_01_Bala_Kanda/Book_1_Bala_Kanda_Chapter_2/slides/slide_13_final.jpg" alt="Slide 13 - Bath and Return" loading="lazy" />
+<img src="https://pub-922d698a65e14ae9aeb30a4c6aacdaed.r2.dev/src/pages/comics/ramayana/Book_01_Bala_Kanda/Book_1_Bala_Kanda_Chapter_2/slides/slide_13_final.jpg" alt="Slide 09 - Bath and Return" loading="lazy" />
 </div>
 <div class="slide-caption-wrapper">
 <p class="slide-caption-text lang-en">Bharadwaja nods with joy and repeats the sweet verse back. Valmiki feels peace hearing his student's voice. He bathes in the clear water and walks back to his hut, still turning the rhythm in his mind. Bharadwaja follows behind with the full water pot.</p>
@@ -224,14 +160,14 @@ status: "published"
 </div>
 </article>
 
-<article class="comic-slide-card" id="slide-14">
+<article class="comic-slide-card" id="slide-10">
 <div class="slide-card-header">
-<span class="slide-badge">Slide 14</span>
+<span class="slide-badge">Slide 10</span>
 <h3 class="slide-title lang-en">Brahma Arrives</h3>
 <h3 class="slide-title lang-hi">Brahma Arrives</h3>
 </div>
 <div class="slide-image-wrapper">
-<img src="https://pub-922d698a65e14ae9aeb30a4c6aacdaed.r2.dev/src/pages/comics/ramayana/Book_01_Bala_Kanda/Book_1_Bala_Kanda_Chapter_2/slides/slide_14_final.jpg" alt="Slide 14 - Brahma Arrives" loading="lazy" />
+<img src="https://pub-922d698a65e14ae9aeb30a4c6aacdaed.r2.dev/src/pages/comics/ramayana/Book_01_Bala_Kanda/Book_1_Bala_Kanda_Chapter_2/slides/slide_14_final.jpg" alt="Slide 10 - Brahma Arrives" loading="lazy" />
 </div>
 <div class="slide-caption-wrapper">
 <p class="slide-caption-text lang-en">Back at his leaf hut Valmiki chats lightly about daily tasks. Yet inside his heart the new verse keeps beating again and again. Suddenly a bright light fills the air. Four - faced Brahma himself, glowing and kind, appears to meet the sage.</p>
@@ -239,14 +175,14 @@ status: "published"
 </div>
 </article>
 
-<article class="comic-slide-card" id="slide-15">
+<article class="comic-slide-card" id="slide-11">
 <div class="slide-card-header">
-<span class="slide-badge">Slide 15</span>
+<span class="slide-badge">Slide 11</span>
 <h3 class="slide-title lang-en">Welcoming Brahma</h3>
 <h3 class="slide-title lang-hi">Welcoming Brahma</h3>
 </div>
 <div class="slide-image-wrapper">
-<img src="https://pub-922d698a65e14ae9aeb30a4c6aacdaed.r2.dev/src/pages/comics/ramayana/Book_01_Bala_Kanda/Book_1_Bala_Kanda_Chapter_2/slides/slide_15_final.jpg" alt="Slide 15 - Welcoming Brahma" loading="lazy" />
+<img src="https://pub-922d698a65e14ae9aeb30a4c6aacdaed.r2.dev/src/pages/comics/ramayana/Book_01_Bala_Kanda/Book_1_Bala_Kanda_Chapter_2/slides/slide_15_final.jpg" alt="Slide 11 - Welcoming Brahma" loading="lazy" />
 </div>
 <div class="slide-caption-wrapper">
 <p class="slide-caption-text lang-en">The moment Valmiki sees Brahma he jumps up in wonder. He stands silent with folded hands and bows low. He washes Brahma's feet with clean water and offers a high seat. Brahma smiles warmly, asks about his health, and invites him to sit.</p>
@@ -254,14 +190,14 @@ status: "published"
 </div>
 </article>
 
-<article class="comic-slide-card" id="slide-16">
+<article class="comic-slide-card" id="slide-12">
 <div class="slide-card-header">
-<span class="slide-badge">Slide 16</span>
+<span class="slide-badge">Slide 12</span>
 <h3 class="slide-title lang-en">Stuck in Sorrow</h3>
 <h3 class="slide-title lang-hi">Stuck in Sorrow</h3>
 </div>
 <div class="slide-image-wrapper">
-<img src="https://pub-922d698a65e14ae9aeb30a4c6aacdaed.r2.dev/src/pages/comics/ramayana/Book_01_Bala_Kanda/Book_1_Bala_Kanda_Chapter_2/slides/slide_16_final.jpg" alt="Slide 16 - Stuck in Sorrow" loading="lazy" />
+<img src="https://pub-922d698a65e14ae9aeb30a4c6aacdaed.r2.dev/src/pages/comics/ramayana/Book_01_Bala_Kanda/Book_1_Bala_Kanda_Chapter_2/slides/slide_16_final.jpg" alt="Slide 12 - Stuck in Sorrow" loading="lazy" />
 </div>
 <div class="slide-caption-wrapper">
 <p class="slide-caption-text lang-en">Even seated beside Brahma, Valmiki cannot smile. His mind stays stuck on the sad riverbank. He keeps picturing the sweet bird singing before death. He thinks, what a heavy wrong that hunter did, taking a joyful life for no cause at all.</p>
@@ -269,14 +205,14 @@ status: "published"
 </div>
 </article>
 
-<article class="comic-slide-card" id="slide-17">
+<article class="comic-slide-card" id="slide-13">
 <div class="slide-card-header">
-<span class="slide-badge">Slide 17</span>
+<span class="slide-badge">Slide 13</span>
 <h3 class="slide-title lang-en">Write Rama's Story</h3>
 <h3 class="slide-title lang-hi">Write Rama's Story</h3>
 </div>
 <div class="slide-image-wrapper">
-<img src="https://pub-922d698a65e14ae9aeb30a4c6aacdaed.r2.dev/src/pages/comics/ramayana/Book_01_Bala_Kanda/Book_1_Bala_Kanda_Chapter_2/slides/slide_17_final.jpg" alt="Slide 17 - Write Rama's Story" loading="lazy" />
+<img src="https://pub-922d698a65e14ae9aeb30a4c6aacdaed.r2.dev/src/pages/comics/ramayana/Book_01_Bala_Kanda/Book_1_Bala_Kanda_Chapter_2/slides/slide_17_final.jpg" alt="Slide 13 - Write Rama's Story" loading="lazy" />
 </div>
 <div class="slide-caption-wrapper">
 <p class="slide-caption-text lang-en">Dear Valmiki, do not doubt, this new metre from your lips will live forever. By my wish it burst from your grief. Now use it to sing Rama's full story, with Lakshmana, Sita, and the rakshasas. All truth, seen and unseen, will shine to you, and no word will fail.</p>
@@ -284,30 +220,14 @@ status: "published"
 </div>
 </article>
 
-<article class="comic-slide-card" id="slide-18">
+<article class="comic-slide-card" id="slide-14">
 <div class="slide-card-header">
-<span class="slide-badge">Slide 18</span>
-<span class="slide-type-badge">Insight</span>
-<h3 class="slide-title lang-en">Turn Wound Into Work</h3>
-<h3 class="slide-title lang-hi">Turn Wound Into Work</h3>
-</div>
-<div class="slide-image-wrapper">
-<img src="https://pub-922d698a65e14ae9aeb30a4c6aacdaed.r2.dev/src/pages/comics/ramayana/Book_01_Bala_Kanda/Book_1_Bala_Kanda_Chapter_2/slides/slide_18_final.jpg" alt="Slide 18 - Turn Wound Into Work" loading="lazy" />
-</div>
-<div class="slide-caption-wrapper">
-<p class="slide-caption-text lang-en">Why make one bird's grief into Rama and Sita's vast tale? Because a lonely wound stays a cry, but a blessed wound becomes work for all. Valmiki's tears were for every parted love. Name one old hurt this week and turn it into help for someone else.</p>
-<p class="slide-caption-text lang-hi">क्यों एक चिड़िया के दुख को राम और सीता की बड़ी कथा बनाना है? क्योंकि अकेला घाव बस रोना रहता है पर आशीर्वाद पाया घाव सबके काम आता है। वाल्मीकि के आँसू हर बिछड़े प्रेम के लिए थे। इस सप्ताह अपना एक पुराना दर्द याद करो और उसे किसी और की मदद बना दो।</p>
-</div>
-</article>
-
-<article class="comic-slide-card" id="slide-19">
-<div class="slide-card-header">
-<span class="slide-badge">Slide 19</span>
+<span class="slide-badge">Slide 14</span>
 <h3 class="slide-title lang-en">Living Beyond Mountains</h3>
 <h3 class="slide-title lang-hi">Living Beyond Mountains</h3>
 </div>
 <div class="slide-image-wrapper">
-<img src="https://pub-922d698a65e14ae9aeb30a4c6aacdaed.r2.dev/src/pages/comics/ramayana/Book_01_Bala_Kanda/Book_1_Bala_Kanda_Chapter_2/slides/slide_19_final.jpg" alt="Slide 19 - Living Beyond Mountains" loading="lazy" />
+<img src="https://pub-922d698a65e14ae9aeb30a4c6aacdaed.r2.dev/src/pages/comics/ramayana/Book_01_Bala_Kanda/Book_1_Bala_Kanda_Chapter_2/slides/slide_19_final.jpg" alt="Slide 14 - Living Beyond Mountains" loading="lazy" />
 </div>
 <div class="slide-caption-wrapper">
 <p class="slide-caption-text lang-en">As long as high mountains and deep oceans stand on earth, your Ramayana will travel among people. As long as children sing this tale, you will live in my world and here. Saying this, Brahma vanishes, and Valmiki gazes in joyful wonder.</p>
@@ -315,14 +235,14 @@ status: "published"
 </div>
 </article>
 
-<article class="comic-slide-card" id="slide-20">
+<article class="comic-slide-card" id="slide-15">
 <div class="slide-card-header">
-<span class="slide-badge">Slide 20</span>
+<span class="slide-badge">Slide 15</span>
 <h3 class="slide-title lang-en">Disciples Sing Again</h3>
 <h3 class="slide-title lang-hi">Disciples Sing Again</h3>
 </div>
 <div class="slide-image-wrapper">
-<img src="https://pub-922d698a65e14ae9aeb30a4c6aacdaed.r2.dev/src/pages/comics/ramayana/Book_01_Bala_Kanda/Book_1_Bala_Kanda_Chapter_2/slides/slide_20_final.jpg" alt="Slide 20 - Disciples Sing Again" loading="lazy" />
+<img src="https://pub-922d698a65e14ae9aeb30a4c6aacdaed.r2.dev/src/pages/comics/ramayana/Book_01_Bala_Kanda/Book_1_Bala_Kanda_Chapter_2/slides/slide_20_final.jpg" alt="Slide 15 - Disciples Sing Again" loading="lazy" />
 </div>
 <div class="slide-caption-wrapper">
 <p class="slide-caption-text lang-en">Valmiki's disciples clap and sing the new verse again and again. Four short lines, even beats, full of tender sadness. They laugh with hope and say, our teacher will now sing the whole Ramayana in this sweet singing style for the world.</p>
@@ -330,18 +250,105 @@ status: "published"
 </div>
 </article>
 
-<article class="comic-slide-card" id="slide-21">
+<article class="comic-slide-card" id="slide-16">
 <div class="slide-card-header">
-<span class="slide-badge">Slide 21</span>
+<span class="slide-badge">Slide 16</span>
 <h3 class="slide-title lang-en">The Ramayana Is Born</h3>
 <h3 class="slide-title lang-hi">The Ramayana Is Born</h3>
 </div>
 <div class="slide-image-wrapper">
-<img src="https://pub-922d698a65e14ae9aeb30a4c6aacdaed.r2.dev/src/pages/comics/ramayana/Book_01_Bala_Kanda/Book_1_Bala_Kanda_Chapter_2/slides/slide_21_final.jpg" alt="Slide 21 - The Ramayana Is Born" loading="lazy" />
+<img src="https://pub-922d698a65e14ae9aeb30a4c6aacdaed.r2.dev/src/pages/comics/ramayana/Book_01_Bala_Kanda/Book_1_Bala_Kanda_Chapter_2/slides/slide_21_final.jpg" alt="Slide 16 - The Ramayana Is Born" loading="lazy" />
 </div>
 <div class="slide-caption-wrapper">
 <p class="slide-caption-text lang-en">Blessed and bright, sage Valmiki sits to weave Rama's line in hundreds of sweet verses. He sings Rama, noblest of Raghus, and the fall of ten - headed Ravana in simple tuneful words. Here by still water and kind grief, the great Ramayana is born.</p>
 <p class="slide-caption-text lang-hi">धन्य और तेजस्वी ऋषि वाल्मीकि राम की कथा को सैकड़ों मीठे श्लोकों में पिरोने बैठते हैं। वे रघुकुल के सबसे महान राम का गान करते हैं और दस सिर वाले रावण के पतन को सरल सुरभरे शब्दों में सुनाते हैं। यहाँ शांत जल के पास और कोमल करुणा से महान रामायण का जन्म होता है।</p>
+</div>
+</article>
+
+<!-- CHAPTER INSIGHTS -->
+<div class="section-title-bar insights-divider">
+<span class="section-badge">Chapter Insights</span>
+<h2 class="section-heading lang-en">Reflections & Key Insights</h2>
+<h2 class="section-heading lang-hi">दार्शनिक अंतर्दृष्टि एवं विचार</h2>
+</div>
+
+<article class="comic-slide-card" id="slide-17">
+<div class="slide-card-header">
+<span class="slide-badge">Slide 17</span>
+<span class="slide-type-badge">Insight</span>
+<h3 class="slide-title lang-en">Clear Mind Sees Pain</h3>
+<h3 class="slide-title lang-hi">Clear Mind Sees Pain</h3>
+</div>
+<div class="slide-image-wrapper">
+<img src="https://pub-922d698a65e14ae9aeb30a4c6aacdaed.r2.dev/src/pages/comics/ramayana/Book_01_Bala_Kanda/Book_1_Bala_Kanda_Chapter_2/slides/slide_04_final.jpg" alt="Slide 17 - Clear Mind Sees Pain" loading="lazy" />
+</div>
+<div class="slide-caption-wrapper">
+<p class="slide-caption-text lang-en">Why call Tamasa's clean bank like a good mind? Because muddy water hides your face, and a noisy mind hides others' pain. Valmiki found clean water and gained clean sight. Sit ten quiet minutes daily with no phone, and notice whose hurt you see first.</p>
+<p class="slide-caption-text lang-hi">क्यों तमसा का साफ किनारा अच्छे मन जैसा लगता है? क्योंकि गंदा पानी तुम्हारा चेहरा छिपा देता है, और शोर भरा मन दूसरों का दर्द छिपा देता है। वाल्मीकि को साफ जल में साफ दृष्टि मिली। रोज़ बिना फोन दस शांत मिनट बैठो, और पहले देखो किसे दुख है।</p>
+</div>
+</article>
+
+<article class="comic-slide-card" id="slide-18">
+<div class="slide-card-header">
+<span class="slide-badge">Slide 18</span>
+<span class="slide-type-badge">Insight</span>
+<h3 class="slide-title lang-en">Curse Born of Love</h3>
+<h3 class="slide-title lang-hi">Curse Born of Love</h3>
+</div>
+<div class="slide-image-wrapper">
+<img src="https://pub-922d698a65e14ae9aeb30a4c6aacdaed.r2.dev/src/pages/comics/ramayana/Book_01_Bala_Kanda/Book_1_Bala_Kanda_Chapter_2/slides/slide_09_final.jpg" alt="Slide 18 - Curse Born of Love" loading="lazy" />
+</div>
+<div class="slide-caption-wrapper">
+<p class="slide-caption-text lang-en">Why start a holy tale with a curse and not a blessing? Because deep sorrow first bursts out as hot anger, and anger is only love boiling over. Shaped pain turns into song that lasts. When anger burns you this week, write four short lines and make your own small shloka.</p>
+<p class="slide-caption-text lang-hi">क्यों पवित्र कथा आशीर्वाद से नहीं, शाप से शुरू होती है? क्योंकि गहरा दुख पहले तेज गुस्से में फूटता है, और गुस्सा बस उबलता हुआ प्रेम है। सँवरा हुआ दर्द हमेशा रहने वाला गीत बन जाता है। इस हफ्ते जब तुम्हें गुस्सा आए तो चार छोटी पंक्तियाँ लिखो और अपना छोटा श्लोक बनाओ।</p>
+</div>
+</article>
+
+<article class="comic-slide-card" id="slide-19">
+<div class="slide-card-header">
+<span class="slide-badge">Slide 19</span>
+<span class="slide-type-badge">Insight</span>
+<h3 class="slide-title lang-en">Do Not Break Play</h3>
+<h3 class="slide-title lang-hi">Do Not Break Play</h3>
+</div>
+<div class="slide-image-wrapper">
+<img src="https://pub-922d698a65e14ae9aeb30a4c6aacdaed.r2.dev/src/pages/comics/ramayana/Book_01_Bala_Kanda/Book_1_Bala_Kanda_Chapter_2/slides/slide_10_final.jpg" alt="Slide 19 - Do Not Break Play" loading="lazy" />
+</div>
+<div class="slide-caption-wrapper">
+<p class="slide-caption-text lang-en">Why blame a hunter just doing his daily work? Because he shot without hate and without need into singing love at play. Breaking joy for fun is true cruelty. Watch this week where you mock or troll, and choose kind silence instead of shooting your arrow.</p>
+<p class="slide-caption-text lang-hi">क्यों शिकारी को उसके रोज़ के काम के लिए दोष दें? क्योंकि उसने बिना नफरत और बिना ज़रूरत गाते हुए प्रेम पर तीर चलाया। मस्ती के लिए खुशी तोड़ना ही सच्ची क्रूरता है। इस हफ्ते देखो तुम कहाँ मज़ाक या ताना मारते हो, और तीर चलाने की जगह दयालु चुप्पी चुनो।</p>
+</div>
+</article>
+
+<article class="comic-slide-card" id="slide-20">
+<div class="slide-card-header">
+<span class="slide-badge">Slide 20</span>
+<span class="slide-type-badge">Insight</span>
+<h3 class="slide-title lang-en">Catch Your True Line</h3>
+<h3 class="slide-title lang-hi">Catch Your True Line</h3>
+</div>
+<div class="slide-image-wrapper">
+<img src="https://pub-922d698a65e14ae9aeb30a4c6aacdaed.r2.dev/src/pages/comics/ramayana/Book_01_Bala_Kanda/Book_1_Bala_Kanda_Chapter_2/slides/slide_12_final.jpg" alt="Slide 20 - Catch Your True Line" loading="lazy" />
+</div>
+<div class="slide-caption-wrapper">
+<p class="slide-caption-text lang-en">Why did Valmiki gasp at his own mouth? Because true making comes first and knowing comes later. Grief sang an even beat by itself, like music flowing. New sparks fade fast. When a true line jumps from your heart this week, write it down at once and show a trusted friend.</p>
+<p class="slide-caption-text lang-hi">वाल्मीकि अपने ही मुँह को देखकर क्यों चौंक गए? क्योंकि सच्ची रचना पहले आती है, समझ बाद में आती है। दुःख ने खुद सम लय में गीत गाया, जैसे बहता संगीत। नई चिंगारी जल्दी बुझ जाती है। इस सप्ताह जब दिल से सच्ची पंक्ति निकले, उसे तुरंत लिख लो और किसी भरोसेमंद मित्र को दिखाओ।</p>
+</div>
+</article>
+
+<article class="comic-slide-card" id="slide-21">
+<div class="slide-card-header">
+<span class="slide-badge">Slide 21</span>
+<span class="slide-type-badge">Insight</span>
+<h3 class="slide-title lang-en">Turn Wound Into Work</h3>
+<h3 class="slide-title lang-hi">Turn Wound Into Work</h3>
+</div>
+<div class="slide-image-wrapper">
+<img src="https://pub-922d698a65e14ae9aeb30a4c6aacdaed.r2.dev/src/pages/comics/ramayana/Book_01_Bala_Kanda/Book_1_Bala_Kanda_Chapter_2/slides/slide_18_final.jpg" alt="Slide 21 - Turn Wound Into Work" loading="lazy" />
+</div>
+<div class="slide-caption-wrapper">
+<p class="slide-caption-text lang-en">Why make one bird's grief into Rama and Sita's vast tale? Because a lonely wound stays a cry, but a blessed wound becomes work for all. Valmiki's tears were for every parted love. Name one old hurt this week and turn it into help for someone else.</p>
+<p class="slide-caption-text lang-hi">क्यों एक चिड़िया के दुख को राम और सीता की बड़ी कथा बनाना है? क्योंकि अकेला घाव बस रोना रहता है पर आशीर्वाद पाया घाव सबके काम आता है। वाल्मीकि के आँसू हर बिछड़े प्रेम के लिए थे। इस सप्ताह अपना एक पुराना दर्द याद करो और उसे किसी और की मदद बना दो।</p>
 </div>
 </article>
 

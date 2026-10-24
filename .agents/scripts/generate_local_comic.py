@@ -27,6 +27,13 @@ FALLBACK_SOURCE_BASE = Path(os.path.expanduser("~/Documents/comics/ramayana_dutt
 TERTIARY_SOURCE_BASE = Path("/Users/neerav/Documents/Projects/mythology-texts/mythology podcast/ramayana_dutt")
 DEST_BASE = Path("src/pages/comics/ramayana")
 MAPPING_FILE = Path("src/data/ramayana_dutt_1to1_mapping.json")
+MEDIA_LINKS_FILE = Path("src/data/ramayana_media_links.json")
+
+# Media Playlists and Shows
+PLAYLIST_YOUTUBE_EN = "https://www.youtube.com/playlist?list=PLZGq6jRnwVEo"
+PLAYLIST_YOUTUBE_HI = "https://www.youtube.com/playlist?list=PLO9UZttFOQmU"
+SPOTIFY_SHOW_EN = "https://open.spotify.com/show/76thxc8Hsaqmg8Jkkm9Vmt?si=cr05k4mwTg2osNu26mowTw"
+SPOTIFY_SHOW_HI = "https://open.spotify.com/show/7qSDnzLNps4zMretdDh65K?si=1nEWqwAISlOYZouXf7K63w"
 
 KANDA_MAPPING = {
     1: ("Book_01_Bala_Kanda", "Bāla Kāṇḍa", "बालकाण्ड"),
@@ -398,16 +405,28 @@ def process_chapter(
     today_str = datetime.now().strftime("%Y-%m-%d")
     pub_date = existing_fm.get("date") or today_str
 
-    has_media = bool(existing_fm.get("has_media", False))
-    spotify_en = existing_fm.get("spotify_en", "")
-    spotify_hi = existing_fm.get("spotify_hi", "")
-    youtube_url = existing_fm.get("youtube_url", "")
+    # Lookup media database
+    media_key = "intro" if is_intro else f"{book_num}:{chap_num}"
+    media_entry = {}
+    if MEDIA_LINKS_FILE.exists():
+        try:
+            with open(MEDIA_LINKS_FILE, "r", encoding="utf-8") as f:
+                media_entry = json.load(f).get(media_key, {})
+        except Exception:
+            pass
 
-    if is_intro:
-        spotify_en = spotify_en or "https://open.spotify.com/episode/4pAbbGom38zKsf5oLanUkt"
-        spotify_hi = spotify_hi or "https://open.spotify.com/episode/6ejakwTisIvNWD7Ef8DPSQ"
-        has_media = True
-    elif spotify_en or spotify_hi or youtube_url:
+    has_media = bool(existing_fm.get("has_media", False))
+    spotify_en = existing_fm.get("spotify_en") or media_entry.get("spotify_en", "")
+    spotify_hi = existing_fm.get("spotify_hi") or media_entry.get("spotify_hi", "")
+    youtube_url = existing_fm.get("youtube_url") or media_entry.get("youtube_en") or media_entry.get("youtube_url", "")
+    youtube_en = existing_fm.get("youtube_en") or media_entry.get("youtube_en", "")
+    youtube_hi = existing_fm.get("youtube_hi") or media_entry.get("youtube_hi", "")
+
+    if is_intro and not spotify_en:
+        spotify_en = "https://open.spotify.com/episode/4pAbbGom38zKsf5oLanUkt"
+        spotify_hi = "https://open.spotify.com/episode/6ejakwTisIvNWD7Ef8DPSQ"
+
+    if spotify_en or spotify_hi or youtube_en or youtube_hi or youtube_url:
         has_media = True
 
     # Frontmatter Header
@@ -434,8 +453,12 @@ def process_chapter(
         lines.append(f'spotify_en: "{spotify_en}"')
     if spotify_hi:
         lines.append(f'spotify_hi: "{spotify_hi}"')
-    if youtube_url is not None and youtube_url != "":
+    if youtube_url:
         lines.append(f'youtube_url: "{youtube_url}"')
+    if youtube_en:
+        lines.append(f'youtube_en: "{youtube_en}"')
+    if youtube_hi:
+        lines.append(f'youtube_hi: "{youtube_hi}"')
     lines.extend([
         'status: "published"',
         "---",
@@ -448,9 +471,12 @@ def process_chapter(
         '<!-- TAB 1: COMICS SLIDES (Text displayed below each image) -->',
         '<div class="tab-pane active" id="pane-comics" data-pane="comics">',
         ""
-    ]
+    ])
 
-    # Render each comic slide
+    # Collect and partition slides into story slides and insight slides
+    story_slides = []
+    insight_slides = []
+
     for idx, img_path in enumerate(dest_images, start=1):
         # Extract slide number from filename or index
         m = re.search(r"slide_0*(\d+)", img_path.stem, re.I)
@@ -470,28 +496,65 @@ def process_chapter(
 
         is_insight = sb_item_en.get("type") == "insight" or "insight" in title_en.lower()
 
-        slide_card_lines = [
-            f'<article class="comic-slide-card" id="slide-{s_num:02d}">',
-            '<div class="slide-card-header">',
-            f'<span class="slide-badge">Slide {s_num:02d}</span>',
-        ]
+        slide_data = {
+            "s_num": s_num,
+            "title_en": title_en,
+            "title_hi": title_hi,
+            "caption_en": caption_en,
+            "caption_hi": caption_hi,
+            "img_name": img_path.name,
+            "is_insight": is_insight,
+        }
+
         if is_insight:
-            slide_card_lines.append('<span class="slide-type-badge">Insight</span>')
-        slide_card_lines.extend([
-            f'<h3 class="slide-title lang-en">{title_en}</h3>',
-            f'<h3 class="slide-title lang-hi">{title_hi}</h3>',
+            insight_slides.append(slide_data)
+        else:
+            story_slides.append(slide_data)
+
+    def render_slide_card(slide_info, display_idx):
+        card = [
+            f'<article class="comic-slide-card" id="slide-{display_idx:02d}">',
+            '<div class="slide-card-header">',
+            f'<span class="slide-badge">Slide {display_idx:02d}</span>',
+        ]
+        if slide_info["is_insight"]:
+            card.append('<span class="slide-type-badge">Insight</span>')
+        card.extend([
+            f'<h3 class="slide-title lang-en">{slide_info["title_en"]}</h3>',
+            f'<h3 class="slide-title lang-hi">{slide_info["title_hi"]}</h3>',
             '</div>',
             '<div class="slide-image-wrapper">',
-            f'<img src="{web_slides_dir}/{img_path.name}" alt="Slide {s_num:02d} - {title_en}" loading="lazy" />',
+            f'<img src="{web_slides_dir}/{slide_info["img_name"]}" alt="Slide {display_idx:02d} - {slide_info["title_en"]}" loading="lazy" />',
             '</div>',
             '<div class="slide-caption-wrapper">',
-            f'<p class="slide-caption-text lang-en">{caption_en}</p>',
-            f'<p class="slide-caption-text lang-hi">{caption_hi}</p>',
+            f'<p class="slide-caption-text lang-en">{slide_info["caption_en"]}</p>',
+            f'<p class="slide-caption-text lang-hi">{slide_info["caption_hi"]}</p>',
             '</div>',
             '</article>',
             ""
         ])
-        lines.extend(slide_card_lines)
+        return card
+
+    # Render all story slides first
+    seq_counter = 1
+    for s in story_slides:
+        lines.extend(render_slide_card(s, seq_counter))
+        seq_counter += 1
+
+    # Render insight section divider and all insight slides at the end
+    if insight_slides:
+        lines.extend([
+            '<!-- CHAPTER INSIGHTS -->',
+            '<div class="section-title-bar insights-divider">',
+            '<span class="section-badge">Chapter Insights</span>',
+            '<h2 class="section-heading lang-en">Reflections & Key Insights</h2>',
+            '<h2 class="section-heading lang-hi">दार्शनिक अंतर्दृष्टि एवं विचार</h2>',
+            '</div>',
+            ""
+        ])
+        for s in insight_slides:
+            lines.extend(render_slide_card(s, seq_counter))
+            seq_counter += 1
 
     lines.extend([
         "</div>",
@@ -600,7 +663,8 @@ def process_chapter(
     if has_media or spotify_en or spotify_hi:
         spotify_en_embed = to_spotify_embed_url(spotify_en)
         spotify_hi_embed = to_spotify_embed_url(spotify_hi)
-        youtube_embed = to_youtube_embed_url(youtube_url)
+        youtube_en_embed = to_youtube_embed_url(youtube_en or youtube_url)
+        youtube_hi_embed = to_youtube_embed_url(youtube_hi)
 
         lines.extend([
             '<!-- TAB 3: AUDIO & VIDEO -->',
@@ -683,13 +747,44 @@ def process_chapter(
             '</div>'
         ])
 
-        if youtube_embed:
+        if youtube_en_embed or youtube_hi_embed:
+            lines.extend([
+                '<div class="media-track-indicator">',
+                '<span class="track-pill lang-en">English Edition</span>',
+                '<span class="track-pill lang-hi">हिन्दी संस्करण</span>',
+                '</div>',
+                '</div>',
+                "",
+                '<div class="media-player-container">'
+            ])
+            if youtube_en_embed:
+                lines.extend([
+                    '<!-- English YouTube Embed -->',
+                    '<div class="video-embed-wrapper lang-en">',
+                    '<div class="video-embed-container">',
+                    f'<iframe src="{youtube_en_embed}" title="Chapter Video (English)" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen loading="lazy"></iframe>',
+                    '</div>',
+                    '</div>'
+                ])
+            if youtube_hi_embed:
+                lines.extend([
+                    '<!-- Hindi YouTube Embed -->',
+                    '<div class="video-embed-wrapper lang-hi">',
+                    '<div class="video-embed-container">',
+                    f'<iframe src="{youtube_hi_embed}" title="Chapter Video (Hindi)" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen loading="lazy"></iframe>',
+                    '</div>',
+                    '</div>'
+                ])
             lines.extend([
                 '</div>',
-                '<div class="media-player-container">',
-                '<div class="video-embed-container">',
-                f'<iframe src="{youtube_embed}" title="Chapter Video" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen loading="lazy"></iframe>',
-                '</div>',
+                "",
+                '<div class="media-card-footer">',
+                '<p class="media-hint lang-en">',
+                '💡 <em>Want to watch in Hindi? Use the toolbar language toggle above or <a href="javascript:void(0)" class="quick-lang-switch" data-switch-to="hi">switch to हिन्दी</a>.</em>',
+                '</p>',
+                '<p class="media-hint lang-hi">',
+                '💡 <em>अंग्रेज़ी में देखना चाहते हैं? ऊपर भाषा टॉगल का उपयोग करें या <a href="javascript:void(0)" class="quick-lang-switch" data-switch-to="en">English पर जाएँ</a>।</em>',
+                '</p>',
                 '</div>'
             ])
         else:

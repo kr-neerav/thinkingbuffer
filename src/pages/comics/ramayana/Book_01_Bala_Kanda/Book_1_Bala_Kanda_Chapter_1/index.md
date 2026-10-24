@@ -1,7 +1,7 @@
 ---
-layout: ../../../../../layouts/ComicLayout.astro
+layout: "../../../../../layouts/ComicLayout.astro"
 title: "Book 1: Bāla Kāṇḍa - Chapter 1"
-date: 2026-08-23
+date: "2026-08-23"
 tags: ["Ramayana", "Comics", "Mythology", "Bāla Kāṇḍa"]
 image_url: "https://pub-922d698a65e14ae9aeb30a4c6aacdaed.r2.dev/src/pages/comics/ramayana/Book_01_Bala_Kanda/Book_1_Bala_Kanda_Chapter_1/slides/slide_01_final.jpg"
 heroImage: "https://pub-922d698a65e14ae9aeb30a4c6aacdaed.r2.dev/src/pages/comics/ramayana/Book_01_Bala_Kanda/Book_1_Bala_Kanda_Chapter_1/slides/slide_01_final.jpg"
@@ -14,6 +14,12 @@ sanskrit_title: "Samkṣepa Rāmāyaṇa"
 english_title: "Narada summarizes the entire life and virtues of Sri Rama to Sage Valmiki"
 has_hindi: true
 has_narration: true
+has_media: true
+spotify_en: "https://open.spotify.com/episode/7LH1YUTSWL6R838nVVes3u"
+spotify_hi: "https://open.spotify.com/episode/0pxS1GDRMs4hhlsHkh9MMe"
+youtube_url: "https://www.youtube.com/watch?v=ZbYf4IGpZRc"
+youtube_en: "https://www.youtube.com/watch?v=ZbYf4IGpZRc"
+youtube_hi: "https://www.youtube.com/watch?v=T_jwaFaHhfo"
 status: "published"
 ---
 
@@ -43,27 +49,11 @@ status: "published"
 <article class="comic-slide-card" id="slide-02">
 <div class="slide-card-header">
 <span class="slide-badge">Slide 02</span>
-<span class="slide-type-badge">Insight</span>
-<h3 class="slide-title lang-en">Measure Before Hero</h3>
-<h3 class="slide-title lang-hi">Measure Before Hero</h3>
-</div>
-<div class="slide-image-wrapper">
-<img src="https://pub-922d698a65e14ae9aeb30a4c6aacdaed.r2.dev/src/pages/comics/ramayana/Book_01_Bala_Kanda/Book_1_Bala_Kanda_Chapter_1/slides/slide_02_final.jpg" alt="Slide 02 - Measure Before Hero" loading="lazy" />
-</div>
-<div class="slide-caption-wrapper">
-<p class="slide-caption-text lang-en">Why build a measure before telling a hero's story? Because without thankfulness and truth as your scale, a story stays only fun. Valmiki first writes what makes a person great - then finds the man. Write your three rules of life, and test every hero by them.</p>
-<p class="slide-caption-text lang-hi">नायक की कहानी से पहले कसौटी क्यों बनाई जाए? क्योंकि कृतज्ञता और सत्य के बिना कहानी सिर्फ मज़ा है। वाल्मीकि पहले लिखते हैं कि बड़ा आदमी कैसा होता है - फिर मनुष्य खोजते हैं। जीवन के तीन नियम लिखो, और हर नायक को उसी पर परखो।</p>
-</div>
-</article>
-
-<article class="comic-slide-card" id="slide-03">
-<div class="slide-card-header">
-<span class="slide-badge">Slide 03</span>
 <h3 class="slide-title lang-en">Rama Named</h3>
 <h3 class="slide-title lang-hi">Rama Named</h3>
 </div>
 <div class="slide-image-wrapper">
-<img src="https://pub-922d698a65e14ae9aeb30a4c6aacdaed.r2.dev/src/pages/comics/ramayana/Book_01_Bala_Kanda/Book_1_Bala_Kanda_Chapter_1/slides/slide_03_final.jpg" alt="Slide 03 - Rama Named" loading="lazy" />
+<img src="https://pub-922d698a65e14ae9aeb30a4c6aacdaed.r2.dev/src/pages/comics/ramayana/Book_01_Bala_Kanda/Book_1_Bala_Kanda_Chapter_1/slides/slide_03_final.jpg" alt="Slide 02 - Rama Named" loading="lazy" />
 </div>
 <div class="slide-caption-wrapper">
 <p class="slide-caption-text lang-en">Narada smiles with joy and answers: Rama, prince of Ayodhya. He is calm, truthful, patient, and kind. As Narada speaks, Rama himself appears in a golden vision, bow in hand, ready to save the world.</p>
@@ -71,14 +61,14 @@ status: "published"
 </div>
 </article>
 
-<article class="comic-slide-card" id="slide-04">
+<article class="comic-slide-card" id="slide-03">
 <div class="slide-card-header">
-<span class="slide-badge">Slide 04</span>
+<span class="slide-badge">Slide 03</span>
 <h3 class="slide-title lang-en">Body Certifies Soul</h3>
 <h3 class="slide-title lang-hi">Body Certifies Soul</h3>
 </div>
 <div class="slide-image-wrapper">
-<img src="https://pub-922d698a65e14ae9aeb30a4c6aacdaed.r2.dev/src/pages/comics/ramayana/Book_01_Bala_Kanda/Book_1_Bala_Kanda_Chapter_1/slides/slide_04_final.jpg" alt="Slide 04 - Body Certifies Soul" loading="lazy" />
+<img src="https://pub-922d698a65e14ae9aeb30a4c6aacdaed.r2.dev/src/pages/comics/ramayana/Book_01_Bala_Kanda/Book_1_Bala_Kanda_Chapter_1/slides/slide_04_final.jpg" alt="Slide 03 - Body Certifies Soul" loading="lazy" />
 </div>
 <div class="slide-caption-wrapper">
 <p class="slide-caption-text lang-en">What does a perfect hero look like? Broad shoulders to carry duty, a calm face, eyes that see everyone equally. Rama stands before his shining city, and beside him glow the wheel of duty and the book of wise laws.</p>
@@ -86,30 +76,14 @@ status: "published"
 </div>
 </article>
 
-<article class="comic-slide-card" id="slide-05">
+<article class="comic-slide-card" id="slide-04">
 <div class="slide-card-header">
-<span class="slide-badge">Slide 05</span>
-<span class="slide-type-badge">Insight</span>
-<h3 class="slide-title lang-en">Flesh Shows Virtue</h3>
-<h3 class="slide-title lang-hi">Flesh Shows Virtue</h3>
-</div>
-<div class="slide-image-wrapper">
-<img src="https://pub-922d698a65e14ae9aeb30a4c6aacdaed.r2.dev/src/pages/comics/ramayana/Book_01_Bala_Kanda/Book_1_Bala_Kanda_Chapter_1/slides/slide_05_final.jpg" alt="Slide 05 - Flesh Shows Virtue" loading="lazy" />
-</div>
-<div class="slide-caption-wrapper">
-<p class="slide-caption-text lang-en">Why join body with virtue? Because the body is the heart's report card - a broad chest carries duty, big eyes see all as equal, a calm face beats anger. Once a day, without a mirror, notice your shoulders, breath and eyes, and ask what goodness they show.</p>
-<p class="slide-caption-text lang-hi">शरीर को गुण से क्यों जोड़ा गया? क्योंकि शरीर दिल की रिपोर्ट है - चौड़ी छाती कर्तव्य उठाती है, बड़ी आँखें सबको बराबर देखती हैं, शांत चेहरा गुस्सा जीतता है। दिन में एक बार, बिना शीशे के, कंधे, साँस और आँखें देखो - और पूछो कि वे कौन सी अच्छाई दिखा रहे हैं।</p>
-</div>
-</article>
-
-<article class="comic-slide-card" id="slide-06">
-<div class="slide-card-header">
-<span class="slide-badge">Slide 06</span>
+<span class="slide-badge">Slide 04</span>
 <h3 class="slide-title lang-en">Two Boons Exile</h3>
 <h3 class="slide-title lang-hi">Two Boons Exile</h3>
 </div>
 <div class="slide-image-wrapper">
-<img src="https://pub-922d698a65e14ae9aeb30a4c6aacdaed.r2.dev/src/pages/comics/ramayana/Book_01_Bala_Kanda/Book_1_Bala_Kanda_Chapter_1/slides/slide_06_final.jpg" alt="Slide 06 - Two Boons Exile" loading="lazy" />
+<img src="https://pub-922d698a65e14ae9aeb30a4c6aacdaed.r2.dev/src/pages/comics/ramayana/Book_01_Bala_Kanda/Book_1_Bala_Kanda_Chapter_1/slides/slide_06_final.jpg" alt="Slide 04 - Two Boons Exile" loading="lazy" />
 </div>
 <div class="slide-caption-wrapper">
 <p class="slide-caption-text lang-en">King Dasharatha is ready to crown his eldest son Rama. Then Rama's stepmother Kaikeyi stops the joy. She claims two old promises: her own son Bharata must be king, and Rama must spend fourteen years in the forest.</p>
@@ -117,14 +91,14 @@ status: "published"
 </div>
 </article>
 
-<article class="comic-slide-card" id="slide-07">
+<article class="comic-slide-card" id="slide-05">
 <div class="slide-card-header">
-<span class="slide-badge">Slide 07</span>
+<span class="slide-badge">Slide 05</span>
 <h3 class="slide-title lang-en">Ganga to Chitrakuta</h3>
 <h3 class="slide-title lang-hi">Ganga to Chitrakuta</h3>
 </div>
 <div class="slide-image-wrapper">
-<img src="https://pub-922d698a65e14ae9aeb30a4c6aacdaed.r2.dev/src/pages/comics/ramayana/Book_01_Bala_Kanda/Book_1_Bala_Kanda_Chapter_1/slides/slide_07_final.jpg" alt="Slide 07 - Ganga to Chitrakuta" loading="lazy" />
+<img src="https://pub-922d698a65e14ae9aeb30a4c6aacdaed.r2.dev/src/pages/comics/ramayana/Book_01_Bala_Kanda/Book_1_Bala_Kanda_Chapter_1/slides/slide_07_final.jpg" alt="Slide 05 - Ganga to Chitrakuta" loading="lazy" />
 </div>
 <div class="slide-caption-wrapper">
 <p class="slide-caption-text lang-en">Rama accepts exile with a calm heart. His wife Sita and brother Lakshmana walk beside him into the forest. At the river, the boatman Guha ferries them across, while the royal chariot waits to carry the sad news home.</p>
@@ -132,14 +106,14 @@ status: "published"
 </div>
 </article>
 
-<article class="comic-slide-card" id="slide-08">
+<article class="comic-slide-card" id="slide-06">
 <div class="slide-card-header">
-<span class="slide-badge">Slide 08</span>
+<span class="slide-badge">Slide 06</span>
 <h3 class="slide-title lang-en">Sandals of Trust</h3>
 <h3 class="slide-title lang-hi">Sandals of Trust</h3>
 </div>
 <div class="slide-image-wrapper">
-<img src="https://pub-922d698a65e14ae9aeb30a4c6aacdaed.r2.dev/src/pages/comics/ramayana/Book_01_Bala_Kanda/Book_1_Bala_Kanda_Chapter_1/slides/slide_08_final.jpg" alt="Slide 08 - Sandals of Trust" loading="lazy" />
+<img src="https://pub-922d698a65e14ae9aeb30a4c6aacdaed.r2.dev/src/pages/comics/ramayana/Book_01_Bala_Kanda/Book_1_Bala_Kanda_Chapter_1/slides/slide_08_final.jpg" alt="Slide 06 - Sandals of Trust" loading="lazy" />
 </div>
 <div class="slide-caption-wrapper">
 <p class="slide-caption-text lang-en">Bharata loves Rama and refuses the stolen throne. He begs Rama to return, but Rama keeps his father's word. So Bharata carries Rama's sandals to Nandigrama and rules the kingdom in his brother's name.</p>
@@ -147,30 +121,14 @@ status: "published"
 </div>
 </article>
 
-<article class="comic-slide-card" id="slide-09">
+<article class="comic-slide-card" id="slide-07">
 <div class="slide-card-header">
-<span class="slide-badge">Slide 09</span>
-<span class="slide-type-badge">Insight</span>
-<h3 class="slide-title lang-en">Power as Trust</h3>
-<h3 class="slide-title lang-hi">Power as Trust</h3>
-</div>
-<div class="slide-image-wrapper">
-<img src="https://pub-922d698a65e14ae9aeb30a4c6aacdaed.r2.dev/src/pages/comics/ramayana/Book_01_Bala_Kanda/Book_1_Bala_Kanda_Chapter_1/slides/slide_09_final.jpg" alt="Slide 09 - Power as Trust" loading="lazy" />
-</div>
-<div class="slide-caption-wrapper">
-<p class="slide-caption-text lang-en">Why does Rama accept exile while Bharata refuses a free throne? Because the real issue is trust, not orders. Rama keeps the king's word so all promises stay safe; Bharata refuses a tricked throne so order never breaks. Power is a trust, not a prize.</p>
-<p class="slide-caption-text lang-hi">राम वनवास क्यों मानते हैं और भरत मुफ्त गद्दी क्यों ठुकराते हैं? क्योंकि असली बात आज्ञा नहीं, भरोसा है। राम राजा का वचन निभाते हैं ताकि सबके वचन बचे रहें; भरत छल की गद्दी ठुकराते हैं ताकि व्यवस्था कभी न टूटे। सत्ता पुरस्कार नहीं, भरोसा है।</p>
-</div>
-</article>
-
-<article class="comic-slide-card" id="slide-10">
-<div class="slide-card-header">
-<span class="slide-badge">Slide 10</span>
+<span class="slide-badge">Slide 07</span>
 <h3 class="slide-title lang-en">Vow Against Rakshasas</h3>
 <h3 class="slide-title lang-hi">Vow Against Rakshasas</h3>
 </div>
 <div class="slide-image-wrapper">
-<img src="https://pub-922d698a65e14ae9aeb30a4c6aacdaed.r2.dev/src/pages/comics/ramayana/Book_01_Bala_Kanda/Book_1_Bala_Kanda_Chapter_1/slides/slide_10_final.jpg" alt="Slide 10 - Vow Against Rakshasas" loading="lazy" />
+<img src="https://pub-922d698a65e14ae9aeb30a4c6aacdaed.r2.dev/src/pages/comics/ramayana/Book_01_Bala_Kanda/Book_1_Bala_Kanda_Chapter_1/slides/slide_10_final.jpg" alt="Slide 07 - Vow Against Rakshasas" loading="lazy" />
 </div>
 <div class="slide-caption-wrapper">
 <p class="slide-caption-text lang-en">Deep in Dandaka forest, holy sages beg Rama for safety from demons. The great sage Agastya blesses him, gives him god - made weapons, and Rama promises: your prayers will be protected.</p>
@@ -178,14 +136,14 @@ status: "published"
 </div>
 </article>
 
-<article class="comic-slide-card" id="slide-11">
+<article class="comic-slide-card" id="slide-08">
 <div class="slide-card-header">
-<span class="slide-badge">Slide 11</span>
+<span class="slide-badge">Slide 08</span>
 <h3 class="slide-title lang-en">Fourteen Thousand Fall</h3>
 <h3 class="slide-title lang-hi">Fourteen Thousand Fall</h3>
 </div>
 <div class="slide-image-wrapper">
-<img src="https://pub-922d698a65e14ae9aeb30a4c6aacdaed.r2.dev/src/pages/comics/ramayana/Book_01_Bala_Kanda/Book_1_Bala_Kanda_Chapter_1/slides/slide_11_final.jpg" alt="Slide 11 - Fourteen Thousand Fall" loading="lazy" />
+<img src="https://pub-922d698a65e14ae9aeb30a4c6aacdaed.r2.dev/src/pages/comics/ramayana/Book_01_Bala_Kanda/Book_1_Bala_Kanda_Chapter_1/slides/slide_11_final.jpg" alt="Slide 08 - Fourteen Thousand Fall" loading="lazy" />
 </div>
 <div class="slide-caption-wrapper">
 <p class="slide-caption-text lang-en">Shurpanakha runs crying to the demon chief Khara, and his fourteen thousand soldiers rush at Rama. Alone and calm, lotus - eyed Rama lifts his great bow and faces them all by himself.</p>
@@ -193,14 +151,14 @@ status: "published"
 </div>
 </article>
 
-<article class="comic-slide-card" id="slide-12">
+<article class="comic-slide-card" id="slide-09">
 <div class="slide-card-header">
-<span class="slide-badge">Slide 12</span>
+<span class="slide-badge">Slide 09</span>
 <h3 class="slide-title lang-en">The Luring</h3>
 <h3 class="slide-title lang-hi">The Luring</h3>
 </div>
 <div class="slide-image-wrapper">
-<img src="https://pub-922d698a65e14ae9aeb30a4c6aacdaed.r2.dev/src/pages/comics/ramayana/Book_01_Bala_Kanda/Book_1_Bala_Kanda_Chapter_1/slides/slide_12_final.jpg" alt="Slide 12 - The Luring" loading="lazy" />
+<img src="https://pub-922d698a65e14ae9aeb30a4c6aacdaed.r2.dev/src/pages/comics/ramayana/Book_01_Bala_Kanda/Book_1_Bala_Kanda_Chapter_1/slides/slide_12_final.jpg" alt="Slide 09 - The Luring" loading="lazy" />
 </div>
 <div class="slide-caption-wrapper">
 <p class="slide-caption-text lang-en">A golden deer lures Rama and Lakshmana far from home. All is quiet in the empty hut. Then Sita hears a cry for help from the trees - and takes a step toward the sound.</p>
@@ -208,14 +166,14 @@ status: "published"
 </div>
 </article>
 
-<article class="comic-slide-card" id="slide-13">
+<article class="comic-slide-card" id="slide-10">
 <div class="slide-card-header">
-<span class="slide-badge">Slide 13</span>
+<span class="slide-badge">Slide 10</span>
 <h3 class="slide-title lang-en">Abduction Grief</h3>
 <h3 class="slide-title lang-hi">Abduction Grief</h3>
 </div>
 <div class="slide-image-wrapper">
-<img src="https://pub-922d698a65e14ae9aeb30a4c6aacdaed.r2.dev/src/pages/comics/ramayana/Book_01_Bala_Kanda/Book_1_Bala_Kanda_Chapter_1/slides/slide_13_final.jpg" alt="Slide 13 - Abduction Grief" loading="lazy" />
+<img src="https://pub-922d698a65e14ae9aeb30a4c6aacdaed.r2.dev/src/pages/comics/ramayana/Book_01_Bala_Kanda/Book_1_Bala_Kanda_Chapter_1/slides/slide_13_final.jpg" alt="Slide 10 - Abduction Grief" loading="lazy" />
 </div>
 <div class="slide-caption-wrapper">
 <p class="slide-caption-text lang-en">Demon king Ravana swoops down and carries Sita away into the sky. Only the brave old vulture Jatayu dares to stop him, diving with wide wings to bar the demon's path.</p>
@@ -223,14 +181,14 @@ status: "published"
 </div>
 </article>
 
-<article class="comic-slide-card" id="slide-14">
+<article class="comic-slide-card" id="slide-11">
 <div class="slide-card-header">
-<span class="slide-badge">Slide 14</span>
+<span class="slide-badge">Slide 11</span>
 <h3 class="slide-title lang-en">Grief</h3>
 <h3 class="slide-title lang-hi">Grief</h3>
 </div>
 <div class="slide-image-wrapper">
-<img src="https://pub-922d698a65e14ae9aeb30a4c6aacdaed.r2.dev/src/pages/comics/ramayana/Book_01_Bala_Kanda/Book_1_Bala_Kanda_Chapter_1/slides/slide_14_final.jpg" alt="Slide 14 - Grief" loading="lazy" />
+<img src="https://pub-922d698a65e14ae9aeb30a4c6aacdaed.r2.dev/src/pages/comics/ramayana/Book_01_Bala_Kanda/Book_1_Bala_Kanda_Chapter_1/slides/slide_14_final.jpg" alt="Slide 11 - Grief" loading="lazy" />
 </div>
 <div class="slide-caption-wrapper">
 <p class="slide-caption-text lang-en">Rama returns to find feathers strewn and the courtyard empty. His bow lies forgotten on the ground. Kneeling by the cold fire, Rama weeps for his stolen Sita.</p>
@@ -238,14 +196,14 @@ status: "published"
 </div>
 </article>
 
-<article class="comic-slide-card" id="slide-15">
+<article class="comic-slide-card" id="slide-12">
 <div class="slide-card-header">
-<span class="slide-badge">Slide 15</span>
+<span class="slide-badge">Slide 12</span>
 <h3 class="slide-title lang-en">Rites</h3>
 <h3 class="slide-title lang-hi">Rites</h3>
 </div>
 <div class="slide-image-wrapper">
-<img src="https://pub-922d698a65e14ae9aeb30a4c6aacdaed.r2.dev/src/pages/comics/ramayana/Book_01_Bala_Kanda/Book_1_Bala_Kanda_Chapter_1/slides/slide_15_final.jpg" alt="Slide 15 - Rites" loading="lazy" />
+<img src="https://pub-922d698a65e14ae9aeb30a4c6aacdaed.r2.dev/src/pages/comics/ramayana/Book_01_Bala_Kanda/Book_1_Bala_Kanda_Chapter_1/slides/slide_15_final.jpg" alt="Slide 12 - Rites" loading="lazy" />
 </div>
 <div class="slide-caption-wrapper">
 <p class="slide-caption-text lang-en">With love and honour, Rama and Lakshmana burn brave Jatayu on a bed of flowers under the stars. Then the two brothers turn south, where new friends and new dangers wait.</p>
@@ -253,14 +211,14 @@ status: "published"
 </div>
 </article>
 
-<article class="comic-slide-card" id="slide-16">
+<article class="comic-slide-card" id="slide-13">
 <div class="slide-card-header">
-<span class="slide-badge">Slide 16</span>
+<span class="slide-badge">Slide 13</span>
 <h3 class="slide-title lang-en">Shabari to Friendship</h3>
 <h3 class="slide-title lang-hi">Shabari to Friendship</h3>
 </div>
 <div class="slide-image-wrapper">
-<img src="https://pub-922d698a65e14ae9aeb30a4c6aacdaed.r2.dev/src/pages/comics/ramayana/Book_01_Bala_Kanda/Book_1_Bala_Kanda_Chapter_1/slides/slide_16_final.jpg" alt="Slide 16 - Shabari to Friendship" loading="lazy" />
+<img src="https://pub-922d698a65e14ae9aeb30a4c6aacdaed.r2.dev/src/pages/comics/ramayana/Book_01_Bala_Kanda/Book_1_Bala_Kanda_Chapter_1/slides/slide_16_final.jpg" alt="Slide 13 - Shabari to Friendship" loading="lazy" />
 </div>
 <div class="slide-caption-wrapper">
 <p class="slide-caption-text lang-en">On Pampa's bank the two brothers meet Hanuman, and he brings them to Sugriva. Before a witness fire, Rama and Sugriva join hands in lifelong friendship.</p>
@@ -268,14 +226,14 @@ status: "published"
 </div>
 </article>
 
-<article class="comic-slide-card" id="slide-17">
+<article class="comic-slide-card" id="slide-14">
 <div class="slide-card-header">
-<span class="slide-badge">Slide 17</span>
+<span class="slide-badge">Slide 14</span>
 <h3 class="slide-title lang-en">Proof</h3>
 <h3 class="slide-title lang-hi">Proof</h3>
 </div>
 <div class="slide-image-wrapper">
-<img src="https://pub-922d698a65e14ae9aeb30a4c6aacdaed.r2.dev/src/pages/comics/ramayana/Book_01_Bala_Kanda/Book_1_Bala_Kanda_Chapter_1/slides/slide_17_final.jpg" alt="Slide 17 - Proof" loading="lazy" />
+<img src="https://pub-922d698a65e14ae9aeb30a4c6aacdaed.r2.dev/src/pages/comics/ramayana/Book_01_Bala_Kanda/Book_1_Bala_Kanda_Chapter_1/slides/slide_17_final.jpg" alt="Slide 14 - Proof" loading="lazy" />
 </div>
 <div class="slide-caption-wrapper">
 <p class="slide-caption-text lang-en">Monkey king Sugriva doubts Rama's strength. So Rama smiles, hurls the demon's old bones far away, and with one arrow pierces seven tall palm trees. Doubt washed away!</p>
@@ -283,14 +241,14 @@ status: "published"
 </div>
 </article>
 
-<article class="comic-slide-card" id="slide-18">
+<article class="comic-slide-card" id="slide-15">
 <div class="slide-card-header">
-<span class="slide-badge">Slide 18</span>
+<span class="slide-badge">Slide 15</span>
 <h3 class="slide-title lang-en">Fall of Vali</h3>
 <h3 class="slide-title lang-hi">Fall of Vali</h3>
 </div>
 <div class="slide-image-wrapper">
-<img src="https://pub-922d698a65e14ae9aeb30a4c6aacdaed.r2.dev/src/pages/comics/ramayana/Book_01_Bala_Kanda/Book_1_Bala_Kanda_Chapter_1/slides/slide_18_final.jpg" alt="Slide 18 - Fall of Vali" loading="lazy" />
+<img src="https://pub-922d698a65e14ae9aeb30a4c6aacdaed.r2.dev/src/pages/comics/ramayana/Book_01_Bala_Kanda/Book_1_Bala_Kanda_Chapter_1/slides/slide_18_final.jpg" alt="Slide 15 - Fall of Vali" loading="lazy" />
 </div>
 <div class="slide-caption-wrapper">
 <p class="slide-caption-text lang-en">Sugriva roars his challenge at the gates of Kishkindha. His brother Vali storms out, strong as a mountain. Then Rama's single arrow flies from the trees - and unjust Vali falls.</p>
@@ -298,30 +256,14 @@ status: "published"
 </div>
 </article>
 
-<article class="comic-slide-card" id="slide-19">
+<article class="comic-slide-card" id="slide-16">
 <div class="slide-card-header">
-<span class="slide-badge">Slide 19</span>
-<span class="slide-type-badge">Insight</span>
-<h3 class="slide-title lang-en">Periphery Saves Center</h3>
-<h3 class="slide-title lang-hi">Periphery Saves Center</h3>
-</div>
-<div class="slide-image-wrapper">
-<img src="https://pub-922d698a65e14ae9aeb30a4c6aacdaed.r2.dev/src/pages/comics/ramayana/Book_01_Bala_Kanda/Book_1_Bala_Kanda_Chapter_1/slides/slide_19_final.jpg" alt="Slide 19 - Periphery Saves Center" loading="lazy" />
-</div>
-<div class="slide-caption-wrapper">
-<p class="slide-caption-text lang-en">Why must a prince befriend forest monkeys? Because when the center breaks, the edges save. Exile took Rama's palace but gave him searchers, an army, and wings - great tales are won by friendship, not strength. Stuck? Ask help outside your rank.</p>
-<p class="slide-caption-text lang-hi">राजकुमार को वन - वानरों से मित्रता क्यों करनी पड़ी? क्योंकि जब केंद्र टूटता है तो किनारे बचाते हैं। वनवास ने महल छीना पर खोजने वाले, सेना और पंख दिए - बड़ी कथाएँ दोस्ती से जीती जाती हैं, ताकत से नहीं। अटके हो? पद से बाहर मदद माँगो।</p>
-</div>
-</article>
-
-<article class="comic-slide-card" id="slide-20">
-<div class="slide-card-header">
-<span class="slide-badge">Slide 20</span>
+<span class="slide-badge">Slide 16</span>
 <h3 class="slide-title lang-en">Leap to Ashoka</h3>
 <h3 class="slide-title lang-hi">Leap to Ashoka</h3>
 </div>
 <div class="slide-image-wrapper">
-<img src="https://pub-922d698a65e14ae9aeb30a4c6aacdaed.r2.dev/src/pages/comics/ramayana/Book_01_Bala_Kanda/Book_1_Bala_Kanda_Chapter_1/slides/slide_20_final.jpg" alt="Slide 20 - Leap to Ashoka" loading="lazy" />
+<img src="https://pub-922d698a65e14ae9aeb30a4c6aacdaed.r2.dev/src/pages/comics/ramayana/Book_01_Bala_Kanda/Book_1_Bala_Kanda_Chapter_1/slides/slide_20_final.jpg" alt="Slide 16 - Leap to Ashoka" loading="lazy" />
 </div>
 <div class="slide-caption-wrapper">
 <p class="slide-caption-text lang-en">Hanuman leaps across the whole sea in one mighty jump. In Lanka's Ashoka garden he finds Sita, sad but brave. He gives her Rama's ring and promises: Rama will come like a storm for you.</p>
@@ -329,14 +271,14 @@ status: "published"
 </div>
 </article>
 
-<article class="comic-slide-card" id="slide-21">
+<article class="comic-slide-card" id="slide-17">
 <div class="slide-card-header">
-<span class="slide-badge">Slide 21</span>
+<span class="slide-badge">Slide 17</span>
 <h3 class="slide-title lang-en">Burning</h3>
 <h3 class="slide-title lang-hi">Burning</h3>
 </div>
 <div class="slide-image-wrapper">
-<img src="https://pub-922d698a65e14ae9aeb30a4c6aacdaed.r2.dev/src/pages/comics/ramayana/Book_01_Bala_Kanda/Book_1_Bala_Kanda_Chapter_1/slides/slide_21_final.jpg" alt="Slide 21 - Burning" loading="lazy" />
+<img src="https://pub-922d698a65e14ae9aeb30a4c6aacdaed.r2.dev/src/pages/comics/ramayana/Book_01_Bala_Kanda/Book_1_Bala_Kanda_Chapter_1/slides/slide_21_final.jpg" alt="Slide 17 - Burning" loading="lazy" />
 </div>
 <div class="slide-caption-wrapper">
 <p class="slide-caption-text lang-en">Caught, then freed by a gods - given blessing, Hanuman forgives his captors. He spares only Sita's garden, sets all Lanka on fire with his burning tail, and leaps away into the night.</p>
@@ -344,14 +286,14 @@ status: "published"
 </div>
 </article>
 
-<article class="comic-slide-card" id="slide-22">
+<article class="comic-slide-card" id="slide-18">
 <div class="slide-card-header">
-<span class="slide-badge">Slide 22</span>
+<span class="slide-badge">Slide 18</span>
 <h3 class="slide-title lang-en">Lanka Burns Ocean Rises</h3>
 <h3 class="slide-title lang-hi">Lanka Burns Ocean Rises</h3>
 </div>
 <div class="slide-image-wrapper">
-<img src="https://pub-922d698a65e14ae9aeb30a4c6aacdaed.r2.dev/src/pages/comics/ramayana/Book_01_Bala_Kanda/Book_1_Bala_Kanda_Chapter_1/slides/slide_22_final.jpg" alt="Slide 22 - Lanka Burns Ocean Rises" loading="lazy" />
+<img src="https://pub-922d698a65e14ae9aeb30a4c6aacdaed.r2.dev/src/pages/comics/ramayana/Book_01_Bala_Kanda/Book_1_Bala_Kanda_Chapter_1/slides/slide_22_final.jpg" alt="Slide 18 - Lanka Burns Ocean Rises" loading="lazy" />
 </div>
 <div class="slide-caption-wrapper">
 <p class="slide-caption-text lang-en">Hanuman brings happy news: Sita is found! But the wide sea blocks the way. Rama draws his bow at the waves until Ocean himself rises, holding gifts, and shows them how to cross.</p>
@@ -359,14 +301,14 @@ status: "published"
 </div>
 </article>
 
-<article class="comic-slide-card" id="slide-23">
+<article class="comic-slide-card" id="slide-19">
 <div class="slide-card-header">
-<span class="slide-badge">Slide 23</span>
+<span class="slide-badge">Slide 19</span>
 <h3 class="slide-title lang-en">Bridge</h3>
 <h3 class="slide-title lang-hi">Bridge</h3>
 </div>
 <div class="slide-image-wrapper">
-<img src="https://pub-922d698a65e14ae9aeb30a4c6aacdaed.r2.dev/src/pages/comics/ramayana/Book_01_Bala_Kanda/Book_1_Bala_Kanda_Chapter_1/slides/slide_23_final.jpg" alt="Slide 23 - Bridge" loading="lazy" />
+<img src="https://pub-922d698a65e14ae9aeb30a4c6aacdaed.r2.dev/src/pages/comics/ramayana/Book_01_Bala_Kanda/Book_1_Bala_Kanda_Chapter_1/slides/slide_23_final.jpg" alt="Slide 19 - Bridge" loading="lazy" />
 </div>
 <div class="slide-caption-wrapper">
 <p class="slide-caption-text lang-en">Stone by stone, the monkey army builds a floating bridge across the sea. Rama walks first on the new road, Hanuman lifts the heaviest boulders, and behind them the army marches stone by stone.</p>
@@ -374,14 +316,14 @@ status: "published"
 </div>
 </article>
 
-<article class="comic-slide-card" id="slide-24">
+<article class="comic-slide-card" id="slide-20">
 <div class="slide-card-header">
-<span class="slide-badge">Slide 24</span>
+<span class="slide-badge">Slide 20</span>
 <h3 class="slide-title lang-en">Bridge Battle Fire</h3>
 <h3 class="slide-title lang-hi">Bridge Battle Fire</h3>
 </div>
 <div class="slide-image-wrapper">
-<img src="https://pub-922d698a65e14ae9aeb30a4c6aacdaed.r2.dev/src/pages/comics/ramayana/Book_01_Bala_Kanda/Book_1_Bala_Kanda_Chapter_1/slides/slide_24_final.jpg" alt="Slide 24 - Bridge Battle Fire" loading="lazy" />
+<img src="https://pub-922d698a65e14ae9aeb30a4c6aacdaed.r2.dev/src/pages/comics/ramayana/Book_01_Bala_Kanda/Book_1_Bala_Kanda_Chapter_1/slides/slide_24_final.jpg" alt="Slide 20 - Bridge Battle Fire" loading="lazy" />
 </div>
 <div class="slide-caption-wrapper">
 <p class="slide-caption-text lang-en">Saved, yet doubted - poor Sita must prove her truth. She walks calmly into roaring fire, and wonder! The flames curl around her like cool flowers. Fire - god Agni himself appears and declares her pure.</p>
@@ -389,14 +331,14 @@ status: "published"
 </div>
 </article>
 
-<article class="comic-slide-card" id="slide-25">
+<article class="comic-slide-card" id="slide-21">
 <div class="slide-card-header">
-<span class="slide-badge">Slide 25</span>
+<span class="slide-badge">Slide 21</span>
 <h3 class="slide-title lang-en">Return and Golden Rule</h3>
 <h3 class="slide-title lang-hi">Return and Golden Rule</h3>
 </div>
 <div class="slide-image-wrapper">
-<img src="https://pub-922d698a65e14ae9aeb30a4c6aacdaed.r2.dev/src/pages/comics/ramayana/Book_01_Bala_Kanda/Book_1_Bala_Kanda_Chapter_1/slides/slide_25_final.jpg" alt="Slide 25 - Return and Golden Rule" loading="lazy" />
+<img src="https://pub-922d698a65e14ae9aeb30a4c6aacdaed.r2.dev/src/pages/comics/ramayana/Book_01_Bala_Kanda/Book_1_Bala_Kanda_Chapter_1/slides/slide_25_final.jpg" alt="Slide 21 - Return and Golden Rule" loading="lazy" />
 </div>
 <div class="slide-caption-wrapper">
 <p class="slide-caption-text lang-en">The gods bless Rama, the fallen wake up, and all hurry home - Rama sends Hanuman flying ahead to tell Bharata: we are coming!</p>
@@ -404,18 +346,89 @@ status: "published"
 </div>
 </article>
 
-<article class="comic-slide-card" id="slide-26">
+<article class="comic-slide-card" id="slide-22">
 <div class="slide-card-header">
-<span class="slide-badge">Slide 26</span>
+<span class="slide-badge">Slide 22</span>
 <h3 class="slide-title lang-en">Coronation</h3>
 <h3 class="slide-title lang-hi">Coronation</h3>
 </div>
 <div class="slide-image-wrapper">
-<img src="https://pub-922d698a65e14ae9aeb30a4c6aacdaed.r2.dev/src/pages/comics/ramayana/Book_01_Bala_Kanda/Book_1_Bala_Kanda_Chapter_1/slides/slide_26_final.jpg" alt="Slide 26 - Coronation" loading="lazy" />
+<img src="https://pub-922d698a65e14ae9aeb30a4c6aacdaed.r2.dev/src/pages/comics/ramayana/Book_01_Bala_Kanda/Book_1_Bala_Kanda_Chapter_1/slides/slide_26_final.jpg" alt="Slide 22 - Coronation" loading="lazy" />
 </div>
 <div class="slide-caption-wrapper">
 <p class="slide-caption-text lang-en">At Nandigrama, Bharata returns the sandals' trust and offers Rama the crown with both hands. Crowned king of Ayodhya with Sita smiling beside him, Rama watches all the people dance with joy.</p>
 <p class="slide-caption-text lang-hi">नंदिग्राम में भरत खड़ाऊँ का भरोसा लौटाता है और दोनों हाथों से राम को ताज देता है। सीता पास मुस्कराती हैं, राम अयोध्या के राजा बनते हैं, और सारी प्रजा खुशी से नाचती है।</p>
+</div>
+</article>
+
+<!-- CHAPTER INSIGHTS -->
+<div class="section-title-bar insights-divider">
+<span class="section-badge">Chapter Insights</span>
+<h2 class="section-heading lang-en">Reflections & Key Insights</h2>
+<h2 class="section-heading lang-hi">दार्शनिक अंतर्दृष्टि एवं विचार</h2>
+</div>
+
+<article class="comic-slide-card" id="slide-23">
+<div class="slide-card-header">
+<span class="slide-badge">Slide 23</span>
+<span class="slide-type-badge">Insight</span>
+<h3 class="slide-title lang-en">Measure Before Hero</h3>
+<h3 class="slide-title lang-hi">Measure Before Hero</h3>
+</div>
+<div class="slide-image-wrapper">
+<img src="https://pub-922d698a65e14ae9aeb30a4c6aacdaed.r2.dev/src/pages/comics/ramayana/Book_01_Bala_Kanda/Book_1_Bala_Kanda_Chapter_1/slides/slide_02_final.jpg" alt="Slide 23 - Measure Before Hero" loading="lazy" />
+</div>
+<div class="slide-caption-wrapper">
+<p class="slide-caption-text lang-en">Why build a measure before telling a hero's story? Because without thankfulness and truth as your scale, a story stays only fun. Valmiki first writes what makes a person great - then finds the man. Write your three rules of life, and test every hero by them.</p>
+<p class="slide-caption-text lang-hi">नायक की कहानी से पहले कसौटी क्यों बनाई जाए? क्योंकि कृतज्ञता और सत्य के बिना कहानी सिर्फ मज़ा है। वाल्मीकि पहले लिखते हैं कि बड़ा आदमी कैसा होता है - फिर मनुष्य खोजते हैं। जीवन के तीन नियम लिखो, और हर नायक को उसी पर परखो।</p>
+</div>
+</article>
+
+<article class="comic-slide-card" id="slide-24">
+<div class="slide-card-header">
+<span class="slide-badge">Slide 24</span>
+<span class="slide-type-badge">Insight</span>
+<h3 class="slide-title lang-en">Flesh Shows Virtue</h3>
+<h3 class="slide-title lang-hi">Flesh Shows Virtue</h3>
+</div>
+<div class="slide-image-wrapper">
+<img src="https://pub-922d698a65e14ae9aeb30a4c6aacdaed.r2.dev/src/pages/comics/ramayana/Book_01_Bala_Kanda/Book_1_Bala_Kanda_Chapter_1/slides/slide_05_final.jpg" alt="Slide 24 - Flesh Shows Virtue" loading="lazy" />
+</div>
+<div class="slide-caption-wrapper">
+<p class="slide-caption-text lang-en">Why join body with virtue? Because the body is the heart's report card - a broad chest carries duty, big eyes see all as equal, a calm face beats anger. Once a day, without a mirror, notice your shoulders, breath and eyes, and ask what goodness they show.</p>
+<p class="slide-caption-text lang-hi">शरीर को गुण से क्यों जोड़ा गया? क्योंकि शरीर दिल की रिपोर्ट है - चौड़ी छाती कर्तव्य उठाती है, बड़ी आँखें सबको बराबर देखती हैं, शांत चेहरा गुस्सा जीतता है। दिन में एक बार, बिना शीशे के, कंधे, साँस और आँखें देखो - और पूछो कि वे कौन सी अच्छाई दिखा रहे हैं।</p>
+</div>
+</article>
+
+<article class="comic-slide-card" id="slide-25">
+<div class="slide-card-header">
+<span class="slide-badge">Slide 25</span>
+<span class="slide-type-badge">Insight</span>
+<h3 class="slide-title lang-en">Power as Trust</h3>
+<h3 class="slide-title lang-hi">Power as Trust</h3>
+</div>
+<div class="slide-image-wrapper">
+<img src="https://pub-922d698a65e14ae9aeb30a4c6aacdaed.r2.dev/src/pages/comics/ramayana/Book_01_Bala_Kanda/Book_1_Bala_Kanda_Chapter_1/slides/slide_09_final.jpg" alt="Slide 25 - Power as Trust" loading="lazy" />
+</div>
+<div class="slide-caption-wrapper">
+<p class="slide-caption-text lang-en">Why does Rama accept exile while Bharata refuses a free throne? Because the real issue is trust, not orders. Rama keeps the king's word so all promises stay safe; Bharata refuses a tricked throne so order never breaks. Power is a trust, not a prize.</p>
+<p class="slide-caption-text lang-hi">राम वनवास क्यों मानते हैं और भरत मुफ्त गद्दी क्यों ठुकराते हैं? क्योंकि असली बात आज्ञा नहीं, भरोसा है। राम राजा का वचन निभाते हैं ताकि सबके वचन बचे रहें; भरत छल की गद्दी ठुकराते हैं ताकि व्यवस्था कभी न टूटे। सत्ता पुरस्कार नहीं, भरोसा है।</p>
+</div>
+</article>
+
+<article class="comic-slide-card" id="slide-26">
+<div class="slide-card-header">
+<span class="slide-badge">Slide 26</span>
+<span class="slide-type-badge">Insight</span>
+<h3 class="slide-title lang-en">Periphery Saves Center</h3>
+<h3 class="slide-title lang-hi">Periphery Saves Center</h3>
+</div>
+<div class="slide-image-wrapper">
+<img src="https://pub-922d698a65e14ae9aeb30a4c6aacdaed.r2.dev/src/pages/comics/ramayana/Book_01_Bala_Kanda/Book_1_Bala_Kanda_Chapter_1/slides/slide_19_final.jpg" alt="Slide 26 - Periphery Saves Center" loading="lazy" />
+</div>
+<div class="slide-caption-wrapper">
+<p class="slide-caption-text lang-en">Why must a prince befriend forest monkeys? Because when the center breaks, the edges save. Exile took Rama's palace but gave him searchers, an army, and wings - great tales are won by friendship, not strength. Stuck? Ask help outside your rank.</p>
+<p class="slide-caption-text lang-hi">राजकुमार को वन - वानरों से मित्रता क्यों करनी पड़ी? क्योंकि जब केंद्र टूटता है तो किनारे बचाते हैं। वनवास ने महल छीना पर खोजने वाले, सेना और पंख दिए - बड़ी कथाएँ दोस्ती से जीती जाती हैं, ताकत से नहीं। अटके हो? पद से बाहर मदद माँगो।</p>
 </div>
 </article>
 
@@ -635,6 +648,109 @@ status: "published"
 </article>
 </div>
 </section>
+
+</div>
+</div>
+
+<!-- TAB 3: AUDIO & VIDEO -->
+<div class="tab-pane" id="pane-media" data-pane="media">
+<div class="media-view-container">
+
+<div class="section-title-bar">
+<span class="section-badge">Listen & Watch</span>
+<h2 class="section-heading lang-en">Audio & Video Episodes</h2>
+<h2 class="section-heading lang-hi">ऑडियो एवं वीडियो प्रसंग</h2>
+<p class="section-subheading lang-en">Experience this chapter through sound and screen: stream the narrated podcast on Spotify or watch the inline video.</p>
+<p class="section-subheading lang-hi">ध्वनि और दृश्य के माध्यम से प्रसंग का अनुभव करें: स्पॉटिफ़ाई पर पॉडकास्ट सुनें या सीधे यहीं वीडियो देखें।</p>
+</div>
+
+<div class="media-sections-wrapper">
+
+<!-- Audio Card: Spotify -->
+<section class="media-card audio-media-card">
+<div class="media-card-header">
+<div class="media-card-header-left">
+<span class="media-type-badge audio-badge">
+<svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor">
+<path d="M12 2C6.477 2 2 6.477 2 12c0 4.991 3.657 9.128 8.438 9.879V14.89h-2.54V12h2.54V9.797c0-2.506 1.492-3.89 3.777-3.89 1.094 0 2.238.195 2.238.195v2.46h-1.26c-1.243 0-1.63.771-1.63 1.562V12h2.773l-.443 2.89h-2.33v6.988C18.343 21.128 22 16.991 22 12c0-5.523-4.477-10-10-10z"/>
+</svg>
+Spotify Audio
+</span>
+<h3 class="media-card-title lang-en">Narrated Podcast Episode</h3>
+<h3 class="media-card-title lang-hi">कथा पॉडकास्ट प्रसंग</h3>
+</div>
+<div class="media-track-indicator">
+<span class="track-pill lang-en">English Edition • Narrated by Kavya</span>
+<span class="track-pill lang-hi">हिन्दी संस्करण • काव्या द्वारा प्रस्तुत</span>
+</div>
+</div>
+
+<div class="media-player-container">
+<!-- English Spotify Embed -->
+<div class="spotify-embed-wrapper lang-en">
+<iframe style="border-radius:12px" src="https://open.spotify.com/embed/episode/7LH1YUTSWL6R838nVVes3u?utm_source=generator" width="100%" height="232" frameBorder="0" allowfullscreen="" allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture" loading="lazy"></iframe>
+</div>
+<!-- Hindi Spotify Embed -->
+<div class="spotify-embed-wrapper lang-hi">
+<iframe style="border-radius:12px" src="https://open.spotify.com/embed/episode/0pxS1GDRMs4hhlsHkh9MMe?utm_source=generator" width="100%" height="232" frameBorder="0" allowfullscreen="" allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture" loading="lazy"></iframe>
+</div>
+</div>
+
+<div class="media-card-footer">
+<p class="media-hint lang-en">
+💡 <em>Want to listen in Hindi? Use the toolbar language toggle above or <a href="javascript:void(0)" class="quick-lang-switch" data-switch-to="hi">switch to हिन्दी audio</a>.</em>
+</p>
+<p class="media-hint lang-hi">
+💡 <em>अंग्रेज़ी में सुनना चाहते हैं? ऊपर भाषा टॉगल का उपयोग करें या <a href="javascript:void(0)" class="quick-lang-switch" data-switch-to="en">English ऑडियो पर जाएँ</a>।</em>
+</p>
+</div>
+</section>
+
+<!-- Video Card: YouTube -->
+<section class="media-card video-media-card">
+<div class="media-card-header">
+<div class="media-card-header-left">
+<span class="media-type-badge video-badge">
+<svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor">
+<path d="M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z"/>
+</svg>
+YouTube Video
+</span>
+<h3 class="media-card-title lang-en">Visual Chronicle</h3>
+<h3 class="media-card-title lang-hi">सचित्र वीडियो कथा</h3>
+</div>
+<div class="media-track-indicator">
+<span class="track-pill lang-en">English Edition</span>
+<span class="track-pill lang-hi">हिन्दी संस्करण</span>
+</div>
+</div>
+
+<div class="media-player-container">
+<!-- English YouTube Embed -->
+<div class="video-embed-wrapper lang-en">
+<div class="video-embed-container">
+<iframe src="https://www.youtube-nocookie.com/embed/ZbYf4IGpZRc" title="Chapter Video (English)" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen loading="lazy"></iframe>
+</div>
+</div>
+<!-- Hindi YouTube Embed -->
+<div class="video-embed-wrapper lang-hi">
+<div class="video-embed-container">
+<iframe src="https://www.youtube-nocookie.com/embed/T_jwaFaHhfo" title="Chapter Video (Hindi)" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen loading="lazy"></iframe>
+</div>
+</div>
+</div>
+
+<div class="media-card-footer">
+<p class="media-hint lang-en">
+💡 <em>Want to watch in Hindi? Use the toolbar language toggle above or <a href="javascript:void(0)" class="quick-lang-switch" data-switch-to="hi">switch to हिन्दी</a>.</em>
+</p>
+<p class="media-hint lang-hi">
+💡 <em>अंग्रेज़ी में देखना चाहते हैं? ऊपर भाषा टॉगल का उपयोग करें या <a href="javascript:void(0)" class="quick-lang-switch" data-switch-to="en">English पर जाएँ</a>।</em>
+</p>
+</div>
+</section>
+
+</div>
 
 </div>
 </div>
