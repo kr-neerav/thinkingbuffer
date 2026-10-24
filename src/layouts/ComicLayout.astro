@@ -19,6 +19,10 @@ interface Props {
     word_count?: number;
     has_hindi?: boolean;
     has_narration?: boolean;
+    has_media?: boolean;
+    spotify_en?: string;
+    spotify_hi?: string;
+    youtube_url?: string;
     status?: string;
   };
 }
@@ -113,6 +117,13 @@ const isIntro = urlPath.includes('/introduction') || derivedSectionNum === 0 || 
             </svg>
             <span class="tab-text">Narration & Discussion</span>
           </button>
+          <button type="button" class="view-tab-btn" data-tab="media" role="tab" aria-selected="false">
+            <svg class="tab-icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <circle cx="12" cy="12" r="10"></circle>
+              <polygon points="10 8 16 12 10 16 10 8" fill="currentColor"></polygon>
+            </svg>
+            <span class="tab-text">Audio & Video</span>
+          </button>
         </div>
 
         <div class="comic-language-bar">
@@ -152,6 +163,13 @@ const isIntro = urlPath.includes('/introduction') || derivedSectionNum === 0 || 
               <path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"></path>
             </svg>
             <span class="tab-text">Narration & Discussion</span>
+          </button>
+          <button type="button" class="view-tab-btn" data-tab="media" role="tab" aria-selected="false">
+            <svg class="tab-icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <circle cx="12" cy="12" r="10"></circle>
+              <polygon points="10 8 16 12 10 16 10 8" fill="currentColor"></polygon>
+            </svg>
+            <span class="tab-text">Audio & Video</span>
           </button>
         </div>
 
@@ -447,14 +465,24 @@ const isIntro = urlPath.includes('/introduction') || derivedSectionNum === 0 || 
   .comic-reader-wrapper[data-active-tab="comics"] .tab-pane[data-pane="comics"] {
     display: block !important;
   }
-  .comic-reader-wrapper[data-active-tab="comics"] .tab-pane[data-pane="narration"] {
+  .comic-reader-wrapper[data-active-tab="comics"] .tab-pane[data-pane="narration"],
+  .comic-reader-wrapper[data-active-tab="comics"] .tab-pane[data-pane="media"] {
     display: none !important;
   }
 
   .comic-reader-wrapper[data-active-tab="narration"] .tab-pane[data-pane="narration"] {
     display: block !important;
   }
-  .comic-reader-wrapper[data-active-tab="narration"] .tab-pane[data-pane="comics"] {
+  .comic-reader-wrapper[data-active-tab="narration"] .tab-pane[data-pane="comics"],
+  .comic-reader-wrapper[data-active-tab="narration"] .tab-pane[data-pane="media"] {
+    display: none !important;
+  }
+
+  .comic-reader-wrapper[data-active-tab="media"] .tab-pane[data-pane="media"] {
+    display: block !important;
+  }
+  .comic-reader-wrapper[data-active-tab="media"] .tab-pane[data-pane="comics"],
+  .comic-reader-wrapper[data-active-tab="media"] .tab-pane[data-pane="narration"] {
     display: none !important;
   }
 
@@ -706,12 +734,235 @@ const isIntro = urlPath.includes('/introduction') || derivedSectionNum === 0 || 
     margin-bottom: 0.4rem;
   }
 
-  .takeaway-text {
-    font-size: 0.95rem;
-    line-height: 1.6;
-    color: #1f2937;
-    font-weight: 500;
+  /* ========================================================
+     Audio & Video Tab Content
+     ======================================================== */
+  .media-view-container {
+    display: flex;
+    flex-direction: column;
+    gap: 2rem;
+    margin: 1rem 0 2.5rem 0;
+  }
+
+  .media-sections-wrapper {
+    display: flex;
+    flex-direction: column;
+    gap: 2rem;
+  }
+
+  .media-card {
+    background: #ffffff;
+    border-radius: var(--radius-card, 16px);
+    box-shadow: var(--shadow-soft, 0 10px 40px -10px rgba(0, 0, 0, 0.08));
+    border: 1px solid rgba(0, 0, 0, 0.05);
+    overflow: hidden;
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+  }
+
+  .media-card-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 1rem 1.5rem;
+    background: #fafbfc;
+    border-bottom: 1px solid rgba(0, 0, 0, 0.05);
+    flex-wrap: wrap;
+    gap: 0.75rem;
+  }
+
+  .media-card-header-left {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    flex-wrap: wrap;
+  }
+
+  .media-type-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.4rem;
+    font-size: 0.75rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+    padding: 0.25rem 0.65rem;
+    border-radius: 12px;
+  }
+
+  .media-type-badge.audio-badge {
+    color: #15803d;
+    background: #f0fdf4;
+    border: 1px solid rgba(22, 163, 74, 0.2);
+  }
+
+  .media-type-badge.video-badge {
+    color: #b91c1c;
+    background: #fef2f2;
+    border: 1px solid rgba(220, 38, 38, 0.2);
+  }
+
+  .media-card-title {
+    font-size: 1.05rem;
+    font-weight: 600;
+    color: #1a202c;
     margin: 0;
+    letter-spacing: -0.01em;
+  }
+
+  .media-track-indicator {
+    display: inline-flex;
+    align-items: center;
+  }
+
+  .track-pill {
+    font-size: 0.78rem;
+    font-weight: 600;
+    color: #4b5563;
+    background: #f3f4f6;
+    padding: 0.25rem 0.75rem;
+    border-radius: 100px;
+    border: 1px solid rgba(0, 0, 0, 0.05);
+  }
+
+  .media-status-pill {
+    font-size: 0.75rem;
+    font-weight: 600;
+    color: #b85d19;
+    background: #fff4e8;
+    padding: 0.25rem 0.7rem;
+    border-radius: 100px;
+    border: 1px solid rgba(184, 93, 25, 0.18);
+  }
+
+  .media-player-container {
+    padding: 1.5rem;
+  }
+
+  .spotify-embed-wrapper {
+    width: 100%;
+    border-radius: 12px;
+    overflow: hidden;
+    background: #121212;
+  }
+
+  .spotify-embed-wrapper iframe {
+    display: block;
+    width: 100%;
+    border: none;
+  }
+
+  .video-embed-container {
+    position: relative;
+    width: 100%;
+    aspect-ratio: 16 / 9;
+    border-radius: 12px;
+    overflow: hidden;
+    background: #000000;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15);
+  }
+
+  .video-embed-container iframe {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    border: none;
+    display: block;
+  }
+
+  .video-placeholder-box {
+    width: 100%;
+    aspect-ratio: 16 / 9;
+    border-radius: 12px;
+    background: linear-gradient(135deg, #1f232b 0%, #111317 100%);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 2rem 1.5rem;
+    text-align: center;
+    color: #ffffff;
+    box-shadow: 0 4px 24px rgba(0, 0, 0, 0.12);
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    position: relative;
+    overflow: hidden;
+  }
+
+  .video-placeholder-box::before {
+    content: '';
+    position: absolute;
+    top: -50%;
+    left: -50%;
+    width: 200%;
+    height: 200%;
+    background: radial-gradient(circle, rgba(239, 68, 68, 0.08) 0%, transparent 60%);
+    pointer-events: none;
+  }
+
+  .video-placeholder-inner {
+    max-width: 480px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.75rem;
+    position: relative;
+    z-index: 1;
+  }
+
+  .video-play-mock-btn {
+    width: 56px;
+    height: 56px;
+    border-radius: 50%;
+    background: rgba(239, 68, 68, 0.9);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #ffffff;
+    box-shadow: 0 6px 20px rgba(239, 68, 68, 0.4);
+    margin-bottom: 0.25rem;
+    transition: transform 0.2s ease;
+  }
+
+  .video-play-mock-btn svg {
+    margin-left: 3px;
+  }
+
+  .video-placeholder-title {
+    font-size: 1.2rem;
+    font-weight: 700;
+    color: #ffffff;
+    letter-spacing: -0.01em;
+    margin: 0;
+  }
+
+  .video-placeholder-text {
+    font-size: 0.88rem;
+    color: rgba(255, 255, 255, 0.75);
+    line-height: 1.5;
+    margin: 0;
+  }
+
+  .media-card-footer {
+    padding: 0.85rem 1.5rem;
+    background: #fafbfc;
+    border-top: 1px solid rgba(0, 0, 0, 0.05);
+  }
+
+  .media-hint {
+    font-size: 0.82rem;
+    color: #6b7280;
+    margin: 0;
+  }
+
+  .quick-lang-switch {
+    color: #b85d19;
+    font-weight: 600;
+    text-decoration: underline;
+    cursor: pointer;
+  }
+
+  .quick-lang-switch:hover {
+    color: #92400e;
   }
 
   @keyframes comicFadeIn {
@@ -783,6 +1034,13 @@ const isIntro = urlPath.includes('/introduction') || derivedSectionNum === 0 || 
       width: 100%;
       justify-content: center;
     }
+    .chapter-view-tabs {
+      flex-wrap: wrap;
+    }
+    .view-tab-btn {
+      padding: 0.35rem 0.65rem;
+      font-size: 0.78rem;
+    }
     .nav-links-chapter {
       flex-direction: column;
       gap: 0.5rem;
@@ -793,6 +1051,14 @@ const isIntro = urlPath.includes('/introduction') || derivedSectionNum === 0 || 
     }
     .discussion-card {
       padding: 1.25rem 1rem;
+    }
+    .media-player-container {
+      padding: 1rem;
+    }
+    .video-placeholder-box {
+      aspect-ratio: auto;
+      min-height: 220px;
+      padding: 1.5rem 1rem;
     }
   }
 </style>
@@ -851,6 +1117,25 @@ const isIntro = urlPath.includes('/introduction') || derivedSectionNum === 0 || 
         });
       }
 
+      // Check for Media content
+      const mediaPanes = content ? content.querySelectorAll('.tab-pane[data-pane="media"]') : [];
+      let hasMedia = false;
+      mediaPanes.forEach(pane => {
+        if (pane.textContent.trim().length > 0) {
+          hasMedia = true;
+        }
+      });
+
+      const mediaTabButtons = document.querySelectorAll('.view-tab-btn[data-tab="media"]');
+      if (!hasMedia) {
+        mediaTabButtons.forEach(btn => {
+          btn.disabled = true;
+          btn.title = 'Audio & video coming soon';
+          const label = btn.querySelector('.tab-text');
+          if (label) label.textContent = 'Audio & Video (Soon)';
+        });
+      }
+
       // Language Switcher Logic
       const langButtons = document.querySelectorAll('.lang-btn');
       let preferredLang = 'en';
@@ -880,6 +1165,17 @@ const isIntro = urlPath.includes('/introduction') || derivedSectionNum === 0 || 
         });
       });
 
+      // Quick language switch shortcut (e.g. within media cards)
+      document.querySelectorAll('.quick-lang-switch').forEach(btn => {
+        btn.addEventListener('click', function(e) {
+          e.preventDefault();
+          const targetLang = this.getAttribute('data-switch-to');
+          if (targetLang && (targetLang === 'en' || (targetLang === 'hi' && hasHindi))) {
+            setLanguage(targetLang);
+          }
+        });
+      });
+
       // Tab Switcher Logic
       const tabButtons = document.querySelectorAll('.view-tab-btn');
       const panes = content ? content.querySelectorAll('.tab-pane') : [];
@@ -888,6 +1184,9 @@ const isIntro = urlPath.includes('/introduction') || derivedSectionNum === 0 || 
         preferredTab = localStorage.getItem('tb_chapter_tab') || 'comics';
       } catch (e) {}
       if (preferredTab === 'narration' && !hasNarration) {
+        preferredTab = 'comics';
+      }
+      if (preferredTab === 'media' && !hasMedia) {
         preferredTab = 'comics';
       }
       setActiveTab(preferredTab);
@@ -912,6 +1211,7 @@ const isIntro = urlPath.includes('/introduction') || derivedSectionNum === 0 || 
         btn.addEventListener('click', function() {
           const targetTab = this.getAttribute('data-tab');
           if (targetTab === 'narration' && !hasNarration) return;
+          if (targetTab === 'media' && !hasMedia) return;
           setActiveTab(targetTab);
         });
       });

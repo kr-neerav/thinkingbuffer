@@ -26,7 +26,7 @@ A podcast interview quickly shifted my perspective on the whole standoff.
 
 ## The Catalyst: Resources Are a Conversation Away
 
-Shortly after that review, I listened to entrepreneur Daniel Priestley on *The Diary of a Chief Executive Officer (CEO)* [TBD: verify URL for Priestley CEO interview]. During the discussion, Priestley outlined how leaders secure resources:
+Shortly after that review, I listened to entrepreneur Daniel Priestley on *The Diary of a CEO*. During the discussion, Priestley outlined how leaders secure resources:
 
 > "The visionary has a different view of life. And the first thing is that if a resource exists on the planet anywhere, that resource is just a couple of conversations away... Someone woke up this morning with the resource that you want. And if you have a conversation about how that resource gets used, essentially, it's as good as you having the resource."
 -- Daniel Priestley
@@ -101,5 +101,3 @@ We presented our architectural gaps openly with estimated engineering investment
 ## What to do next
 
 Present architectural gaps openly to senior review panels instead of defending ticket campaigns. Build telemetry-driven multi-version schemas that decouple platform changes from downstream team schedules. Align migration incentives across stakeholders to turn review friction into company-wide platform leverage.
-
-<!-- unverified links: [TBD: verify URL for Priestley CEO interview] blocks automated curl requests (HTTP 403) -->

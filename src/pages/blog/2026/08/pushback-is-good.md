@@ -3,7 +3,7 @@ layout: ../../../../layouts/Layout.astro
 title: "Why Pushback is a Gift (And How to Use It)"
 description: "Unexpected pushback on a change management project exposed flawed assumptions and unlocked automated tooling that eliminated customer discovery friction."
 date: 2026-08-07
-tags: [Leadership, Mindset, Automation, "Change Management"]
+tags: [leadership, mindset, automation, change-management]
 heroImage: "https://pub-d8556b57257648feb0e7d903bdc8186f.r2.dev/src/pages/blog/2026/08/pushback-is-good-concept.jpg"
 ---
 

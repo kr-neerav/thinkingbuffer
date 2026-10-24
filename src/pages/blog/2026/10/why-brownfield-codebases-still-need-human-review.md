@@ -3,7 +3,7 @@ layout: ../../../../layouts/Layout.astro
 title: "Why Brownfield Codebases Still Need Human Review"
 date: 2026-10-12
 description: "AI tools write clean local code, but real production context remains scattered across team boundaries and legacy contracts."
-tags: [Engineering Leadership, Architecture, Code Review, AI Engineering]
+tags: [engineering-leadership, architecture, code-review, ai-engineering]
 heroImage: "https://pub-d8556b57257648feb0e7d903bdc8186f.r2.dev/src/pages/blog/2026/10/brownfield-context-hero.jpg"
 ---
 

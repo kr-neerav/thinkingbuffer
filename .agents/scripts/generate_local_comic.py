@@ -138,6 +138,28 @@ def parse_discussion_item(en_raw: str, hi_raw: str) -> dict:
     }
 
 
+def to_spotify_embed_url(url: str) -> str:
+    if not url:
+        return ""
+    if "/embed/" in url:
+        return url
+    m = re.search(r"episode/([a-zA-Z0-9]+)", url)
+    if m:
+        return f"https://open.spotify.com/embed/episode/{m.group(1)}?utm_source=generator"
+    return url
+
+
+def to_youtube_embed_url(url: str) -> str:
+    if not url:
+        return ""
+    if "/embed/" in url:
+        return url
+    m = re.search(r"(?:v=|youtu\.be/)([a-zA-Z0-9_-]+)", url)
+    if m:
+        return f"https://www.youtube-nocookie.com/embed/{m.group(1)}"
+    return url
+
+
 def process_chapter(
     source_dir: Path,
     dest_dir: Path,
@@ -376,6 +398,18 @@ def process_chapter(
     today_str = datetime.now().strftime("%Y-%m-%d")
     pub_date = existing_fm.get("date") or today_str
 
+    has_media = bool(existing_fm.get("has_media", False))
+    spotify_en = existing_fm.get("spotify_en", "")
+    spotify_hi = existing_fm.get("spotify_hi", "")
+    youtube_url = existing_fm.get("youtube_url", "")
+
+    if is_intro:
+        spotify_en = spotify_en or "https://open.spotify.com/episode/4pAbbGom38zKsf5oLanUkt"
+        spotify_hi = spotify_hi or "https://open.spotify.com/episode/6ejakwTisIvNWD7Ef8DPSQ"
+        has_media = True
+    elif spotify_en or spotify_hi or youtube_url:
+        has_media = True
+
     # Frontmatter Header
     lines = [
         "---",
@@ -394,6 +428,15 @@ def process_chapter(
         f'english_title: "{english_title}"',
         f'has_hindi: {str(has_hindi).lower()}',
         f'has_narration: {str(has_narration).lower()}',
+        f'has_media: {str(has_media).lower()}',
+    ]
+    if spotify_en:
+        lines.append(f'spotify_en: "{spotify_en}"')
+    if spotify_hi:
+        lines.append(f'spotify_hi: "{spotify_hi}"')
+    if youtube_url is not None and youtube_url != "":
+        lines.append(f'youtube_url: "{youtube_url}"')
+    lines.extend([
         'status: "published"',
         "---",
         "",
@@ -551,6 +594,135 @@ def process_chapter(
     lines.extend([
         '</div>',
         '</div>',
+        ""
+    ])
+
+    if has_media or spotify_en or spotify_hi:
+        spotify_en_embed = to_spotify_embed_url(spotify_en)
+        spotify_hi_embed = to_spotify_embed_url(spotify_hi)
+        youtube_embed = to_youtube_embed_url(youtube_url)
+
+        lines.extend([
+            '<!-- TAB 3: AUDIO & VIDEO -->',
+            '<div class="tab-pane" id="pane-media" data-pane="media">',
+            '<div class="media-view-container">',
+            "",
+            '<div class="section-title-bar">',
+            '<span class="section-badge">Listen & Watch</span>',
+            '<h2 class="section-heading lang-en">Audio & Video Episodes</h2>',
+            '<h2 class="section-heading lang-hi">ऑडियो एवं वीडियो प्रसंग</h2>',
+            '<p class="section-subheading lang-en">Experience the episode through sound and screen: stream the narrated podcast on Spotify or watch the inline video.</p>',
+            '<p class="section-subheading lang-hi">ध्वनि और दृश्य के माध्यम से प्रसंग का अनुभव करें: स्पॉटिफ़ाई पर पॉडकास्ट सुनें या सीधे यहीं वीडियो देखें।</p>',
+            '</div>',
+            "",
+            '<div class="media-sections-wrapper">',
+            "",
+            '<!-- Audio Card: Spotify -->',
+            '<section class="media-card audio-media-card">',
+            '<div class="media-card-header">',
+            '<div class="media-card-header-left">',
+            '<span class="media-type-badge audio-badge">',
+            '<svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor">',
+            '<path d="M12 2C6.477 2 2 6.477 2 12c0 4.991 3.657 9.128 8.438 9.879V14.89h-2.54V12h2.54V9.797c0-2.506 1.492-3.89 3.777-3.89 1.094 0 2.238.195 2.238.195v2.46h-1.26c-1.243 0-1.63.771-1.63 1.562V12h2.773l-.443 2.89h-2.33v6.988C18.343 21.128 22 16.991 22 12c0-5.523-4.477-10-10-10z"/>',
+            '</svg>',
+            'Spotify Audio',
+            '</span>',
+            '<h3 class="media-card-title lang-en">Narrated Podcast Episode</h3>',
+            '<h3 class="media-card-title lang-hi">कथा पॉडकास्ट प्रसंग</h3>',
+            '</div>',
+            '<div class="media-track-indicator">',
+            '<span class="track-pill lang-en">English Edition • Narrated by Kavya</span>',
+            '<span class="track-pill lang-hi">हिन्दी संस्करण • काव्या द्वारा प्रस्तुत</span>',
+            '</div>',
+            '</div>',
+            "",
+            '<div class="media-player-container">'
+        ])
+
+        if spotify_en_embed:
+            lines.extend([
+                '<!-- English Spotify Embed -->',
+                '<div class="spotify-embed-wrapper lang-en">',
+                f'<iframe style="border-radius:12px" src="{spotify_en_embed}" width="100%" height="232" frameBorder="0" allowfullscreen="" allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture" loading="lazy"></iframe>',
+                '</div>'
+            ])
+
+        if spotify_hi_embed:
+            lines.extend([
+                '<!-- Hindi Spotify Embed -->',
+                '<div class="spotify-embed-wrapper lang-hi">',
+                f'<iframe style="border-radius:12px" src="{spotify_hi_embed}" width="100%" height="232" frameBorder="0" allowfullscreen="" allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture" loading="lazy"></iframe>',
+                '</div>'
+            ])
+
+        lines.extend([
+            '</div>',
+            "",
+            '<div class="media-card-footer">',
+            '<p class="media-hint lang-en">',
+            '💡 <em>Want to listen in Hindi? Use the toolbar language toggle above or <a href="javascript:void(0)" class="quick-lang-switch" data-switch-to="hi">switch to हिन्दी audio</a>.</em>',
+            '</p>',
+            '<p class="media-hint lang-hi">',
+            '💡 <em>अंग्रेज़ी में सुनना चाहते हैं? ऊपर भाषा टॉगल का उपयोग करें या <a href="javascript:void(0)" class="quick-lang-switch" data-switch-to="en">English ऑडियो पर जाएँ</a>।</em>',
+            '</p>',
+            '</div>',
+            '</section>',
+            "",
+            '<!-- Video Card: YouTube -->',
+            '<section class="media-card video-media-card">',
+            '<div class="media-card-header">',
+            '<div class="media-card-header-left">',
+            '<span class="media-type-badge video-badge">',
+            '<svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor">',
+            '<path d="M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z"/>',
+            '</svg>',
+            'YouTube Video',
+            '</span>',
+            '<h3 class="media-card-title lang-en">Visual Chronicle</h3>',
+            '<h3 class="media-card-title lang-hi">सचित्र वीडियो कथा</h3>',
+            '</div>'
+        ])
+
+        if youtube_embed:
+            lines.extend([
+                '</div>',
+                '<div class="media-player-container">',
+                '<div class="video-embed-container">',
+                f'<iframe src="{youtube_embed}" title="Chapter Video" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen loading="lazy"></iframe>',
+                '</div>',
+                '</div>'
+            ])
+        else:
+            lines.extend([
+                '<span class="media-status-pill">Coming Soon / शीघ्र उपलब्ध</span>',
+                '</div>',
+                '<div class="media-player-container">',
+                '<div class="video-placeholder-box">',
+                '<div class="video-placeholder-inner">',
+                '<div class="video-play-mock-btn">',
+                '<svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">',
+                '<polygon points="5 3 19 12 5 21 5 3" fill="currentColor"></polygon>',
+                '</svg>',
+                '</div>',
+                '<h4 class="video-placeholder-title lang-en">YouTube Video Premiere Coming Soon</h4>',
+                '<h4 class="video-placeholder-title lang-hi">यूट्यूब वीडियो प्रसारण शीघ्र आ रहा है</h4>',
+                '<p class="video-placeholder-text lang-en">The high-definition animated graphic video will be embedded here for direct inline viewing as soon as it premieres.</p>',
+                '<p class="video-placeholder-text lang-hi">उच्च-गुणवत्ता सचित्र एनिमेटेड वीडियो प्रसारण के तुरंत बाद सीधे यहीं इनलाइन देखा जा सकेगा।</p>',
+                '</div>',
+                '</div>',
+                '</div>'
+            ])
+
+        lines.extend([
+            '</section>',
+            "",
+            '</div>',
+            "",
+            '</div>',
+            '</div>'
+        ])
+
+    lines.extend([
         "",
         '<div class="nav-links-chapter">',
         f"{prev_link_html}",

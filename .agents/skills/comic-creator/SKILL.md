@@ -1,11 +1,11 @@
 ---
 name: comic-creator
-description: Generates an Astro markdown blog post for a Ramayana comic chapter with dual tabs (Comics + Narration) and bilingual toggle (English + Hindi) based on studio images, storyboards, narration, and discussion JSON.
+description: Generates an Astro markdown blog post for a Ramayana comic chapter with three tabs (Comics, Narration & Discussion, Audio & Video) and bilingual toggle (English + Hindi) based on studio images, storyboards, narration, discussion JSON, and media embeds.
 ---
 
 # Comic Creator Skill
 
-This skill automates the creation of a new comic chapter post. It reads studio slide images, bilingual storyboards, narration prose, and discussion inquiries from MythologyMuse outputs, generates the markdown file with dual tabs (Comics + Narration & Discussion), and uploads images to Cloudflare R2 using the `r2-image-uploader` script.
+This skill automates the creation of a new comic chapter post. It reads studio slide images, bilingual storyboards, narration prose, and discussion inquiries from MythologyMuse outputs, generates the markdown file with three view tabs (Comics, Narration & Discussion, Audio & Video), and uploads images to Cloudflare R2 using the `r2-image-uploader` script.
 
 ## Usage
 
@@ -36,7 +36,8 @@ This script:
 4. Generates `index.md` with:
    - **Tab 1: Comic**: Each slide presents the artwork with bilingual captions placed directly below the image.
    - **Tab 2: Narration & Discussion**: Full story prose paragraphs followed by structured inquiry cards (Question, Reflection, and Actionable Takeaway).
-   - **Language Toggle**: Synchronized switcher for English and Hindi active on both tabs.
+   - **Tab 3: Audio & Video**: Embedded inline Spotify episode players (bilingual English + Hindi) and embedded YouTube video player (or coming soon preview card).
+   - **Language Toggle**: Synchronized switcher for English and Hindi active across all tabs.
 
 ### 3. Upload Images to R2
 After verifying the local post, upload images to Cloudflare R2:

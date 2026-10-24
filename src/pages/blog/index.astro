@@ -96,6 +96,10 @@ const sortedYears = Object.keys(dateTree).sort((a, b) => b.localeCompare(a));
           const dateKey = `${year}-${monthNum}-${dayStr}`;
           const monthName = monthNames[d.getUTCMonth()];
           const displayDate = `${monthName} ${dayStr}, ${year}`;
+          const raw = typeof post.rawContent === 'function'
+            ? post.rawContent().replace(/```[\s\S]*?```/g, ' ').replace(/[#>*_`~\[\]()!-]/g, ' ')
+            : '';
+          const readTimeMin = Math.max(1, Math.round(raw.trim().split(/\s+/).filter(Boolean).length / 200));
 
           return (
             <article
@@ -115,7 +119,7 @@ const sortedYears = Object.keys(dateTree).sort((a, b) => b.localeCompare(a));
                 <div class="card-meta">
                   <time datetime={dateKey} class="meta-date">{displayDate}</time>
                   <span class="meta-divider">•</span>
-                  <span class="meta-date-iso">{dateKey}</span>
+                  <span class="meta-date-iso">{readTimeMin} min read</span>
                 </div>
                 <h2 class="card-title">
                   <a href={post.url} class="card-title-link">{post.frontmatter.title}</a>

@@ -14,6 +14,10 @@ sanskrit_title: "Prastāvanā & Samkṣepa"
 english_title: "Welcome to the Odyssey - An Illustrated Introduction to the Ramayana"
 has_hindi: true
 has_narration: false
+has_media: true
+spotify_en: "https://open.spotify.com/episode/4pAbbGom38zKsf5oLanUkt"
+spotify_hi: "https://open.spotify.com/episode/6ejakwTisIvNWD7Ef8DPSQ"
+youtube_url: ""
 status: "published"
 ---
 
@@ -141,6 +145,118 @@ status: "published"
 <div class="narration-prose-card" style="text-align: center; padding: 3rem 1.5rem;">
 <p class="lang-en" style="color: var(--text-muted); font-size: 1.05rem;">The illustrated comic slides are available in the Comic tab. The full narrative translation for this chapter will appear here soon.</p>
 <p class="lang-hi" style="color: var(--text-muted); font-size: 1.05rem;">सचित्र कॉमिक स्लाइड्स कॉमिक टैब में उपलब्ध हैं। इस अध्याय का संपूर्ण कथा अनुवाद जल्द ही यहाँ उपलब्ध होगा।</p>
+</div>
+
+</div>
+</div>
+
+<!-- TAB 3: AUDIO & VIDEO -->
+<div class="tab-pane" id="pane-media" data-pane="media">
+<div class="media-view-container">
+
+<div class="section-title-bar">
+<span class="section-badge">Listen & Watch</span>
+<h2 class="section-heading lang-en">Audio & Video Episodes</h2>
+<h2 class="section-heading lang-hi">ऑडियो एवं वीडियो प्रसंग</h2>
+<p class="section-subheading lang-en">Experience the introduction through sound and screen: stream the narrated podcast on Spotify or watch the inline video.</p>
+<p class="section-subheading lang-hi">ध्वनि और दृश्य के माध्यम से प्रस्तावना का अनुभव करें: स्पॉटिफ़ाई पर पॉडकास्ट सुनें या सीधे यहीं वीडियो देखें।</p>
+</div>
+
+<div class="media-sections-wrapper">
+
+<!-- Audio Card: Spotify -->
+<section class="media-card audio-media-card">
+<div class="media-card-header">
+<div class="media-card-header-left">
+<span class="media-type-badge audio-badge">
+<svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor">
+<path d="M12 2C6.477 2 2 6.477 2 12c0 4.991 3.657 9.128 8.438 9.879V14.89h-2.54V12h2.54V9.797c0-2.506 1.492-3.89 3.777-3.89 1.094 0 2.238.195 2.238.195v2.46h-1.26c-1.243 0-1.63.771-1.63 1.562V12h2.773l-.443 2.89h-2.33v6.988C18.343 21.128 22 16.991 22 12c0-5.523-4.477-10-10-10z"/>
+</svg>
+Spotify Audio
+</span>
+<h3 class="media-card-title lang-en">Narrated Podcast Episode</h3>
+<h3 class="media-card-title lang-hi">कथा पॉडकास्ट प्रसंग</h3>
+</div>
+<div class="media-track-indicator">
+<span class="track-pill lang-en">English Edition • Narrated by Kavya</span>
+<span class="track-pill lang-hi">हिन्दी संस्करण • काव्या द्वारा प्रस्तुत</span>
+</div>
+</div>
+
+<div class="media-player-container">
+<!-- English Spotify Embed -->
+<div class="spotify-embed-wrapper lang-en">
+<iframe
+  style="border-radius:12px"
+  src="https://open.spotify.com/embed/episode/4pAbbGom38zKsf5oLanUkt?utm_source=generator"
+  width="100%"
+  height="232"
+  frameBorder="0"
+  allowfullscreen=""
+  allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture"
+  loading="lazy">
+</iframe>
+</div>
+
+<!-- Hindi Spotify Embed -->
+<div class="spotify-embed-wrapper lang-hi">
+<iframe
+  style="border-radius:12px"
+  src="https://open.spotify.com/embed/episode/6ejakwTisIvNWD7Ef8DPSQ?utm_source=generator"
+  width="100%"
+  height="232"
+  frameBorder="0"
+  allowfullscreen=""
+  allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture"
+  loading="lazy">
+</iframe>
+</div>
+</div>
+
+<div class="media-card-footer">
+<p class="media-hint lang-en">
+💡 <em>Want to listen in Hindi? Use the toolbar language toggle above or <a href="javascript:void(0)" class="quick-lang-switch" data-switch-to="hi">switch to हिन्दी audio</a>.</em>
+</p>
+<p class="media-hint lang-hi">
+💡 <em>अंग्रेज़ी में सुनना चाहते हैं? ऊपर भाषा टॉगल का उपयोग करें या <a href="javascript:void(0)" class="quick-lang-switch" data-switch-to="en">English ऑडियो पर जाएँ</a>।</em>
+</p>
+</div>
+</section>
+
+<!-- Video Card: YouTube -->
+<section class="media-card video-media-card">
+<div class="media-card-header">
+<div class="media-card-header-left">
+<span class="media-type-badge video-badge">
+<svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor">
+<path d="M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z"/>
+</svg>
+YouTube Video
+</span>
+<h3 class="media-card-title lang-en">Visual Chronicle</h3>
+<h3 class="media-card-title lang-hi">सचित्र वीडियो कथा</h3>
+</div>
+<span class="media-status-pill">Coming Soon / शीघ्र उपलब्ध</span>
+</div>
+
+<div class="media-player-container">
+<!-- Video Placeholder for Coming Soon -->
+<div class="video-placeholder-box">
+<div class="video-placeholder-inner">
+<div class="video-play-mock-btn">
+<svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+<polygon points="5 3 19 12 5 21 5 3" fill="currentColor"></polygon>
+</svg>
+</div>
+<h4 class="video-placeholder-title lang-en">YouTube Video Premiere Coming Soon</h4>
+<h4 class="video-placeholder-title lang-hi">यूट्यूब वीडियो प्रसारण शीघ्र आ रहा है</h4>
+<p class="video-placeholder-text lang-en">The high-definition animated graphic video will be embedded here for direct inline viewing as soon as it premieres.</p>
+<p class="video-placeholder-text lang-hi">उच्च-गुणवत्ता सचित्र एनिमेटेड वीडियो प्रसारण के तुरंत बाद सीधे यहीं इनलाइन देखा जा सकेगा।</p>
+</div>
+</div>
+</div>
+</section>
+
 </div>
 
 </div>

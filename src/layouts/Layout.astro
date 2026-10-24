@@ -1,28 +1,111 @@
 ---
 import '../styles/global.css';
+
 interface Props {
-	title: string;
+	title?: string;
+	description?: string;
+	frontmatter?: {
+		title?: string;
+		description?: string;
+		date?: string;
+		tags?: string[];
+		heroImage?: string;
+		image_url?: string;
+	};
+	rawContent?: () => string;
 }
 
-const { title } = Astro.props;
+const { title, description, frontmatter, rawContent } = Astro.props;
+
+const pageTitle = title || (frontmatter?.title ? `${frontmatter.title} - Thinking Buffer` : 'Thinking Buffer');
+const pageDescription = description || frontmatter?.description || 'A digital sandbox for deep thoughts and illustrated stories.';
+const ogImage = frontmatter?.heroImage || frontmatter?.image_url;
+
+const isBlogPost = Boolean(frontmatter) && Astro.url.pathname.startsWith('/blog');
+
+const monthNames = [
+	'January', 'February', 'March', 'April', 'May', 'June',
+	'July', 'August', 'September', 'October', 'November', 'December'
+];
+
+let formattedDate = '';
+let isoDate = '';
+if (frontmatter?.date) {
+	const d = new Date(frontmatter.date);
+	const year = d.getUTCFullYear();
+	const month = monthNames[d.getUTCMonth()];
+	const monthNum = String(d.getUTCMonth() + 1).padStart(2, '0');
+	const day = d.getUTCDate();
+	const dayPad = String(day).padStart(2, '0');
+	formattedDate = `${month} ${day}, ${year}`;
+	isoDate = `${year}-${monthNum}-${dayPad}`;
+}
+
+let readingTimeMin = 0;
+if (isBlogPost && typeof rawContent === 'function') {
+	const raw = rawContent()
+		.replace(/```[\s\S]*?```/g, ' ')
+		.replace(/[#>*_`~\[\]()!-]/g, ' ');
+	const words = raw.trim().split(/\s+/).filter(Boolean).length;
+	readingTimeMin = Math.max(1, Math.round(words / 200));
+}
+
+const allBlogPosts = Object.values(import.meta.glob('../pages/blog/**/*.md', { eager: true })) as any[];
+allBlogPosts.sort((a, b) => new Date(b.frontmatter.date).valueOf() - new Date(a.frontmatter.date).valueOf());
+
+const normalizePath = (p: string) => (p || '').replace(/\/$/, '');
+const currentPath = normalizePath(Astro.url.pathname);
+const currentPostIndex = isBlogPost
+	? allBlogPosts.findIndex((p) => normalizePath(p.url) === currentPath)
+	: -1;
+
+const nextPost = currentPostIndex > 0 ? allBlogPosts[currentPostIndex - 1] : null;
+const prevPost = currentPostIndex >= 0 && currentPostIndex < allBlogPosts.length - 1 ? allBlogPosts[currentPostIndex + 1] : null;
+
+const searchItems = [
+	...allBlogPosts.map((p) => ({
+		title: p.frontmatter.title,
+		description: p.frontmatter.description || '',
+		tags: p.frontmatter.tags || [],
+		type: 'Article',
+		url: p.url
+	})),
+	{
+		title: 'The Valmiki Ramayana: Graphic Odyssey',
+		description: 'Complete 1-to-1 visual comic adaptation across all 7 Kāṇḍas and 652 chapters.',
+		tags: ['Ramayana', 'Comics', 'Mythology'],
+		type: 'Comics',
+		url: '/comics/ramayana'
+	},
+	{
+		title: 'About Thinking Buffer & Neerav Kumar',
+		description: 'The philosophy of the buffer, systems engineering, and platform architecture.',
+		tags: ['About', 'Philosophy'],
+		type: 'Page',
+		url: '/about'
+	}
+];
 ---
 
 <!doctype html>
 <html lang="en">
 	<head>
 		<meta charset="UTF-8" />
-		<meta name="description" content="A digital sandbox for deep thoughts and illustrated stories." />
-		<meta name="viewport" content="width=device-width" />
+		<meta name="description" content={pageDescription} />
+		<meta name="viewport" content="width=device-width, initial-scale=1" />
+		<meta property="og:title" content={pageTitle} />
+		<meta property="og:description" content={pageDescription} />
+		{ogImage && <meta property="og:image" content={ogImage} />}
 		<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
 		<meta name="generator" content={Astro.generator} />
-		<title>{title}</title>
+		<title>{pageTitle}</title>
 	</head>
 	<body>
 		<div class="app-container">
 			<header class="site-header">
 				<a href="/" class="logo">Thinking Buffer</a>
 				
-				<nav class="nav-links">
+				<nav class="nav-links" aria-label="Primary Navigation">
 					<a href="/" class={Astro.url.pathname === '/' ? 'active' : ''}>Home</a>
 					<a href="/blog" class={Astro.url.pathname.startsWith('/blog') ? 'active' : ''}>Articles</a>
 					<a href="/comics" class={Astro.url.pathname.startsWith('/comics') ? 'active' : ''}>Comics</a>
@@ -30,25 +113,95 @@ const { title } = Astro.props;
 				</nav>
 				
 				<div class="header-actions">
-					<button class="search-btn">
+					<button type="button" class="search-btn" id="open-search-btn" aria-label="Search articles and comics">
 						<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
 							<circle cx="11" cy="11" r="8"></circle>
 							<line x1="21" y1="21" x2="16.65" y2="16.65"></line>
 						</svg>
-						Search
+						<span>Search</span>
 					</button>
 					
-					<div class="profile">
+					<a href="/about" class="profile">
 						<div class="avatar">
 							<img src="https://pub-d8556b57257648feb0e7d903bdc8186f.r2.dev/public/images/neerav_avatar.jpg" alt="Neerav Kumar" />
 						</div>
-						Neerav Kumar
-					</div>
+						<span class="profile-label">Neerav Kumar</span>
+					</a>
 				</div>
 			</header>
 			
 			<main>
-				<slot />
+				{isBlogPost ? (
+					<div class="blog-post-wrapper">
+						<div class="blog-post-topbar">
+							<a href="/blog" class="post-back-link">← All Articles</a>
+							<div class="post-meta-bar">
+								{formattedDate && (
+									<time datetime={isoDate} class="post-meta-date">{formattedDate}</time>
+								)}
+								{readingTimeMin > 0 && (
+									<>
+										<span class="post-meta-divider">•</span>
+										<span class="post-meta-readtime">{readingTimeMin} min read</span>
+									</>
+								)}
+							</div>
+						</div>
+
+						<article class="card blog-post-card">
+							{frontmatter?.tags && frontmatter.tags.length > 0 && (
+								<div class="post-header-tags">
+									{frontmatter.tags.map((tag: string) => (
+										<a href={`/tags/${tag}`} class="tag">{tag}</a>
+									))}
+								</div>
+							)}
+							<div class="blog-prose">
+								<slot />
+							</div>
+						</article>
+
+						<footer class="blog-post-footer">
+							<div class="card post-author-card">
+								<div class="post-author-info">
+									<div class="avatar post-author-avatar">
+										<img src="https://pub-d8556b57257648feb0e7d903bdc8186f.r2.dev/public/images/neerav_avatar.jpg" alt="Neerav Kumar" />
+									</div>
+									<div>
+										<div class="post-author-name">Neerav Kumar</div>
+										<div class="post-author-role">Senior Data Engineer • Thinking Buffer</div>
+									</div>
+								</div>
+								{frontmatter?.tags && frontmatter.tags.length > 0 && (
+									<div class="card-tags">
+										{frontmatter.tags.map((tag: string) => (
+											<a href={`/tags/${tag}`} class="tag">{tag}</a>
+										))}
+									</div>
+								)}
+							</div>
+
+							{(prevPost || nextPost) && (
+								<nav class="post-nav-grid" aria-label="Adjacent articles">
+									{prevPost ? (
+										<a href={prevPost.url} class="card post-nav-card">
+											<span class="post-nav-label">← Older Article</span>
+											<span class="post-nav-title">{prevPost.frontmatter.title}</span>
+										</a>
+									) : <div />}
+									{nextPost ? (
+										<a href={nextPost.url} class="card post-nav-card post-nav-next">
+											<span class="post-nav-label">Newer Article →</span>
+											<span class="post-nav-title">{nextPost.frontmatter.title}</span>
+										</a>
+									) : <div />}
+								</nav>
+							)}
+						</footer>
+					</div>
+				) : (
+					<slot />
+				)}
 			</main>
 			
 			<footer>
@@ -57,5 +210,117 @@ const { title } = Astro.props;
 				</div>
 			</footer>
 		</div>
+
+		<!-- Instant Search Modal -->
+		<div class="search-modal-backdrop" id="search-modal" aria-hidden="true">
+			<div class="search-modal-card" role="dialog" aria-modal="true" aria-labelledby="search-modal-input">
+				<div class="search-modal-header">
+					<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+						<circle cx="11" cy="11" r="8"></circle>
+						<line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+					</svg>
+					<input
+						type="search"
+						id="search-modal-input"
+						class="search-modal-input"
+						placeholder="Search articles, topics, or comics..."
+						autocomplete="off"
+					/>
+					<button type="button" class="search-close-btn" id="close-search-btn" aria-label="Close search">Esc</button>
+				</div>
+				<div class="search-results-list" id="search-results-list"></div>
+			</div>
+		</div>
+
+		<script type="application/json" id="site-search-data" set:html={JSON.stringify(searchItems)}></script>
+		<script>
+			function initSiteSearch() {
+				const openBtn = document.getElementById('open-search-btn');
+				const closeBtn = document.getElementById('close-search-btn');
+				const modal = document.getElementById('search-modal');
+				const input = document.getElementById('search-modal-input') as HTMLInputElement | null;
+				const resultsList = document.getElementById('search-results-list');
+				const dataEl = document.getElementById('site-search-data');
+
+				if (!openBtn || !modal || !input || !resultsList || !dataEl) return;
+
+				let items: Array<{ title: string; description: string; tags: string[]; type: string; url: string }> = [];
+				try {
+					items = JSON.parse(dataEl.textContent || '[]');
+				} catch {
+					items = [];
+				}
+
+				function escapeHtml(str: string) {
+					return str
+						.replace(/&/g, '&amp;')
+						.replace(/</g, '&lt;')
+						.replace(/>/g, '&gt;')
+						.replace(/"/g, '&quot;');
+				}
+
+				function renderResults(query: string) {
+					if (!resultsList) return;
+					const q = query.trim().toLowerCase();
+					const matched = q
+						? items.filter((item) =>
+								item.title.toLowerCase().includes(q) ||
+								item.description.toLowerCase().includes(q) ||
+								item.tags.some((t) => t.toLowerCase().includes(q))
+						  )
+						: items.slice(0, 6);
+
+					if (matched.length === 0) {
+						resultsList.innerHTML = '<div class="search-empty">No matching articles or comics found.</div>';
+						return;
+					}
+
+					resultsList.innerHTML = matched
+						.map(
+							(item) => `
+							<a href="${escapeHtml(item.url)}" class="search-result-item">
+								<div class="search-result-top">
+									<span class="search-result-title">${escapeHtml(item.title)}</span>
+									<span class="tag">${escapeHtml(item.type)}</span>
+								</div>
+								${item.description ? `<p class="search-result-desc">${escapeHtml(item.description)}</p>` : ''}
+							</a>
+						`
+						)
+						.join('');
+				}
+
+				function openModal() {
+					if (!modal || !input) return;
+					modal.classList.add('open');
+					modal.setAttribute('aria-hidden', 'false');
+					renderResults(input.value);
+					setTimeout(() => input.focus(), 20);
+				}
+
+				function closeModal() {
+					if (!modal) return;
+					modal.classList.remove('open');
+					modal.setAttribute('aria-hidden', 'true');
+				}
+
+				openBtn.addEventListener('click', openModal);
+				closeBtn?.addEventListener('click', closeModal);
+				modal.addEventListener('click', (e) => {
+					if (e.target === modal) closeModal();
+				});
+				input.addEventListener('input', () => renderResults(input.value));
+				document.addEventListener('keydown', (e) => {
+					if ((e.metaKey || e.ctrlKey) && e.key.toLowerCase() === 'k') {
+						e.preventDefault();
+						modal.classList.contains('open') ? closeModal() : openModal();
+					} else if (e.key === 'Escape' && modal.classList.contains('open')) {
+						closeModal();
+					}
+				});
+			}
+
+			initSiteSearch();
+		</script>
 	</body>
 </html>

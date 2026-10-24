@@ -3,7 +3,7 @@ layout: ../../../../layouts/Layout.astro
 title: "Earning the Bright Future: Why We Can't Leave Tomorrow to Chance"
 date: 2026-08-07
 description: "Reflecting on Dr. Fei-Fei Li's words on why technological progress requires active risk mitigation rather than passive optimism."
-tags: [AI, Books, Philosophy]
+tags: [ai, books, philosophy]
 heroImage: "https://pub-d8556b57257648feb0e7d903bdc8186f.r2.dev/src/pages/blog/2026/08/earning-the-future-hero.jpg"
 ---
 
