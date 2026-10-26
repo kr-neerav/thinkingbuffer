@@ -135,13 +135,47 @@ def parse_discussion_item(en_raw: str, hi_raw: str) -> dict:
     r_hi_m = re.search(r"विवेचना:\s*(.*?)(?=जीवन-सूत्र:|$)", hi_clean, re.DOTALL)
     t_hi_m = re.search(r"जीवन-सूत्र:\s*(.*?)$", hi_clean, re.DOTALL)
 
+    q_en = q_en_m.group(1).strip() if q_en_m else ""
+    r_en = r_en_m.group(1).strip() if r_en_m else ""
+    t_en = t_en_m.group(1).strip() if t_en_m else ""
+
+    q_hi = q_hi_m.group(1).strip() if q_hi_m else ""
+    r_hi = r_hi_m.group(1).strip() if r_hi_m else ""
+    t_hi = t_hi_m.group(1).strip() if t_hi_m else ""
+
+    # Fallback to natural pattern (First sentence with '?', reflection body, takeaway starting with 'This week' / 'इस सप्ताह')
+    if not q_en or not r_en:
+        m_q = re.match(r"^(.*?\?)\s*(.*)$", en_clean, re.DOTALL)
+        if m_q:
+            q_en = m_q.group(1).strip()
+            rem = m_q.group(2).strip()
+            m_t = re.search(r"(This week.*?)$", rem, re.IGNORECASE | re.DOTALL)
+            if m_t:
+                r_en = rem[:m_t.start()].strip()
+                t_en = m_t.group(1).strip()
+            else:
+                r_en = rem
+
+    if not q_hi or not r_hi:
+        m_q = re.match(r"^(.*?\?)\s*(.*)$", hi_clean, re.DOTALL)
+        if m_q:
+            q_hi = m_q.group(1).strip()
+            rem = m_q.group(2).strip()
+            m_t = re.search(r"((?:जीवन\s*[-–—]?\s*सूत्र[:\s]*)?इस सप्ताह.*?)$", rem, re.DOTALL)
+            if m_t:
+                r_hi = rem[:m_t.start()].strip()
+                t_hi = m_t.group(1).strip()
+                t_hi = re.sub(r"^जीवन\s*[-–—]?\s*सूत्र[:\s]*", "", t_hi).strip()
+            else:
+                r_hi = rem
+
     return {
-        "q_en": q_en_m.group(1).strip() if q_en_m else en_clean,
-        "r_en": r_en_m.group(1).strip() if r_en_m else "",
-        "t_en": t_en_m.group(1).strip() if t_en_m else "",
-        "q_hi": q_hi_m.group(1).strip() if q_hi_m else hi_clean,
-        "r_hi": r_hi_m.group(1).strip() if r_hi_m else "",
-        "t_hi": t_hi_m.group(1).strip() if t_hi_m else "",
+        "q_en": q_en or en_clean,
+        "r_en": r_en,
+        "t_en": t_en,
+        "q_hi": q_hi or hi_clean,
+        "r_hi": r_hi,
+        "t_hi": t_hi,
     }
 
 
