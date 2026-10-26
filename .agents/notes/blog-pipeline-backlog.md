@@ -55,3 +55,17 @@ Tracked backlog of upcoming technical blog posts sourced from weekly journal ref
   4. **The Luxury of Chosen Friction:** Separating structural adversity from elite, high-compensation intellectual puzzles.
   5. **Breaking the Loop:** Replacing anonymous forum venting with community presence and active gratitude.
 
+---
+
+## 5. The Enterprise AI Sidecar: Routing Central Agents to Local Data Crews
+* **Source:** `../journal/2026/10/23.md` (Friday, Oct 23, lines 7-8, 18, 32-35)
+* **File:** `src/pages/blog/2026/10/the-enterprise-ai-sidecar.md`
+* **Status:** Completed (Published)
+* **Thesis:** Top-down organizational AI skill packages are tailored for general software engineering, lacking data engineering primitives like partition pruning, warehouse schemas, and pipeline DAGs. Steering central corporate agents to delegate domain-specific tasks to local Kiro crew members preserves leadership telemetry while unlocking specialized execution.
+* **Core Pillars & Narrative Arc:**
+  1. **The Telemetry Dilemma:** Central leadership tracks tool adoption telemetry; abandoning the standard package tanks metrics, while relying exclusively on it stalls data engineering velocity.
+  2. **The Specialization Gap & Hospital Triage Analogy:** General software skills do not map to warehouse partitions or SQL optimizations; triage intake routes to specialized operating teams.
+  3. **The Local Sidecar Architecture:** Using the corporate agent as an entry reverse proxy that invokes local Kiro crew members and custom MCP servers.
+  4. **Prompt Steering over Heavy Protocols:** Establishing lean prompt steering delegation rules as a v0 baseline instead of building complex IPC or API wrappers upfront.
+
+
