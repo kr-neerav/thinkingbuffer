@@ -114,12 +114,12 @@ Perform these steps in this order for every post.
    ```
    - Field rules: `date` MUST be `YYYY-MM-DD`; `tags` MUST be 1-5 lowercase hyphenated tags; `heroImage` MUST be `./<lowercase-hyphenated-name>.jpg`.
    - Run a self-check against Section 1 (4 outcomes), Section 2 (paragraph/sentence limits, 8-word repetition, acronym allowlist, `<!-- Analogy: ... -->` marker, banned words, zero em dashes), and Section 4 (link verification comments).
-   - Present the draft text and proposed image prompts/captions to the user for quick editorial sign-off (unless the user explicitly asked to generate and save everything in a single pass).
+   - Save the Markdown draft directly to `src/pages/blog/YYYY/MM/<slug>.md` where `YYYY/MM` matches the frontmatter `date`.
+   - Present a concise review summary in chat containing the relative file link, the `> Takeaway:` sentence, the word count, and proposed image prompts/captions for quick editorial sign-off. Do NOT reprint the full Markdown body in the chat output (avoids duplicate token generation and stream latency).
 
 3. **Phase 2 - Generate Visuals, Save Files, and Upload to R2.**
    Once the text and `> Takeaway:` keyword are locked in:
-   - **No leaked `[TBD]` markers:** Before writing the final Markdown file to `src/pages/blog/`, ensure zero `[TBD: ...]` link markers remain in reader-visible body text. Either resolve unverified URLs with the user during Phase 1 sign-off, or remove the hyperlink and render clean unlinked text (such as an italicized title) when a link is optional.
-   - Save the post under the repo-relative directory `src/pages/blog/YYYY/MM/<slug>.md` where `YYYY/MM` matches the frontmatter `date`.
+   - **No leaked `[TBD]` markers:** Ensure zero `[TBD: ...]` link markers remain in reader-visible body text in `src/pages/blog/YYYY/MM/<slug>.md`. Either resolve unverified URLs with the user during Phase 1 sign-off, or remove the hyperlink and render clean unlinked text (such as an italicized title) when a link is optional.
    - Generate or process the hero image and required inline images (`16:9`, width `<=1200 px`, JPEG quality `55-65` target `60`), save them in `src/pages/blog/YYYY/MM/<image-name>.jpg`, and delete any intermediate uncompressed `.png` files.
    - Reference images initially as `./<image-name>.jpg`. NEVER use machine-specific absolute paths (`/Users/`, `/home/`, `C:\`).
    - Run the R2 upload script to upload local images and update Markdown URLs:
